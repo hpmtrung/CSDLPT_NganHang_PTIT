@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NganHangPhanTan.DAO
+﻿namespace NganHangPhanTan.DAO
 {
     public class BrandDAO
     {
@@ -23,10 +17,14 @@ namespace NganHangPhanTan.DAO
 
         private BrandDAO() { }
 
+        /// <summary>
+        /// Get Id of current brand having connection
+        /// </summary>
+        /// <returns></returns>
         public string GetBrandIdOfSubcriber()
         {
             string query = "SELECT dbo.udf_GetBrandIDOfSubcriber()";
-            return (string)DataProvider.UniqueInstance.ExecuteScalar(query);
+            return (string)DataProvider.Instance.ExecuteScalar(query);
         }
     }
 }

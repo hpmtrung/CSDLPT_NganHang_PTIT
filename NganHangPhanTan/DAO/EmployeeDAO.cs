@@ -2,24 +2,24 @@
 {
     public class EmployeeDAO
     {
-        private static EmployeeDAO uniqueInstance;
+        private static EmployeeDAO instance;
 
-        public static EmployeeDAO UniqueInstance
+        public static EmployeeDAO Instance
         {
             get
             {
-                if (uniqueInstance == null)
-                    uniqueInstance = new EmployeeDAO();
-                return uniqueInstance;
+                if (instance == null)
+                    instance = new EmployeeDAO();
+                return instance;
             }
-            private set { uniqueInstance = value; }
+            private set { instance = value; }
         }
 
         private EmployeeDAO() { }
 
-        public bool isEmployeeIDExisted(string employeeID)
+        public bool IsEmployeeIDExisted(string employeeID)
         {
-            return (bool) DataProvider.UniqueInstance.ExecuteScalar($"SELECT dbo.udf_CheckEmployeeIDExisted(N'{employeeID}')");
+            return (bool) DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckEmployeeIDExisted(N'{employeeID}')");
         }
     }
 }

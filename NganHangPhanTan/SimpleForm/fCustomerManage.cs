@@ -40,10 +40,10 @@ namespace NganHangPhanTan.SimpleForm
         private void fCustomerManage_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'DS.TaiKhoan' table. You can move, or remove it, as needed.
-            this.taAccount.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taAccount.Fill(this.DS.TaiKhoan);
             // TODO: This line of code loads data into the 'dS.KhachHang' table. You can move, or remove it, as needed.
-            this.taCustomer.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taCustomer.Fill(this.DS.KhachHang);
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
@@ -505,16 +505,16 @@ namespace NganHangPhanTan.SimpleForm
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
             if (cbBrand.SelectedIndex != this.user.BrandIndex)
-                DataProvider.UniqueInstance.SetServerToRemote(serverName);
+                DataProvider.Instance.SetServerToRemote(serverName);
             else
-                DataProvider.UniqueInstance.SetServerToSubcriber(serverName, user.Login, user.Pass);
-            if (DataProvider.UniqueInstance.TestConnection() == false)
+                DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
+            if (DataProvider.Instance.CheckConnection() == false)
             {
                 MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
                 return;
             }
             // Tải dữ liệu từ site mới về
-            taCustomer.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             taCustomer.Fill(this.DS.KhachHang);
         }
 

@@ -36,7 +36,7 @@ namespace NganHangPhanTan.Util
         {
             cb.DisplayMember = BRAND_DISPLAY_NAME;
             cb.ValueMember = BRAND_VALUE_NAME;
-            cb.DataSource = DataProvider.UniqueInstance.GetBSSubcribers();
+            cb.DataSource = DataProvider.Instance.GetBSSubcribers();
             cb.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 

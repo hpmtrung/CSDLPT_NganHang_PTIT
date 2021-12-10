@@ -1,4 +1,5 @@
 ﻿using NganHangPhanTan.DTO;
+using NganHangPhanTan.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,17 +13,17 @@ namespace NganHangPhanTan.DAO
 {
     public class UserDAO
     {
-        private static UserDAO uniqueInstance;
+        private static UserDAO instance;
 
-        public static UserDAO UniqueInstance
+        public static UserDAO Instance
         {
             get
             {
-                if (uniqueInstance == null)
-                    uniqueInstance = new UserDAO();
-                return uniqueInstance;
+                if (instance == null)
+                    instance = new UserDAO();
+                return instance;
             }
-            private set { uniqueInstance = value; }
+            private set { instance = value; }
         }
 
         private UserDAO() { }
@@ -34,20 +35,17 @@ namespace NganHangPhanTan.DAO
         /// <returns></returns>
         public User Login(string loginName)
         {
-            string query = "EXEC dbo.usp_Login @LoginName";
-            DataTable data = DataProvider.UniqueInstance.ExecuteQueryDataTable(query, new object[] { loginName });
+            DataTable data = DataProvider.Instance.ExecuteDataTable($"EXEC dbo.usp_Login {loginName}");
             if (data == null)
                 return null;
 
             if (data.Rows.Count == 0)
             {
-                MessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu.\nVui lòng nhập lại mã nhân viên.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowInfoMsgDialog("Login bạn nhập không có quyền truy cập dữ liệu.\nVui lòng nhập lại mã nhân viên.");
                 return null;
             }
 
-            User user = new User(data.Rows[0]);
-            //MessageBox.Show($"Đăng nhập thành công.\nXin chào {user.Fullname}.", "", MessageBoxButtons.OK);
-            return user;
+            return new User(data.Rows[0]);
         }
     }
 

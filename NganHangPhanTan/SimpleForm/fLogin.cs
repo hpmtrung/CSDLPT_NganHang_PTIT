@@ -2,14 +2,12 @@
 using NganHangPhanTan.DTO;
 using NganHangPhanTan.Util;
 using System;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace NganHangPhanTan
 {
     public partial class fLogin : DevExpress.XtraEditors.XtraForm
     {
-
         private Action<User> changeUserInfo;
         private Action requestExitProgram;
 
@@ -56,9 +54,9 @@ namespace NganHangPhanTan
             }
 
             string serverName = cbBrand.SelectedValue.ToString();
-            DataProvider.UniqueInstance.SetServerToSubcriber(serverName, loginName, pass);
+            DataProvider.Instance.SetServerToSubcriber(serverName, loginName, pass);
 
-            User user = UserDAO.UniqueInstance.Login(loginName);
+            User user = UserDAO.Instance.Login(loginName);
             if (user != null)
             {
                 user.Login = loginName;

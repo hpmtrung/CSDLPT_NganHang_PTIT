@@ -4,7 +4,7 @@ namespace NganHangPhanTan.Util
 {
     public class MessageUtil
     {
-        public static void ShowSuccessMsgDialog(string msg)
+        public static void ShowInfoMsgDialog(string msg)
         {
             MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

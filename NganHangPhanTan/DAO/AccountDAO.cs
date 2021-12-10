@@ -2,24 +2,24 @@
 {
     public class AccountDAO
     {
-        private static AccountDAO uniqueInstance;
+        private static AccountDAO instance;
 
-        public static AccountDAO UniqueInstance
+        public static AccountDAO Instance
         {
             get
             {
-                if (uniqueInstance == null)
-                    uniqueInstance = new AccountDAO();
-                return uniqueInstance;
+                if (instance == null)
+                    instance = new AccountDAO();
+                return instance;
             }
-            private set { uniqueInstance = value; }
+            private set { instance = value; }
         }
 
         private AccountDAO() { }
 
         public bool IsAccountIdExisted(string accountId)
         {
-            return (bool)DataProvider.UniqueInstance.ExecuteScalar($"SELECT dbo.udf_CheckAccountIdExisted(N'{accountId}')");
+            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountIdExisted(N'{accountId}')");
         }
     }
 }

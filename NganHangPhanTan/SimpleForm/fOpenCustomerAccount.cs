@@ -55,10 +55,10 @@ namespace NganHangPhanTan.SimpleForm
         private void fOpenCustomerAccount_Load(object sender, System.EventArgs e)
         {
             // TODO: This line of code loads data into the 'dS.KhachHang' table. You can move, or remove it, as needed.
-            this.taCustomer.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taCustomer.Fill(this.DS.KhachHang);
             // TODO: This line of code loads data into the 'DS.TaiKhoan' table. You can move, or remove it, as needed.
-            this.taAccount.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
             cbBrand.SelectedIndex = this.user.BrandIndex;
@@ -160,18 +160,18 @@ namespace NganHangPhanTan.SimpleForm
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
             if (cbBrand.SelectedIndex != this.user.BrandIndex)
-                DataProvider.UniqueInstance.SetServerToRemote(serverName);
+                DataProvider.Instance.SetServerToRemote(serverName);
             else
-                DataProvider.UniqueInstance.SetServerToSubcriber(serverName, user.Login, user.Pass);
-            if (DataProvider.UniqueInstance.TestConnection() == false)
+                DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
+            if (DataProvider.Instance.CheckConnection() == false)
             {
                 MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
                 return;
             }
             // Tải dữ liệu từ site mới về
-            taCustomer.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             taCustomer.Fill(this.DS.KhachHang);
-            this.taAccount.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
             if (bdsCustomer.Count > 0)
                 this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
@@ -263,7 +263,7 @@ namespace NganHangPhanTan.SimpleForm
                     row[Account.BALANCE_HEADER], row[Account.BRAND_ID_HEADER], row[Account.OPEN_DATE_HEADER]);
             }
 
-            int res = DataProvider.UniqueInstance.ExecuteNonQuery("EXEC dbo.usp_UpdateCustomerAccounts @UpdatedAccounts", new object[] { bufferAccountDataTable });
+            int res = DataProvider.Instance.ExecuteNonQuery("EXEC dbo.usp_UpdateCustomerAccounts @UpdatedAccounts", new object[] { bufferAccountDataTable });
 
             if (res > 0)
             {
@@ -427,7 +427,7 @@ namespace NganHangPhanTan.SimpleForm
             Account account = (Account)action.Content;
             bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
 
-            bool accountHavingTransation = (bool)DataProvider.UniqueInstance.ExecuteScalar($"SELECT dbo.udf_CheckAccountHavingTransaction(N'{account.Id}')");
+            bool accountHavingTransation = (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountHavingTransaction(N'{account.Id}')");
 
             if (accountHavingTransation)
             {
@@ -516,7 +516,7 @@ namespace NganHangPhanTan.SimpleForm
                     return;
                 }
 
-                if (AccountDAO.UniqueInstance.IsAccountIdExisted(accountId))
+                if (AccountDAO.Instance.IsAccountIdExisted(accountId))
                 {
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản đã tồn tại. Vui lòng chọn mã khác.";
@@ -541,7 +541,7 @@ namespace NganHangPhanTan.SimpleForm
         {
             string accountId = ((DataRowView)bdsAccount[bdsAccount.Position])[Account.ID_HEADER].ToString();
 
-            if (AccountDAO.UniqueInstance.IsAccountIdExisted(accountId))
+            if (AccountDAO.Instance.IsAccountIdExisted(accountId))
             {
                 MessageBox.Show("Không thể hiệu chỉnh trên tài khoản đã lưu vào cơ sở dữ liệu.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -591,7 +591,7 @@ namespace NganHangPhanTan.SimpleForm
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản không hợp lệ vì chứa kí tự trắng";
                 }
-                else if (AccountDAO.UniqueInstance.IsAccountIdExisted(accountId))
+                else if (AccountDAO.Instance.IsAccountIdExisted(accountId))
                 {
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản đã tồn tại. Vui lòng chọn mã khác.";
@@ -661,7 +661,7 @@ namespace NganHangPhanTan.SimpleForm
         {
             if (bdsAccount.Count == 0 || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle)
                 return;
-            bool accountIdExisted = AccountDAO.UniqueInstance.IsAccountIdExisted(gvAccount.GetRowCellValue(e.FocusedRowHandle, Account.ID_HEADER).ToString());
+            bool accountIdExisted = AccountDAO.Instance.IsAccountIdExisted(gvAccount.GetRowCellValue(e.FocusedRowHandle, Account.ID_HEADER).ToString());
             gvAccount.Columns[Account.ID_HEADER].OptionsColumn.ReadOnly = accountIdExisted;
             gvAccount.Columns[Account.BALANCE_HEADER].OptionsColumn.ReadOnly = accountIdExisted;
         }
@@ -704,7 +704,7 @@ namespace NganHangPhanTan.SimpleForm
                     e.Value = value;
                 else
                 {
-                    bool accountIdExisted = AccountDAO.UniqueInstance.IsAccountIdExisted(accountId.ToString());
+                    bool accountIdExisted = AccountDAO.Instance.IsAccountIdExisted(accountId.ToString());
                     value = accountIdExisted ? "" : "*";
                     accountUnAllowChangeCache.SetValue(e.Row, value);
                     e.Value = value;

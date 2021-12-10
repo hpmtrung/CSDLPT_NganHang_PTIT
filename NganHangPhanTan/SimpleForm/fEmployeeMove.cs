@@ -24,7 +24,7 @@ namespace NganHangPhanTan.SimpleForm
         private void fEmployeeMove_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'dS.usp_GetOtherBrandFromSubcriber' table. You can move, or remove it, as needed.
-            this.usp_GetOtherBrandFromSubcriberTableAdapter.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.usp_GetOtherBrandFromSubcriberTableAdapter.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.usp_GetOtherBrandFromSubcriberTableAdapter.Fill(this.dS.usp_GetOtherBrandFromSubcriber);
             if (bdsBrandOption.Count > 0)
                 bdsBrandOption.Position = 0;

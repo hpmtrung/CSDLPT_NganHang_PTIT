@@ -1,13 +1,15 @@
-﻿using System;
+﻿using NganHangPhanTan.Util;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace NganHangPhanTan.DAO
 {
-    class DataProvider
+    public class DataProvider
     {
-        private static DataProvider uniqueInstance;
+        private static DataProvider instance;
 
         public readonly string DISTRIBUTOR_NAME = "DESKTOP-TU1HSJC";
         private readonly string CONNECTION_STR_TEMPLATE = "Data Source={0};Initial Catalog=NGANHANG;{1}";
@@ -16,21 +18,20 @@ namespace NganHangPhanTan.DAO
 
         // Giữ khi đăng nhập
         private BindingSource bsSubcribers = new BindingSource();
-
         private string connectionStr;
         private string serverName;
 
-        public static DataProvider UniqueInstance
+        public static DataProvider Instance
         {
             get
             {
-                if (uniqueInstance == null)
-                    uniqueInstance = new DataProvider();
-                return uniqueInstance;
+                if (instance == null)
+                    instance = new DataProvider();
+                return instance;
             }
             private set
             {
-                uniqueInstance = value;
+                instance = value;
             }
         }
 
@@ -45,26 +46,10 @@ namespace NganHangPhanTan.DAO
         {
             if (bsSubcribers.DataSource == null)
             {
-                String query = "SELECT * FROM dbo.uv_GetSubcribers";
-                DataTable data = ExecuteQueryDataTable(query);
+                DataTable data = ExecuteDataTable("SELECT * FROM dbo.uv_GetSubcribers");
                 bsSubcribers.DataSource = data;
             }
             return bsSubcribers;
-        }
-
-        private bool OpenConnection(SqlConnection connection)
-        {
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n{ex.Message}", "", MessageBoxButtons.OK);
-                return false;
-            }
-
-            return true;
         }
 
         public void SetServerToRemote(string subcriber)
@@ -89,20 +74,43 @@ namespace NganHangPhanTan.DAO
         /// Test connection to server is running or not.
         /// </summary>
         /// <returns></returns>
-        public bool TestConnection()
+        public bool CheckConnection()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionStr))
+            SqlConnection connection = null;
+            try
             {
-                try
-                {
-                    connection.Open();
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                connection = new SqlConnection(connectionStr);
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                return false;
             }
             return true;
+        }
+
+        public SqlDataReader ExecuteSqlDataReader(string query)
+        {
+            SqlCommand sqlCommand = new SqlCommand
+            {
+                Connection = new SqlConnection(connectionStr),
+                CommandText = query,
+                CommandType = CommandType.Text
+            };
+
+            SqlDataReader sqlDataReader;
+            try
+            {
+                sqlDataReader = sqlCommand.ExecuteReader();
+                return sqlDataReader;
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                return null;
+            }
         }
 
         /// <summary>
@@ -111,24 +119,21 @@ namespace NganHangPhanTan.DAO
         /// <param name="query"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public DataTable ExecuteQueryDataTable(string query, object[] parameters = null)
+        public DataTable ExecuteDataTable(string query, object[] parameters = null)
         {
             DataTable data = new DataTable();
+
             using (SqlConnection connection = new SqlConnection(ConnectionStr))
             {
-                if (!OpenConnection(connection))
-                {
-                    return null;
-                }
-
                 SqlCommand command = new SqlCommand(query, connection);
 
                 if (parameters != null)
                 {
-                    string[] listparam = query.Split(' ');
                     int i = 0;
-                    foreach (string item in listparam)
+                    foreach (string item in Regex.Split(query, @"\s+"))
                     {
+                        int id = item.IndexOf(',');
+                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
                             command.Parameters.AddWithValue(item, parameters[i]);
@@ -139,29 +144,37 @@ namespace NganHangPhanTan.DAO
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
 
-                adapter.Fill(data);
+                try
+                {
+                    adapter.Fill(data);
+                }
+                catch (Exception ex)
+                {
+                    MessageUtil.ShowErrorMsgDialog(ex.Message);
+                    data = null;
+                }
             }
 
             return data;
         }
 
         /// <summary>
-        /// For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. 
-        /// For all other types of statements or catching error, the return value is -1.
-        /// Return 0 if having any errors.
+        /// For UPDATE, INSERT, and DELETE statements, the return value is the 
+        /// number of rows affected by the command. For all other types of statements, 
+        /// the return value is -1.
+        /// If no statements are detected that contribute to the count, the return value is -1.
+        /// If a rollback occurs, the return value is also -1.
+        /// If any error is found, result is -2.
         /// </summary>
         /// <param name="query"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
         public int ExecuteNonQuery(string query, object[] parameters = null)
         {
+            int rowsAffected = -1;
+
             using (SqlConnection connection = new SqlConnection(ConnectionStr))
             {
-                if (!OpenConnection(connection))
-                {
-                    return -1;
-                }
-
                 SqlCommand command = new SqlCommand(query, connection)
                 {
                     CommandTimeout = 600, // 10 mins
@@ -169,10 +182,11 @@ namespace NganHangPhanTan.DAO
 
                 if (parameters != null)
                 {
-                    string[] listparam = query.Split(' ');
                     int i = 0;
-                    foreach (string item in listparam)
+                    foreach (string item in Regex.Split(query, @"\s+"))
                     {
+                        int id = item.IndexOf(',');
+                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
                             command.Parameters.AddWithValue(item, parameters[i]);
@@ -183,15 +197,17 @@ namespace NganHangPhanTan.DAO
 
                 try
                 {
-                    int rowNum = command.ExecuteNonQuery();
-                    return rowNum;
+                    connection.Open();
+                    rowsAffected = command.ExecuteNonQuery();
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return -1;
+                    MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                    rowsAffected = - 2;
                 }
             }
+
+            return rowsAffected;
         }
 
         /// <summary>
@@ -203,21 +219,19 @@ namespace NganHangPhanTan.DAO
         /// <returns></returns>
         public object ExecuteScalar(string query, object[] parameters = null)
         {
+            object data = null;
+
             using (SqlConnection connection = new SqlConnection(ConnectionStr))
             {
-                if (!OpenConnection(connection))
-                {
-                    return null;
-                }
-
                 SqlCommand command = new SqlCommand(query, connection);
 
                 if (parameters != null)
                 {
-                    string[] listparam = query.Split(' ');
                     int i = 0;
-                    foreach (string item in listparam)
+                    foreach (string item in Regex.Split(query, @"\s+"))
                     {
+                        int id = item.IndexOf(',');
+                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
                             command.Parameters.AddWithValue(item, parameters[i]);
@@ -228,15 +242,17 @@ namespace NganHangPhanTan.DAO
 
                 try
                 {
-                    object data = command.ExecuteScalar();
-                    return data;
+                    connection.Open();
+                    data = command.ExecuteScalar();
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
                     return null;
                 }
             }
+
+            return data;
         }
     }
 }

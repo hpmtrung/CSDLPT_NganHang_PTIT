@@ -43,11 +43,11 @@ namespace NganHangPhanTan.SimpleForm
             // Không báo lỗi do thiếu dữ liệu FK
             DS.EnforceConstraints = false;
 
-            this.taEmployee.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taEmployee.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taEmployee.Fill(this.DS.NhanVien);
-            this.taMoneyTransfer.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taMoneyTransfer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taMoneyTransfer.Fill(this.DS.GD_CHUYENTIEN);
-            this.taMoneyExchange.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            this.taMoneyExchange.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taMoneyExchange.Fill(this.DS.GD_GOIRUT);
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
@@ -466,7 +466,7 @@ namespace NganHangPhanTan.SimpleForm
 
             txbPhoneNum.Text = phoneNum;
 
-            if (btnSave.Tag == btnInsert && EmployeeDAO.UniqueInstance.isEmployeeIDExisted(employeeID))
+            if (btnSave.Tag == btnInsert && EmployeeDAO.Instance.IsEmployeeIDExisted(employeeID))
             {
                 MessageBox.Show("Mã nhân viên đã tồn tại. Vui lòng chọn mã nhân viên khác.", "", MessageBoxButtons.OK);
                 txbId.Focus();
@@ -549,16 +549,16 @@ namespace NganHangPhanTan.SimpleForm
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
             if (cbBrand.SelectedIndex != this.user.BrandIndex)
-                DataProvider.UniqueInstance.SetServerToRemote(serverName);
+                DataProvider.Instance.SetServerToRemote(serverName);
             else
-                DataProvider.UniqueInstance.SetServerToSubcriber(serverName, user.Login, user.Pass);
-            if (DataProvider.UniqueInstance.TestConnection() == false)
+                DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
+            if (DataProvider.Instance.CheckConnection() == false)
             {
                 MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
                 return;
             }
             // Tải dữ liệu từ site mới về
-            taEmployee.Connection.ConnectionString = DataProvider.UniqueInstance.ConnectionStr;
+            taEmployee.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             taEmployee.Fill(this.DS.NhanVien);
         }
 
@@ -581,7 +581,7 @@ namespace NganHangPhanTan.SimpleForm
             if (MessageBox.Show("Xác nhận chuyển nhân viên?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 string query = "EXEC dbo.usp_MoveEmployeeToBrand @MANV , @MACN";
-                int rowNum = DataProvider.UniqueInstance.ExecuteNonQuery(query, new object[] { employeeId, brandId });
+                int rowNum = DataProvider.Instance.ExecuteNonQuery(query, new object[] { employeeId, brandId });
                 if (rowNum > 0)
                 {
                     MessageBox.Show("Chuyển nhân viên thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
