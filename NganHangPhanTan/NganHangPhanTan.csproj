@@ -1,0 +1,279 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ECCD0277-6277-4079-87FC-29299384AA4E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NganHangPhanTan</RootNamespace>
+    <AssemblyName>NganHangPhanTan</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v19.2" />
+    <Reference Include="DevExpress.Data.v19.2" />
+    <Reference Include="DevExpress.Printing.v19.2.Core" />
+    <Reference Include="DevExpress.Utils.v19.2" />
+    <Reference Include="DevExpress.XtraBars.v19.2" />
+    <Reference Include="DevExpress.Sparkline.v19.2.Core" />
+    <Reference Include="DevExpress.XtraEditors.v19.2" />
+    <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAO\AccountDAO.cs" />
+    <Compile Include="DAO\BrandDAO.cs" />
+    <Compile Include="DAO\DataProvider.cs" />
+    <Compile Include="DAO\EmployeeDAO.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DS.cs">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\Account.cs" />
+    <Compile Include="DTO\Brand.cs" />
+    <Compile Include="DTO\Customer.cs" />
+    <Compile Include="DTO\Employee.cs" />
+    <Compile Include="DTO\User.cs" />
+    <Compile Include="SimpleForm\fCreateCustomerAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fCreateCustomerAccount.Designer.cs">
+      <DependentUpon>fCreateCustomerAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fCreateLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fCreateLogin.Designer.cs">
+      <DependentUpon>fCreateLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fCustomerManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fCustomerManage.Designer.cs">
+      <DependentUpon>fCustomerManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fEmployeeManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fEmployeeManage.Designer.cs">
+      <DependentUpon>fEmployeeManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fEmployeeMove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fEmployeeMove.Designer.cs">
+      <DependentUpon>fEmployeeMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleForm\fLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fLogin.Designer.cs">
+      <DependentUpon>fLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fOpenCustomerAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fOpenCustomerAccount.Designer.cs">
+      <DependentUpon>fOpenCustomerAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateDataCell.cs" />
+    <Compile Include="UserEventData.cs" />
+    <Compile Include="Util\ControlUtil.cs" />
+    <Compile Include="Util\MyCache.cs" />
+    <EmbeddedResource Include="SimpleForm\fCreateCustomerAccount.resx">
+      <DependentUpon>fCreateCustomerAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fCreateLogin.resx">
+      <DependentUpon>fCreateLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fCustomerManage.resx">
+      <DependentUpon>fCustomerManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fEmployeeManage.resx">
+      <DependentUpon>fEmployeeManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fEmployeeMove.resx">
+      <DependentUpon>fEmployeeMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SimpleForm\fLogin.resx">
+      <DependentUpon>fLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fOpenCustomerAccount.resx">
+      <DependentUpon>fOpenCustomerAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="DS.xsc">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+    <None Include="DS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS.xss">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Report\" />
+    <Folder Include="SubForm\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\add-details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\building.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\create-login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\dathang.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\diskette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\door-key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\furniture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\import2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\info-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\log-out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\loginlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\role.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\staff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\user %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\account_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\deposit_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\exchange_32px_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\withdrawal_32px.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
