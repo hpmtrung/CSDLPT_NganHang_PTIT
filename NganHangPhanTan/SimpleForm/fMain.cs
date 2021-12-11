@@ -1,5 +1,6 @@
 ﻿using NganHangPhanTan.DAO;
 using NganHangPhanTan.DTO;
+using NganHangPhanTan.Report;
 using NganHangPhanTan.SimpleForm;
 using NganHangPhanTan.Util;
 using System;
@@ -10,29 +11,11 @@ namespace NganHangPhanTan
 {
     public partial class fMain : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        private User user;
-
         private Dictionary<Form, bool> mdiFormCanCloseState = new Dictionary<Form, bool>();
 
         public fMain()
         {
             InitializeComponent();
-        }
-
-        private void ShowUserInfo()
-        {
-            if (user != null)
-            {
-                tssEmployeeID.Text = $"Mã nhân viên: {user.Username}";
-                tssEmployeeName.Text = $"Họ tên: {user.Fullname}";
-                tssEmployeeGroup.Text = $"Nhóm: {user.GetGroupName()}";
-            }
-            else
-            {
-                tssEmployeeID.Text = "Mã nhân viên: trống";
-                tssEmployeeName.Text = "Họ tên: trống";
-                tssEmployeeGroup.Text = "Nhóm: trống";
-            }
         }
 
         private void UpdateCanCloseMDIFormStatus(Form form, bool canClose)
@@ -55,11 +38,9 @@ namespace NganHangPhanTan
             if (mdiFormCanCloseState.ContainsKey(form))
             {
                 if (mdiFormCanCloseState[form])
-                {
                     mdiFormCanCloseState.Remove(form);
-                }
                 else
-                    MessageBox.Show($"Form {form.Text} không thể đóng do có tác vụ đang thực hiện.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowInfoMsgDialog($"Form {form.Text} không thể đóng do có tác vụ đang thực hiện.");
             }
             else
             {
@@ -72,21 +53,20 @@ namespace NganHangPhanTan
         /// Execute when user logins successfully
         /// </summary>
         /// <param name="user"></param>
-        private void UpdateUserInfo(User user)
+        private void UpdateUserInfo()
         {
-            if (user == null)
-                return;
-            this.user = user;
+            User user = SecurityContext.User;
+            if (user == null) return;
 
             // Update status bar
-            ShowUserInfo();
+            tssEmployeeID.Text = $"Mã nhân viên: {user.Username}";
+            tssEmployeeName.Text = $"Họ tên: {user.Fullname}";
+            tssEmployeeGroup.Text = $"Nhóm: {user.GetGroupName()}";
 
             btnLogin.Enabled = false;
-            btnCreateAccount.Enabled = true;
-            btnLogout.Enabled = true;
-            ribCategory.Visible = true;
-            ribService.Visible = true;
-            ribReport.Visible = true;
+            btnCreateAccount.Enabled = btnLogout.Enabled = true;
+
+            ribCategory.Visible = ribService.Visible = ribReport.Visible = true;
         }
 
         private void btnLogin_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -104,11 +84,11 @@ namespace NganHangPhanTan
             {
                 MdiParent = this,
                 ChangeUserInfo = UpdateUserInfo,
-                RequestExitProgram = () => { this.Close(); },
+                RequestExitProgram = () => Close(),
             };
             f.Show();
             // XXX
-            f.abc();
+            //f.abc();
         }
 
         private void btnManageEmployee_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -118,7 +98,7 @@ namespace NganHangPhanTan
                 form.Activate();
             else
             {
-                fEmployeeManage f = new fEmployeeManage(user)
+                fEmployeeManage f = new fEmployeeManage()
                 {
                     MdiParent = this,
                     ReqUpdateCanCloseState = UpdateCanCloseMDIFormStatus,
@@ -131,13 +111,10 @@ namespace NganHangPhanTan
 
         private void fMain_Load(object sender, EventArgs e)
         {
-            btnCreateAccount.Enabled = false;
-            btnLogout.Enabled = false;
-            ribCategory.Visible = false;
-            ribService.Visible = false;
-            ribReport.Visible = false;
+            btnCreateAccount.Enabled = btnLogout.Enabled = false;
+            ribCategory.Visible = ribService.Visible = ribReport.Visible = false;
             CreateAndShowLoginForm();
-            btnOpenCustomerAccount_ItemClick(null, null);
+            //btnOpenCustomerAccount_ItemClick(null, null);
         }
 
         private void btnLogout_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -151,7 +128,7 @@ namespace NganHangPhanTan
                     return;
                 }
             }
-            if (MessageBox.Show("Xác nhận đăng xuất?", "Cảnh báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận đăng xuất?") == DialogResult.OK)
             {
                 foreach (Form form in MdiChildren)
                 {
@@ -159,20 +136,23 @@ namespace NganHangPhanTan
                 }
                 mdiFormCanCloseState.Clear();
                 CreateAndShowLoginForm();
-                this.user = null;
-                ShowUserInfo();
+
+                SecurityContext.ClearUser();
+
+                // Clear user info in status bar
+                tssEmployeeID.Text = "Mã nhân viên: trống";
+                tssEmployeeName.Text = "Họ tên: trống";
+                tssEmployeeGroup.Text = "Nhóm: trống";
+
                 btnLogin.Enabled = true;
-                btnCreateAccount.Enabled = false;
-                btnLogout.Enabled = false;
-                ribCategory.Visible = false;
-                ribService.Visible = false;
-                ribReport.Visible = false;
+                btnCreateAccount.Enabled = btnLogout.Enabled = false;
+                ribCategory.Visible = ribService.Visible = ribReport.Visible = false;
             }
         }
 
         private void fMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Xác nhận thoát chương trình?", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            if (MessageUtil.ShowInfoConfirmDialog("Xác nhận thoát chương trình?") == DialogResult.Cancel)
             {
                 e.Cancel = true;
                 return;
@@ -189,13 +169,11 @@ namespace NganHangPhanTan
             }
             if (formUnSavedExisted)
             {
-                MessageBox.Show($"Không thể thoát chương trình vì có form chưa lưu tác vụ.");
+                MessageUtil.ShowInfoMsgDialog($"Không thể thoát chương trình vì có form chưa lưu tác vụ.");
                 e.Cancel = true;
             } 
             else
-            {
                 e.Cancel = false;
-            }
         }
 
         private void btnCustomerManage_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -205,7 +183,7 @@ namespace NganHangPhanTan
                 form.Activate();
             else
             {
-                fCustomerManage f = new fCustomerManage(user)
+                fCustomerManage f = new fCustomerManage()
                 {
                     MdiParent = this,
                     ReqUpdateCanCloseState = UpdateCanCloseMDIFormStatus,
@@ -223,7 +201,7 @@ namespace NganHangPhanTan
                 form.Activate();
             else
             {
-                fCreateLogin f = new fCreateLogin(user)
+                fCreateLogin f = new fCreateLogin()
                 {
                     MdiParent = this,
                 };
@@ -243,12 +221,34 @@ namespace NganHangPhanTan
 
         private void btnAccTransactionReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Form form = ControlUtil.CheckFormExists(this, typeof(fReportTransaction));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fReportTransaction f = new fReportTransaction()
+                {
+                    MdiParent = this,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
         }
 
         private void btnOpenAccountReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Form form = ControlUtil.CheckFormExists(this, typeof(fReportOpenedAccount));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fReportOpenedAccount f = new fReportOpenedAccount()
+                {
+                    MdiParent = this,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
         }
 
         private void btnCustomerInfoReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -263,7 +263,7 @@ namespace NganHangPhanTan
                 form.Activate();
             else
             {
-                fOpenCustomerAccount f = new fOpenCustomerAccount(user)
+                fOpenCustomerAccount f = new fOpenCustomerAccount()
                 {
                     MdiParent = this,
                     ReqUpdateCanCloseState = UpdateCanCloseMDIFormStatus,

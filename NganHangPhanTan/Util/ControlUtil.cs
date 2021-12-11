@@ -79,6 +79,11 @@ namespace NganHangPhanTan.Util
             MessageBox.Show(msg, "DEBUG");
         }
 
+        public static string GetTextInCombobox(ComboBox cmb)
+        {
+            return cmb.GetItemText(cmb.SelectedItem);
+        }
+
         private ControlUtil() 
         {
             throw new Exception();

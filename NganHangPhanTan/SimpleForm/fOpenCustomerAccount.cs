@@ -12,7 +12,6 @@ namespace NganHangPhanTan.SimpleForm
 {
     public partial class fOpenCustomerAccount : DevExpress.XtraEditors.XtraForm
     {
-        private User user;
         private string gridBrandID;
 
         private Action<Form, bool> reqUpdateCanCloseState;
@@ -29,10 +28,9 @@ namespace NganHangPhanTan.SimpleForm
 
         private MyCache accountUnAllowChangeCache = new MyCache(Account.ID_HEADER);
 
-        public fOpenCustomerAccount(User user)
+        public fOpenCustomerAccount()
         {
             InitializeComponent();
-            this.user = user;
         }
 
         private void khachHangBindingNavigatorSaveItem_Click(object sender, System.EventArgs e)
@@ -61,9 +59,9 @@ namespace NganHangPhanTan.SimpleForm
             this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
-            cbBrand.SelectedIndex = this.user.BrandIndex;
+            cbBrand.SelectedIndex = SecurityContext.User.BrandIndex;
 
-            switch (this.user.Group)
+            switch (SecurityContext.User.Group)
             {
                 case DTO.User.GroupENM.NGAN_HANG:
                     cbBrand.Enabled = true;
@@ -159,7 +157,8 @@ namespace NganHangPhanTan.SimpleForm
             if (cbBrand.SelectedValue.ToString().Equals("System.Data.RowView"))
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
-            if (cbBrand.SelectedIndex != this.user.BrandIndex)
+            User user = SecurityContext.User;
+            if (cbBrand.SelectedIndex != user.BrandIndex)
                 DataProvider.Instance.SetServerToRemote(serverName);
             else
                 DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);

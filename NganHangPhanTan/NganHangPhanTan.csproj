@@ -33,15 +33,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v19.2" />
+    <Reference Include="DevExpress.Charts.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v19.2" />
+    <Reference Include="DevExpress.DataAccess.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.2.Core" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Export, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v19.2" />
+    <Reference Include="DevExpress.Utils.v19.2.UI, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v19.2" />
     <Reference Include="DevExpress.Sparkline.v19.2.Core" />
+    <Reference Include="DevExpress.XtraCharts.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v19.2" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.2.Extensions, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +86,36 @@
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Employee.cs" />
     <Compile Include="DTO\User.cs" />
+    <Compile Include="Report\fReportOpenedAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\fReportOpenedAccount.Designer.cs">
+      <DependentUpon>fReportOpenedAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\fReportTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\fReportTransaction.Designer.cs">
+      <DependentUpon>fReportTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportOpenedAccountAllBrand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report\ReportOpenedAccountAllBrand.Designer.cs">
+      <DependentUpon>ReportOpenedAccountAllBrand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportOpenedAccountByBrand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report\ReportOpenedAccountByBrand.Designer.cs">
+      <DependentUpon>ReportOpenedAccountByBrand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportTransaction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report\ReportTransaction.Designer.cs">
+      <DependentUpon>ReportTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="SimpleForm\fCreateCustomerAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,8 +168,25 @@
     </Compile>
     <Compile Include="UpdateDataCell.cs" />
     <Compile Include="UserEventData.cs" />
+    <Compile Include="Util\MessageUtil.cs" />
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Util\MyCache.cs" />
+    <Compile Include="Util\SecurityContext.cs" />
+    <EmbeddedResource Include="Report\fReportOpenedAccount.resx">
+      <DependentUpon>fReportOpenedAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\fReportTransaction.resx">
+      <DependentUpon>fReportTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportOpenedAccountAllBrand.resx">
+      <DependentUpon>ReportOpenedAccountAllBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportOpenedAccountByBrand.resx">
+      <DependentUpon>ReportOpenedAccountByBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportTransaction.resx">
+      <DependentUpon>ReportTransaction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SimpleForm\fCreateCustomerAccount.resx">
       <DependentUpon>fCreateCustomerAccount.cs</DependentUpon>
     </EmbeddedResource>
@@ -184,23 +245,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Report\" />
     <Folder Include="SubForm\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\add-details.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\building.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\create-login.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\dathang.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\delete.png" />
@@ -209,37 +257,13 @@
     <None Include="Resource\diskette.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\document.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resource\door-key.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\export.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\furniture.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\import.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\import2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\info-user.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\logout.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\log-out.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resource\login.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\loginlogo.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\remove.png" />
@@ -249,12 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\staff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\user %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource\user.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\account_32px.png" />
@@ -267,6 +285,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\withdrawal_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resource\sign-in.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

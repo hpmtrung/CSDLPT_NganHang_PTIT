@@ -11,7 +11,6 @@ namespace NganHangPhanTan.SimpleForm
 {
     public partial class fEmployeeManage : DevExpress.XtraEditors.XtraForm
     {
-        private User user;
         private string gridBrandID;
 
         private Action<Form, bool> reqUpdateCanCloseState;
@@ -25,10 +24,9 @@ namespace NganHangPhanTan.SimpleForm
         public Action<Form, bool> ReqUpdateCanCloseState { get => reqUpdateCanCloseState; set => reqUpdateCanCloseState = value; }
         public Action<Form> ReqClose { get => reqClose; set => reqClose = value; }
 
-        public fEmployeeManage(User user)
+        public fEmployeeManage()
         {
             InitializeComponent();
-            this.user = user;
         }
 
         private void nhanVienBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -51,9 +49,9 @@ namespace NganHangPhanTan.SimpleForm
             this.taMoneyExchange.Fill(this.DS.GD_GOIRUT);
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
-            cbBrand.SelectedIndex = this.user.BrandIndex;
+            cbBrand.SelectedIndex = SecurityContext.User.BrandIndex;
 
-            switch (this.user.Group)
+            switch (SecurityContext.User.Group)
             {
                 case DTO.User.GroupENM.NGAN_HANG:
                     cbBrand.Enabled = true;
@@ -313,7 +311,7 @@ namespace NganHangPhanTan.SimpleForm
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             // Không thể xóa nhân viên đang là user
-            if (((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString().Equals(user.Username))
+            if (((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString().Equals(SecurityContext.User.Username))
             {
                 MessageBox.Show("Bạn chỉ được thay đổi thông tin của mình, không thể xóa.", "", MessageBoxButtons.OK);
                 return;
@@ -548,7 +546,8 @@ namespace NganHangPhanTan.SimpleForm
             if (cbBrand.SelectedValue.ToString().Equals("System.Data.RowView"))
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
-            if (cbBrand.SelectedIndex != this.user.BrandIndex)
+            User user = SecurityContext.User;
+            if (cbBrand.SelectedIndex != user.BrandIndex)
                 DataProvider.Instance.SetServerToRemote(serverName);
             else
                 DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
@@ -572,7 +571,7 @@ namespace NganHangPhanTan.SimpleForm
             string employeeId = ((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString();
             
             // Không thể chuyển nhân viên đang là user
-            if (employeeId.Equals(user.Username))
+            if (employeeId.Equals(SecurityContext.User.Username))
             {
                 MessageBox.Show("Bạn chỉ được thay đổi thông tin của mình, không thể tự chuyển sang chi nhánh khác.", "", MessageBoxButtons.OK);
                 return;

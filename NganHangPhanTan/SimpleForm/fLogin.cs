@@ -2,16 +2,15 @@
 using NganHangPhanTan.DTO;
 using NganHangPhanTan.Util;
 using System;
-using System.Windows.Forms;
 
 namespace NganHangPhanTan
 {
     public partial class fLogin : DevExpress.XtraEditors.XtraForm
     {
-        private Action<User> changeUserInfo;
+        private Action changeUserInfo;
         private Action requestExitProgram;
 
-        public Action<User> ChangeUserInfo { get => changeUserInfo; set => changeUserInfo = value; }
+        public Action ChangeUserInfo { get => changeUserInfo; set => changeUserInfo = value; }
         public Action RequestExitProgram { get => requestExitProgram; set => requestExitProgram = value; }
 
         public fLogin()
@@ -42,14 +41,14 @@ namespace NganHangPhanTan
             string loginName = txbLoginName.Text.Trim();
             if (string.IsNullOrEmpty(loginName))
             {
-                MessageBox.Show("Mã nhân viên không được trống", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Mã nhân viên không được trống");
                 return;
             }
             
             string pass = txbPass.Text.Trim();
             if (string.IsNullOrEmpty(pass))
             {
-                MessageBox.Show("Mật khẩu không được trống", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Mật khẩu không được trống");
                 return;
             }
 
@@ -62,8 +61,12 @@ namespace NganHangPhanTan
                 user.Login = loginName;
                 user.Pass = pass;
                 user.BrandIndex = cbBrand.SelectedIndex;
-                ChangeUserInfo.Invoke(user);
+                SecurityContext.User = user;
+                ChangeUserInfo.Invoke();
                 Close();
+            } else
+            {
+                MessageUtil.ShowErrorMsgDialog("Mã nhân viên hoặc mật khẩu chưa đúng");
             }
         }
 

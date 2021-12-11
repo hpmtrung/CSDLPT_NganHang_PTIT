@@ -12,7 +12,6 @@ namespace NganHangPhanTan.SimpleForm
 {
     public partial class fCustomerManage : DevExpress.XtraEditors.XtraForm
     {
-        private User user;
         private string gridBrandID;
 
         private Action<Form, bool> reqUpdateCanCloseState;
@@ -24,10 +23,9 @@ namespace NganHangPhanTan.SimpleForm
         public Action<Form, bool> ReqUpdateCanCloseState { get => reqUpdateCanCloseState; set => reqUpdateCanCloseState = value; }
         public Action<Form> ReqClose { get => reqClose; set => reqClose = value; }
 
-        public fCustomerManage(User user)
+        public fCustomerManage()
         {
             InitializeComponent();
-            this.user = user;
         }
 
         private void khachHangBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -47,9 +45,9 @@ namespace NganHangPhanTan.SimpleForm
             this.taCustomer.Fill(this.DS.KhachHang);
 
             ControlUtil.ConfigComboboxBrand(cbBrand);
-            cbBrand.SelectedIndex = this.user.BrandIndex;
+            cbBrand.SelectedIndex = SecurityContext.User.BrandIndex;
 
-            switch (this.user.Group)
+            switch (SecurityContext.User.Group)
             {
                 case DTO.User.GroupENM.NGAN_HANG:
                     cbBrand.Enabled = true;
@@ -70,13 +68,9 @@ namespace NganHangPhanTan.SimpleForm
             ControlUtil.ConfigComboboxGender(cbGender);
 
             if (bdsCustomer.Count > 0)
-            {
                 this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
-            }
             else
-            {
                 this.gridBrandID = BrandDAO.UniqueInstance.GetBrandIdOfSubcriber();
-            }
         }
 
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -504,7 +498,8 @@ namespace NganHangPhanTan.SimpleForm
             if (cbBrand.SelectedValue.ToString().Equals("System.Data.RowView"))
                 return;
             string serverName = cbBrand.SelectedValue.ToString();
-            if (cbBrand.SelectedIndex != this.user.BrandIndex)
+            User user = SecurityContext.User;
+            if (cbBrand.SelectedIndex != user.BrandIndex)
                 DataProvider.Instance.SetServerToRemote(serverName);
             else
                 DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);

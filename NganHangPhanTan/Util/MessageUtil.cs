@@ -18,5 +18,16 @@ namespace NganHangPhanTan.Util
         {
             MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static DialogResult ShowInfoConfirmDialog(string msg)
+        {
+            return MessageBox.Show(msg, "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+        }
+
+        public static DialogResult ShowWarnConfirmDialog(string msg)
+        {
+            return MessageBox.Show(msg, "Xác nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+        }
+
     }
 }

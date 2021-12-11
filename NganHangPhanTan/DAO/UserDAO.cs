@@ -35,7 +35,7 @@ namespace NganHangPhanTan.DAO
         /// <returns></returns>
         public User Login(string loginName)
         {
-            DataTable data = DataProvider.Instance.ExecuteDataTable($"EXEC dbo.usp_Login {loginName}");
+            DataTable data = DataProvider.Instance.ExecuteDataTable($"EXEC dbo.usp_Login @loginName", new object[] { loginName });
             if (data == null)
                 return null;
 

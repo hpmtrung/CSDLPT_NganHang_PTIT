@@ -3,10 +3,8 @@ using System.Windows.Forms;
 
 namespace NganHangPhanTan
 {
-    static class Program
+    public static class Program
     {
-        public static fMain fMain;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,8 +13,7 @@ namespace NganHangPhanTan
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            fMain = new fMain();
-            Application.Run(fMain);
+            Application.Run(new fMain());
         }
     }
 }
