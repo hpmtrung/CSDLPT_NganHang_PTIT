@@ -86,6 +86,12 @@
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Employee.cs" />
     <Compile Include="DTO\User.cs" />
+    <Compile Include="Report\fReportAccountDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\fReportAccountDetail.Designer.cs">
+      <DependentUpon>fReportAccountDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Report\fReportOpenedAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,12 @@
     </Compile>
     <Compile Include="Report\fReportTransaction.Designer.cs">
       <DependentUpon>fReportTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportAccountDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report\ReportAccountDetail.Designer.cs">
+      <DependentUpon>ReportAccountDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\ReportOpenedAccountAllBrand.cs">
       <SubType>Component</SubType>
@@ -172,11 +184,17 @@
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Util\MyCache.cs" />
     <Compile Include="Util\SecurityContext.cs" />
+    <EmbeddedResource Include="Report\fReportAccountDetail.resx">
+      <DependentUpon>fReportAccountDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report\fReportOpenedAccount.resx">
       <DependentUpon>fReportOpenedAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\fReportTransaction.resx">
       <DependentUpon>fReportTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReportAccountDetail.resx">
+      <DependentUpon>ReportAccountDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ReportOpenedAccountAllBrand.resx">
       <DependentUpon>ReportOpenedAccountAllBrand.cs</DependentUpon>

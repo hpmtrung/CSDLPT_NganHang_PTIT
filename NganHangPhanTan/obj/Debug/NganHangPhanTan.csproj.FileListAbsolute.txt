@@ -198,3 +198,5 @@ F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanT
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.fReportOpenedAccount.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.ReportOpenedAccountByBrand.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.ReportOpenedAccountAllBrand.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.fReportAccountDetail.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.ReportAccountDetail.resources

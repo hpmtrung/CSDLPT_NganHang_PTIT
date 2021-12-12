@@ -253,7 +253,18 @@ namespace NganHangPhanTan
 
         private void btnCustomerInfoReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Form form = ControlUtil.CheckFormExists(this, typeof(fReportAccountDetail));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fReportAccountDetail f = new fReportAccountDetail()
+                {
+                    MdiParent = this,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
         }
 
         private void btnOpenCustomerAccount_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
