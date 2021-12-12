@@ -56,88 +56,86 @@ namespace NganHangPhanTan.SimpleForm
                 case DTO.User.GroupENM.NGAN_HANG:
                     cbBrand.Enabled = true;
                     btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = false;
+                    btnEmployeeMove.Enabled = false;
                     break;
                 case DTO.User.GroupENM.CHI_NHANH:
                     cbBrand.Enabled = false;
                     btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = true;
+                    btnEmployeeMove.Enabled = bdsEmployee.Count > 0;
                     break;
                 default:
                     // DEBUG
                     throw new Exception("User group is unidentified");
             }
+
             btnReload.Enabled = btnExit.Enabled = true;
-            btnEmployeeMove.Enabled = btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
+            btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
             pnInput.Enabled = false;
             txbId.Enabled = false;
-            ControlUtil.ConfigComboboxGender(cbGender);
 
-            if (bdsEmployee.Count > 0)
-            {
-                this.gridBrandID = ((DataRowView)bdsEmployee[0])[Brand.ID_HEADER].ToString();
-                btnEmployeeMove.Enabled = true;
-            }
-            else
-            {
-                this.gridBrandID = BrandDAO.UniqueInstance.GetBrandIdOfSubcriber();
-                btnEmployeeMove.Enabled = false;
-            }
+            this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             int gridPos = bdsEmployee.Position;
-            pnInput.Enabled = true;
+
             bdsEmployee.AddNew();
+
+            pnInput.Enabled = true;
             txbBrandId.Text = this.gridBrandID;
             gcEmployee.Enabled = false;
             cbGender.SelectedIndex = 0;
             txbId.Enabled = true;
             txbId.Focus();
-            btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = false;
+            btnEmployeeMove.Enabled = btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnSave.Enabled = btnUndo.Enabled = true;
             btnRedo.Enabled = false;
 
-            btnSave.Tag = btnUndo.Tag = btnInsert;
+            btnSave.Tag = btnInsert;
 
             ReqUpdateCanCloseState.Invoke(this, false);
 
             // Push cancel-editing event to undo stack
             undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
+            btnUndo.Enabled = true;
         }
 
         private void UndoUnSaveAction(UserEventData action)
         {
             bdsEmployee.CancelEdit();
-            if (btnUndo.Tag == btnInsert)
+
+            if (btnSave.Tag == btnInsert)
             {
                 bdsEmployee.Position = action.GridPos;
                 bdsEmployee.RemoveAt(bdsEmployee.Count - 1);
             }
+
             gcEmployee.Enabled = true;
             pnInput.Enabled = false;
-            btnInsert.Enabled = btnUpdate.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+            btnEmployeeMove.Enabled = btnInsert.Enabled = btnUpdate.Enabled = btnReload.Enabled = btnExit.Enabled = true;
             btnSave.Enabled = false;
             txbId.Enabled = false;
-            if (undoStack.Count > 0)
-                btnUndo.Enabled = true;
-            btnSave.Tag = btnUndo.Tag = null;
+            btnUndo.Enabled = undoStack.Count > 0;
 
-            if (bdsEmployee.Count > 0)
-                btnDelete.Enabled = true;
+            btnSave.Tag = null;
+
+            btnDelete.Enabled = bdsEmployee.Count > 0;
 
             ReqUpdateCanCloseState.Invoke(this, true);
 
-            if (redoStack.Count > 0)
-                btnRedo.Enabled = true;
+            btnRedo.Enabled = redoStack.Count > 0;
         }
 
         private bool UndoByInsertAction(UserEventData action)
         {
             if (action == null)
                 throw new Exception();
+
             bdsEmployee.AddNew();
+
             txbBrandId.Text = this.gridBrandID;
-            //cbGender.SelectedIndex = 0;
+
             Employee employee = (Employee)action.Content;
             txbId.Text = employee.Id;
             txbLastName.Text = employee.LastName;
@@ -153,15 +151,15 @@ namespace NganHangPhanTan.SimpleForm
                 // Đặt thông tin nhân viên mới lên grid control
                 bdsEmployee.ResetCurrentItem();
                 taEmployee.Update(this.DS.NhanVien);
+                taEmployee.Fill(this.DS.NhanVien);
+                bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
+                btnEmployeeMove.Enabled = SecurityContext.User.Group == DTO.User.GroupENM.CHI_NHANH;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi không thể thêm nhân viên mới.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể thêm nhân viên mới.\nChi tiết: {ex.Message}");
                 return false;
             }
-            btnEmployeeMove.Enabled = (cbBrand.Items.Count > 1);
-            taEmployee.Fill(this.DS.NhanVien);
-            bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
             return true;
         }
 
@@ -170,54 +168,46 @@ namespace NganHangPhanTan.SimpleForm
             Employee employee = (Employee)action.Content;
             bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
 
-            if (bdsMoneyExchange.Count > 0)
+            if (bdsMoneyExchange.Count > 0 || bdsMoneyTransfer.Count > 0)
             {
-                MessageBox.Show("Không thể xóa nhân viên đã giao dịch gửi/rút tiền.\n", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa nhân viên đã thực hiện giao dịch cho khách hàng");
                 return false;
             }
 
-            if (bdsMoneyTransfer.Count > 0)
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa nhân viên?") != DialogResult.OK)
+                return false;
+
+            try
             {
-                MessageBox.Show("Không thể xóa nhân viên đã giao dịch chuyển tiền.", "", MessageBoxButtons.OK);
+                // Xóa trên máy trước
+                bdsEmployee.RemoveCurrent();
+                // Xóa trên server
+                taEmployee.Update(this.DS.NhanVien);
+            }
+            catch (Exception ex)
+            {
+                // Phục hồi nếu xóa không thành công
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa nhân viên. Thử thực hiện lại.\nChi tiết: {ex.Message}");
+                taEmployee.Fill(this.DS.NhanVien);
+                bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
                 return false;
             }
-
-            if (MessageBox.Show("Xác nhận xóa nhân viên?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                try
-                {
-                    // Xóa trên máy trước
-                    bdsEmployee.RemoveCurrent();
-                    // Xóa trên server
-                    taEmployee.Update(this.DS.NhanVien);
-                }
-                catch (Exception ex)
-                {
-                    // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa nhân viên. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
-                    taEmployee.Fill(this.DS.NhanVien);
-                    bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
-                    return false;
-                }
-                if (bdsEmployee.Count == 0)
-                {
-                    btnDelete.Enabled = false;
-                    btnEmployeeMove.Enabled = false;
-                }
-                return true;
-            }
-            return false;
+            btnEmployeeMove.Enabled = btnDelete.Enabled = bdsEmployee.Count != 0;
+            return true;
         }
 
         private bool UndoByUpdateAction(UserEventData action)
         {
             Employee updatedEmployee = (Employee)action.Content;
+
             bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, updatedEmployee.Id);
+
             txbLastName.Text = updatedEmployee.LastName;
             txbFirstName.Text = updatedEmployee.FirstName;
             txbAddress.Text = updatedEmployee.Address;
             txbPhoneNum.Text = updatedEmployee.PhoneNum;
             cbGender.SelectedItem = updatedEmployee.Gender;
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -228,7 +218,7 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi không thể hiệu chỉnh nhân viên.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh nhân viên.\nChi tiết: {ex.Message}");
                 return false;
             }
             return true;
@@ -292,44 +282,50 @@ namespace NganHangPhanTan.SimpleForm
             int gridPos = bdsEmployee.Position;
             pnInput.Enabled = true;
             gcEmployee.Enabled = false;
-            btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = false;
+            btnEmployeeMove.Enabled = btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnSave.Enabled = btnUndo.Enabled = true;
             btnRedo.Enabled = false;
-            btnSave.Tag = btnUndo.Tag = btnUpdate;
+            btnSave.Tag = btnUpdate;
 
             ReqUpdateCanCloseState.Invoke(this, false);
 
             undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
+            btnUndo.Enabled = true;
             ControlUtil.ResolveStackStorage(undoStack);
         }
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            taEmployee.Fill(this.DS.NhanVien);
+            try
+            {
+                taEmployee.Fill(this.DS.NhanVien);
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog(ex.Message);
+                throw;
+            }
         }
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            // Xóa nhân viên là chỉ cần xóa sau khi kiểm tra ràng buộc
+            // Còn chuyển nhân viên mới dùng tới trạng thái xóa
+
             // Không thể xóa nhân viên đang là user
             if (((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString().Equals(SecurityContext.User.Username))
             {
-                MessageBox.Show("Bạn chỉ được thay đổi thông tin của mình, không thể xóa.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Bạn chỉ được thay đổi thông tin của mình, không thể xóa.");
                 return;
             }
 
-            if (bdsMoneyExchange.Count > 0)
+            if (bdsMoneyExchange.Count > 0 || bdsMoneyTransfer.Count > 0)
             {
-                MessageBox.Show("Không thể xóa nhân viên đã giao dịch gửi/rút tiền.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa nhân viên đã thực hiện giao dịch cho khách hàng");
                 return;
             }
 
-            if (bdsMoneyTransfer.Count > 0)
-            {
-                MessageBox.Show("Không thể xóa nhân viên đã giao dịch chuyển tiền.", "", MessageBoxButtons.OK);
-                return;
-            }
-
-            if (MessageBox.Show("Xác nhận xóa nhân viên?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa nhân viên?") == DialogResult.OK)
             {
                 Employee deletedEmployee = null;
                 try
@@ -343,21 +339,21 @@ namespace NganHangPhanTan.SimpleForm
                 catch (Exception ex)
                 {
                     // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa nhân viên. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa nhân viên. Thử thực hiện lại.\nChi tiết: {ex.Message}");
                     taEmployee.Fill(this.DS.NhanVien);
                     bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, deletedEmployee.Id);
                     return;
                 }
-                if (bdsEmployee.Count == 0)
-                    btnDelete.Enabled = false;
+                    
+                btnDelete.Enabled = bdsEmployee.Count != 0;
 
                 // Ignore to save grid pos
                 undoStack.AddLast(new UserEventData(UserEventData.EventType.INSERT, deletedEmployee, -1));
+                btnUndo.Enabled = true;
                 ControlUtil.ResolveStackStorage(undoStack);
                 redoStack.Clear();
                 btnRedo.Enabled = false;
-                if (bdsEmployee.Count == 0)
-                    btnEmployeeMove.Enabled = false;
+                btnEmployeeMove.Enabled = bdsEmployee.Count != 0;
             }
         }
 
@@ -366,9 +362,10 @@ namespace NganHangPhanTan.SimpleForm
             // Save old data for undoing if save for update
             Employee oldEmployee = null;
             string employeeID = "";
+
             if (btnSave.Tag == btnUpdate)
             {
-                oldEmployee = new Employee(((DataRowView)bdsEmployee[bdsEmployee.Position]));
+                oldEmployee = new Employee((DataRowView)bdsEmployee[bdsEmployee.Position]);
             }
             else
             {
@@ -376,21 +373,29 @@ namespace NganHangPhanTan.SimpleForm
                 employeeID = txbId.Text.Trim();
                 if (string.IsNullOrEmpty(employeeID))
                 {
-                    MessageBox.Show("Mã nhân viên không được để trống.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã nhân viên không được để trống.");
                     txbId.Focus();
                     return;
                 }
 
                 if (employeeID.Contains(" "))
                 {
-                    MessageBox.Show("Mã nhân viên không hợp lệ.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã nhân viên không hợp lệ");
                     txbId.Focus();
                     return;
                 }
 
                 if (employeeID.Length > 10)
                 {
-                    MessageBox.Show("Mã nhân viên không được vượt quá 10 kí tự.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã nhân viên không được vượt quá 10 kí tự");
+                    txbId.Focus();
+                    return;
+                }
+
+                // Kiểm tra mã nhân viên tồn tại trên site chủ
+                if (EmployeeDAO.Instance.IsEmployeeIDExisted(employeeID))
+                {
+                    MessageUtil.ShowErrorMsgDialog("Mã nhân viên đã tồn tại. Vui lòng chọn mã khác");
                     txbId.Focus();
                     return;
                 }
@@ -402,7 +407,7 @@ namespace NganHangPhanTan.SimpleForm
             string lastName = txbLastName.Text.Trim();
             if (string.IsNullOrEmpty(lastName))
             {
-                MessageBox.Show("Họ tên nhân viên không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Họ tên nhân viên không được để trống");
                 txbLastName.Focus();
                 return;
             }
@@ -414,14 +419,14 @@ namespace NganHangPhanTan.SimpleForm
             string firstName = txbFirstName.Text.Trim();
             if (string.IsNullOrEmpty(firstName))
             {
-                MessageBox.Show("Họ tên nhân viên không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Họ tên nhân viên không được để trống");
                 txbFirstName.Focus();
                 return;
             }
 
             if (firstName.Contains(" "))
             {
-                MessageBox.Show("Tên nhân viên không hợp lệ.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Tên nhân viên không hợp lệ");
                 txbFirstName.Focus();
                 return;
             }
@@ -432,7 +437,7 @@ namespace NganHangPhanTan.SimpleForm
             string address = txbAddress.Text.Trim();
             if (string.IsNullOrEmpty(address))
             {
-                MessageBox.Show("Địa chỉ nhân viên không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Địa chỉ nhân viên không được để trống");
                 txbAddress.Focus();
                 return;
             }
@@ -443,45 +448,27 @@ namespace NganHangPhanTan.SimpleForm
             string phoneNum = txbPhoneNum.Text.Trim();
             if (string.IsNullOrEmpty(phoneNum))
             {
-                MessageBox.Show("Số điện thoại nhân viên không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại nhân viên không được để trống");
                 txbPhoneNum.Focus();
                 return;
             }
 
             if (!phoneNum.All(Char.IsDigit))
             {
-                MessageBox.Show("Số điện thoại nhân viên không hợp lệ.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại nhân viên không hợp lệ");
                 txbPhoneNum.Focus();
                 return;
             }
 
             if (phoneNum.Length != 10)
             {
-                MessageBox.Show("Số điện thoại nhân viên không đúng 10 chữ số.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại nhân viên không đúng 10 chữ số");
                 txbPhoneNum.Focus();
                 return;
             }
 
             txbPhoneNum.Text = phoneNum;
 
-            if (btnSave.Tag == btnInsert && EmployeeDAO.Instance.IsEmployeeIDExisted(employeeID))
-            {
-                MessageBox.Show("Mã nhân viên đã tồn tại. Vui lòng chọn mã nhân viên khác.", "", MessageBoxButtons.OK);
-                txbId.Focus();
-                return;
-            }
-
-            // KT mã NV tồn tại trên bsdNV nếu có ghi đồng loạt các NV được thêm
-            /*
-                int indexMaNV = bdsNV.Find("MANV", txtMaNV.Text);
-
-                int indexCurrent = bdsNV.Position;
-                if (result_value_MANV == 1 && (indexMaNV != indexCurrent))
-                {
-                    MessageBox.Show("Mã nhân viên đã tồn tại!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-             */
             cbGender.DataBindings[0].WriteValue();
 
             try
@@ -495,7 +482,7 @@ namespace NganHangPhanTan.SimpleForm
             catch (Exception ex)
             {
                 string msg = btnSave.Tag == btnInsert ? "Lỗi không thể thêm nhân viên mới" : "Lỗi không thể hiệu chỉnh nhân viên";
-                MessageBox.Show($"{msg}.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"{msg}.\nChi tiết: {ex.Message}");
                 return;
             }
 
@@ -511,31 +498,35 @@ namespace NganHangPhanTan.SimpleForm
 
             if (btnSave.Tag == btnInsert)
             {
+                // Nếu INSERT, thêm vào undo stack DELETE action
                 action.Type = UserEventData.EventType.DELETE;
                 action.Content = new Employee((DataRowView)bdsEmployee[bdsEmployee.Position]);
-                // action.GridPos giữ nguyên
+                // Không cần lưu action.GridPos vì là DELETE action
             }
             else
             {
+                // Nếu UPDATE, thêm vào undo stack UPDATE action
                 action.Type = UserEventData.EventType.UPDATE;
                 action.Content = oldEmployee;
-                // action.GridPos: không cần
+                // Không cần lưu action.GridPos vì không cần phục hồi gridPos khi UPDATE
             }
 
             undoStack.AddLast(action);
             ControlUtil.ResolveStackStorage(undoStack);
+
             btnUndo.Enabled = true;
 
+            // Xóa redo stack
             redoStack.Clear();
             btnRedo.Enabled = false;
 
             gcEmployee.Enabled = true;
             pnInput.Enabled = false;
-            btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+            btnEmployeeMove.Enabled = btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = true;
             btnSave.Enabled = false;
             btnEmployeeMove.Enabled = (cbBrand.Items.Count > 1);
             txbId.Enabled = false;
-            btnSave.Tag = btnUndo.Tag = null;
+            btnSave.Tag = null;
 
             ReqUpdateCanCloseState.Invoke(this, true);
         }
@@ -553,7 +544,7 @@ namespace NganHangPhanTan.SimpleForm
                 DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
             if (DataProvider.Instance.CheckConnection() == false)
             {
-                MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
+                MessageUtil.ShowErrorMsgDialog("Lỗi kết nối sang chi nhánh mới.");
                 return;
             }
             // Tải dữ liệu từ site mới về
@@ -573,17 +564,17 @@ namespace NganHangPhanTan.SimpleForm
             // Không thể chuyển nhân viên đang là user
             if (employeeId.Equals(SecurityContext.User.Username))
             {
-                MessageBox.Show("Bạn chỉ được thay đổi thông tin của mình, không thể tự chuyển sang chi nhánh khác.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Bạn chỉ được thay đổi thông tin của mình, không thể tự chuyển sang chi nhánh khác.");
                 return;
             }
 
-            if (MessageBox.Show("Xác nhận chuyển nhân viên?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận chuyển nhân viên?") == DialogResult.OK)
             {
-                string query = "EXEC dbo.usp_MoveEmployeeToBrand @MANV , @MACN";
+                string query = "EXEC dbo.usp_MoveEmployeeToBrand @MANV, @MACN";
                 int rowNum = DataProvider.Instance.ExecuteNonQuery(query, new object[] { employeeId, brandId });
                 if (rowNum > 0)
                 {
-                    MessageBox.Show("Chuyển nhân viên thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageUtil.ShowInfoMsgDialog("Chuyển nhân viên thành công");
                     // Reload
                     this.taEmployee.Fill(this.DS.NhanVien);
                     formEmployeeMove.Close();

@@ -64,9 +64,6 @@ namespace NganHangPhanTan
                 SecurityContext.User = user;
                 ChangeUserInfo.Invoke();
                 Close();
-            } else
-            {
-                MessageUtil.ShowErrorMsgDialog("Mã nhân viên hoặc mật khẩu chưa đúng");
             }
         }
 

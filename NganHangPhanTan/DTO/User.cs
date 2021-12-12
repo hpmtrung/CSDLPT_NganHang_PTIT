@@ -43,6 +43,13 @@ namespace NganHangPhanTan.DTO
             SetGroup((string)row["TENNHOM"]);
         }
 
+        public User(SqlDataReader row)
+        {
+            username = (string)row["USERNAME"];
+            fullname = (string)row["HOTEN"];
+            SetGroup((string)row["TENNHOM"]);
+        }
+
         public void SetGroup(string groupName)
         {
             if (groupName.Equals(GROUP_NAME_NGANHANG))

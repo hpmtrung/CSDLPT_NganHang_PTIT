@@ -50,6 +50,8 @@ namespace NganHangPhanTan {
         
         private global::System.Data.DataRelation relationFK_GD_GOIRUT_TaiKhoan;
         
+        private global::System.Data.DataRelation relationTaiKhoan_KhachHang;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -398,6 +400,7 @@ namespace NganHangPhanTan {
             this.relationFK_SOTKCHUYEN_TAIKHOAN = this.Relations["FK_SOTKCHUYEN_TAIKHOAN"];
             this.relationFK_GD_GOIRUT_NhanVien = this.Relations["FK_GD_GOIRUT_NhanVien"];
             this.relationFK_GD_GOIRUT_TaiKhoan = this.Relations["FK_GD_GOIRUT_TaiKhoan"];
+            this.relationTaiKhoan_KhachHang = this.Relations["TaiKhoan_KhachHang"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -471,6 +474,10 @@ namespace NganHangPhanTan {
                         this.tableTaiKhoan.SOTKColumn}, new global::System.Data.DataColumn[] {
                         this.tableGD_GOIRUT.SOTKColumn}, false);
             this.Relations.Add(this.relationFK_GD_GOIRUT_TaiKhoan);
+            this.relationTaiKhoan_KhachHang = new global::System.Data.DataRelation("TaiKhoan_KhachHang", new global::System.Data.DataColumn[] {
+                        this.tableTaiKhoan.CMNDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableKhachHang.CMNDColumn}, false);
+            this.Relations.Add(this.relationTaiKhoan_KhachHang);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2797,10 +2804,10 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public KhachHangRow AddKhachHangRow(string CMND, string HO, string TEN, string DIACHI, string PHAI, System.DateTime NGAYCAP, string SODT, string MACN) {
+            public KhachHangRow AddKhachHangRow(TaiKhoanRow parentTaiKhoanRowByTaiKhoan_KhachHang, string HO, string TEN, string DIACHI, string PHAI, System.DateTime NGAYCAP, string SODT, string MACN) {
                 KhachHangRow rowKhachHangRow = ((KhachHangRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        CMND,
+                        null,
                         HO,
                         TEN,
                         DIACHI,
@@ -2808,6 +2815,9 @@ namespace NganHangPhanTan {
                         NGAYCAP,
                         SODT,
                         MACN};
+                if ((parentTaiKhoanRowByTaiKhoan_KhachHang != null)) {
+                    columnValuesArray[0] = parentTaiKhoanRowByTaiKhoan_KhachHang[1];
+                }
                 rowKhachHangRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowKhachHangRow);
                 return rowKhachHangRow;
@@ -4106,6 +4116,17 @@ namespace NganHangPhanTan {
                     return ((GD_CHUYENTIENRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SOTKCHUYEN_TAIKHOAN"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public KhachHangRow[] GetKhachHangRows() {
+                if ((this.Table.ChildRelations["TaiKhoan_KhachHang"] == null)) {
+                    return new KhachHangRow[0];
+                }
+                else {
+                    return ((KhachHangRow[])(base.GetChildRows(this.Table.ChildRelations["TaiKhoan_KhachHang"])));
+                }
+            }
         }
         
         /// <summary>
@@ -4327,6 +4348,17 @@ namespace NganHangPhanTan {
                 }
                 set {
                     this[this.tableKhachHang.MACNColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public TaiKhoanRow TaiKhoanRow {
+                get {
+                    return ((TaiKhoanRow)(this.GetParentRow(this.Table.ParentRelations["TaiKhoan_KhachHang"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["TaiKhoan_KhachHang"]);
                 }
             }
             

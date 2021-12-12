@@ -28,18 +28,8 @@ namespace NganHangPhanTan.SimpleForm
             InitializeComponent();
         }
 
-        private void khachHangBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.bdsCustomer.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DS);
-        }
-
         private void fCustomerManage_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'DS.TaiKhoan' table. You can move, or remove it, as needed.
-            this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
-            this.taAccount.Fill(this.DS.TaiKhoan);
             // TODO: This line of code loads data into the 'dS.KhachHang' table. You can move, or remove it, as needed.
             this.taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             this.taCustomer.Fill(this.DS.KhachHang);
@@ -65,52 +55,61 @@ namespace NganHangPhanTan.SimpleForm
             btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
             pnInput.Enabled = false;
             txbId.Enabled = false;
-            ControlUtil.ConfigComboboxGender(cbGender);
 
-            if (bdsCustomer.Count > 0)
-                this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
-            else
-                this.gridBrandID = BrandDAO.UniqueInstance.GetBrandIdOfSubcriber();
+            this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
         }
-
+        
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             Customer oldCustomer = null;
             string customerId = "";
+
             if (btnSave.Tag == btnUpdate)
             {
-                oldCustomer = new Customer(((DataRowView)bdsCustomer[bdsCustomer.Position]));
+                oldCustomer = new Customer((DataRowView)bdsCustomer[bdsCustomer.Position]);
             }
             else
             {
-                // Kiểm tra các ràng buộc
+                // Chỉ kiểm tra mã KH khi INSERT
                 customerId = txbId.Text.Trim();
                 if (string.IsNullOrEmpty(customerId))
                 {
-                    MessageBox.Show("Mã khách hàng (CMND) không được để trống.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không được để trống");
                     txbId.Focus();
                     return;
                 }
 
                 if (customerId.Contains(" "))
                 {
-                    MessageBox.Show("Mã khách hàng (CMND) không hợp lệ.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không hợp lệ");
                     txbId.Focus();
                     return;
                 }
 
                 if (customerId.Length > 10)
                 {
-                    MessageBox.Show("Mã khách hàng (CMND) không được vượt quá 10 kí tự.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không được vượt quá 10 kí tự");
                     txbId.Focus();
                     return;
                 }
+
+                // Kiểm tra mã KH (CMND) đã tồn tại trong bảng KHACHHANG trên site chủ
+                // Vì 1 khách hàng chỉ đăng ký thuộc 1 chi nhánh duy nhất
+                if (CustomerDAO.Instance.ExistById(customerId))
+                {
+                    MessageUtil.ShowErrorMsgDialog("Lỗi không thể thêm vì khách hàng đã đăng ký chi nhánh khác.");
+                    txbId.Focus();
+                    return;
+                }
+
+                customerId = customerId.ToUpper();
+                txbId.Text = customerId;
             }
 
             string lastName = txbLastName.Text.Trim();
             if (string.IsNullOrEmpty(lastName))
             {
-                MessageBox.Show("Họ tên khách hàng không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Họ tên khách hàng không được để trống");
                 txbLastName.Focus();
                 return;
             }
@@ -122,14 +121,14 @@ namespace NganHangPhanTan.SimpleForm
             string firstName = txbFirstName.Text.Trim();
             if (string.IsNullOrEmpty(firstName))
             {
-                MessageBox.Show("Họ tên khách hàng không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Họ tên khách hàng không được để trống");
                 txbFirstName.Focus();
                 return;
             }
 
             if (firstName.Contains(" "))
             {
-                MessageBox.Show("Tên khách hàng không hợp lệ.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Tên khách hàng không hợp lệ");
                 txbFirstName.Focus();
                 return;
             }
@@ -140,7 +139,7 @@ namespace NganHangPhanTan.SimpleForm
             string address = txbAddress.Text.Trim();
             if (string.IsNullOrEmpty(address))
             {
-                MessageBox.Show("Địa chỉ khách hàng không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Địa chỉ khách hàng không được để trống");
                 txbAddress.Focus();
                 return;
             }
@@ -151,39 +150,36 @@ namespace NganHangPhanTan.SimpleForm
             string phoneNum = txbPhoneNum.Text.Trim();
             if (string.IsNullOrEmpty(phoneNum))
             {
-                MessageBox.Show("Số điện thoại khách hàng không được để trống.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại khách hàng không được để trống");
                 txbPhoneNum.Focus();
                 return;
             }
 
             if (!phoneNum.All(Char.IsDigit))
             {
-                MessageBox.Show("Số điện thoại khách hàng không hợp lệ.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại khách hàng không hợp lệ");
                 txbPhoneNum.Focus();
                 return;
             }
 
             if (phoneNum.Length != 10)
             {
-                MessageBox.Show("Số điện thoại khách hàng không đúng 10 chữ số.", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Số điện thoại khách hàng không đúng 10 chữ số");
                 txbPhoneNum.Focus();
                 return;
             }
 
             txbPhoneNum.Text = phoneNum;
 
-            // KT mã KH tồn tại trên bsdNV nếu có ghi đồng loạt các KH được thêm
-            /*
-                int indexMaKH = bdsCustomer.Find("MAKH", txtMaNV.Text);
+            if (deDateAccept.DateTime > DateTime.Now)
+            {
+                MessageUtil.ShowErrorMsgDialog("Ngày cấp CMND khách hàng không hợp lệ");
+                deDateAccept.Focus();
+                return;
+            }
 
-                int indexCurrent = bdsNV.Position;
-                if (result_value_MANV == 1 && (indexMaNV != indexCurrent))
-                {
-                    MessageBox.Show("Mã nhân viên đã tồn tại!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-             */
             cbGender.DataBindings[0].WriteValue();
+            deDateAccept.DataBindings[0].WriteValue();
 
             try
             {
@@ -196,7 +192,7 @@ namespace NganHangPhanTan.SimpleForm
             catch (Exception ex)
             {
                 string msg = btnSave.Tag == btnInsert ? "Lỗi không thể thêm khách hàng mới" : "Lỗi không thể hiệu chỉnh khách hàng";
-                MessageBox.Show($"{msg}.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"{msg}.\n{ex.Message}");
                 return;
             }
 
@@ -212,21 +208,25 @@ namespace NganHangPhanTan.SimpleForm
 
             if (btnSave.Tag == btnInsert)
             {
+                // Nếu INSERT, thêm vào undo stack DELETE action
                 action.Type = UserEventData.EventType.DELETE;
                 action.Content = new Customer((DataRowView)bdsCustomer[bdsCustomer.Position]);
-                // action.GridPos giữ nguyên
+                // Không cần lưu action.GridPos vì là DELETE action
             }
             else
             {
+                // Nếu UPDATE, thêm vào undo stack UPDATE action
                 action.Type = UserEventData.EventType.UPDATE;
                 action.Content = oldCustomer;
-                // action.GridPos: không cần
+                // Không cần lưu action.GridPos vì không cần phục hồi gridPos khi UPDATE
             }
 
             undoStack.AddLast(action);
             ControlUtil.ResolveStackStorage(undoStack);
+
             btnUndo.Enabled = true;
 
+            // Xóa redo stack
             redoStack.Clear();
             btnRedo.Enabled = false;
 
@@ -235,7 +235,7 @@ namespace NganHangPhanTan.SimpleForm
             btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = true;
             btnSave.Enabled = false;
             txbId.Enabled = false;
-            btnSave.Tag = btnUndo.Tag = null;
+            btnSave.Tag = null;
 
             ReqUpdateCanCloseState.Invoke(this, true);
         }
@@ -248,11 +248,12 @@ namespace NganHangPhanTan.SimpleForm
             btnInsert.Enabled = btnUpdate.Enabled = btnDelete.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnSave.Enabled = btnUndo.Enabled = true;
             btnRedo.Enabled = false;
-            btnSave.Tag = btnUndo.Tag = btnUpdate;
+            btnSave.Tag = btnUpdate;
 
             ReqUpdateCanCloseState.Invoke(this, false);
 
             undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
+            btnUndo.Enabled = true;
             ControlUtil.ResolveStackStorage(undoStack);
         }
 
@@ -359,7 +360,15 @@ namespace NganHangPhanTan.SimpleForm
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            taCustomer.Fill(this.DS.KhachHang);
+            try
+            {
+                taCustomer.Fill(this.DS.KhachHang);
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog(ex.Message);
+                throw;
+            }
         }
 
         private void btnExit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -370,36 +379,38 @@ namespace NganHangPhanTan.SimpleForm
         private void UndoUnSaveAction(UserEventData action)
         {
             bdsCustomer.CancelEdit();
-            if (btnUndo.Tag == btnInsert)
+
+            if (btnSave.Tag == btnInsert)
             {
                 bdsCustomer.Position = action.GridPos;
                 bdsCustomer.RemoveAt(bdsCustomer.Count - 1);
             }
+
             gcCustomer.Enabled = true;
             pnInput.Enabled = false;
             btnInsert.Enabled = btnUpdate.Enabled = btnReload.Enabled = btnExit.Enabled = true;
             btnSave.Enabled = false;
             txbId.Enabled = false;
-            if (undoStack.Count > 0)
-                btnUndo.Enabled = true;
-            btnSave.Tag = btnUndo.Tag = null;
+            btnUndo.Enabled = undoStack.Count > 0;
 
-            if (bdsCustomer.Count > 0)
-                btnDelete.Enabled = true;
+            btnSave.Tag = null;
+
+            btnDelete.Enabled = bdsCustomer.Count > 0;
 
             ReqUpdateCanCloseState.Invoke(this, true);
 
-            if (redoStack.Count > 0)
-                btnRedo.Enabled = true;
+            btnRedo.Enabled = redoStack.Count > 0;
         }
 
         private bool UndoByInsertAction(UserEventData action)
         {
             if (action == null)
                 throw new Exception();
+
             bdsCustomer.AddNew();
+
             txbBrandId.Text = this.gridBrandID;
-            cbGender.SelectedIndex = 0;
+
             Customer customer = (Customer)action.Content;
             txbId.Text = customer.Id;
             txbLastName.Text = customer.LastName;
@@ -415,15 +426,15 @@ namespace NganHangPhanTan.SimpleForm
                 // Đặt thông tin nhân viên mới lên grid control
                 bdsCustomer.ResetCurrentItem();
                 taCustomer.Update(this.DS.KhachHang);
+                taCustomer.Fill(this.DS.KhachHang);
+                bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
             }
             catch (Exception ex)
             {
                 string msg = btnSave.Tag == btnInsert ? "Lỗi không thể thêm khách hàng mới" : "Lỗi không thể hiệu chỉnh khách hàng";
-                MessageBox.Show($"{msg}.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"{msg}.\n{ex.Message}");
                 return false;
             }
-            taCustomer.Fill(this.DS.KhachHang);
-            bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
             return true;
         }
 
@@ -432,50 +443,48 @@ namespace NganHangPhanTan.SimpleForm
             Customer customer = (Customer)action.Content;
             bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
 
-            int accountIdx = bdsAccount.Find(Customer.ID_HEADER, customer.Id);
-            if (accountIdx >= 0)
+            if (AccountDAO.Instance.CheckAccountExistedByPersonalId(customer.Id))
             {
-                MessageBox.Show("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n");
                 return false;
             }
 
-            if (MessageBox.Show("Xác nhận xóa khách hàng?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                try
-                {
-                    // Xóa trên máy trước
-                    bdsCustomer.RemoveCurrent();
-                    // Xóa trên server
-                    taCustomer.Update(this.DS.KhachHang);
-                }
-                catch (Exception ex)
-                {
-                    // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa khách hàng. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
-                    taCustomer.Fill(this.DS.KhachHang);
-                    bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
-                    return false;
-                }
-                if (bdsCustomer.Count == 0)
-                {
-                    btnDelete.Enabled = false;
-                }
-                return true;
-            }
-            return false;
-        }
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa khách hàng?") != DialogResult.OK)
+                return false;
 
+            try
+            {
+                // Xóa trên máy trước
+                bdsCustomer.RemoveCurrent();
+                // Xóa trên server
+                taCustomer.Update(this.DS.KhachHang);
+            }
+            catch (Exception ex)
+            {
+                // Phục hồi nếu xóa không thành công
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa khách hàng. Thử thực hiện lại.\n{ex.Message}");
+                taCustomer.Fill(this.DS.KhachHang);
+                bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
+                return false;
+            }
+
+            btnDelete.Enabled = bdsCustomer.Count != 0;
+            return true;
+        }
 
         private bool UndoByUpdateAction(UserEventData action)
         {
             Customer updatedCustomer = (Customer)action.Content;
+
             bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, updatedCustomer.Id);
+
             txbLastName.Text = updatedCustomer.LastName;
             txbFirstName.Text = updatedCustomer.FirstName;
             txbAddress.Text = updatedCustomer.Address;
             txbPhoneNum.Text = updatedCustomer.PhoneNum;
             cbGender.SelectedItem = updatedCustomer.Gender;
             deDateAccept.DateTime = updatedCustomer.DateAccept;
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -486,9 +495,10 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi không thể hiệu chỉnh khách hàng.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh khách hàng.\nChi tiết: {ex.Message}");
                 return false;
             }
+
             return true;
         }
 
@@ -503,9 +513,9 @@ namespace NganHangPhanTan.SimpleForm
                 DataProvider.Instance.SetServerToRemote(serverName);
             else
                 DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
-            if (DataProvider.Instance.CheckConnection() == false)
+            if (!DataProvider.Instance.CheckConnection())
             {
-                MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
+                MessageUtil.ShowErrorMsgDialog("Lỗi kết nối sang chi nhánh mới");
                 return;
             }
             // Tải dữ liệu từ site mới về
@@ -525,8 +535,10 @@ namespace NganHangPhanTan.SimpleForm
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             int gridPos = bdsCustomer.Position;
-            pnInput.Enabled = true;
+
             bdsCustomer.AddNew();
+
+            pnInput.Enabled = true;
             txbBrandId.Text = this.gridBrandID;
             gcCustomer.Enabled = false;
             cbGender.SelectedIndex = 0;
@@ -536,28 +548,28 @@ namespace NganHangPhanTan.SimpleForm
             btnSave.Enabled = btnUndo.Enabled = true;
             btnRedo.Enabled = false;
 
-            btnSave.Tag = btnUndo.Tag = btnInsert;
+            btnSave.Tag = btnInsert;
 
             ReqUpdateCanCloseState.Invoke(this, false);
 
             // Push cancel-editing event to undo stack
             undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
+            btnUndo.Enabled = true;
         }
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             string customerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
-            int accountIdx = bdsAccount.Find(Customer.ID_HEADER, customerId);
-            if (accountIdx >= 0)
+            if (AccountDAO.Instance.CheckAccountExistedByPersonalId(customerId))
             {
-                MessageBox.Show("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n");
                 return;
             }
 
-            if (MessageBox.Show("Xác nhận xóa khách hàng?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa khách hàng?") == DialogResult.OK)
             {
-                Customer deletedCustomer = null;
                 string deletedCustomerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
+                Customer deletedCustomer;
                 try
                 {
                     deletedCustomer = new Customer((DataRowView)bdsCustomer[bdsCustomer.Position]);
@@ -569,16 +581,17 @@ namespace NganHangPhanTan.SimpleForm
                 catch (Exception ex)
                 {
                     // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa khách hàng. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa khách hàng. Thử thực hiện lại.\n{ex.Message}");
                     taCustomer.Fill(this.DS.KhachHang);
                     bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, deletedCustomerId);
                     return;
                 }
-                if (bdsCustomer.Count == 0)
-                    btnDelete.Enabled = false;
 
-                // Ignore to save grid pos
+                btnDelete.Enabled = bdsCustomer.Count != 0;
+
+                // Ignore save grid pos
                 undoStack.AddLast(new UserEventData(UserEventData.EventType.INSERT, deletedCustomer, -1));
+                btnUndo.Enabled = true;
                 ControlUtil.ResolveStackStorage(undoStack);
                 redoStack.Clear();
                 btnRedo.Enabled = false;

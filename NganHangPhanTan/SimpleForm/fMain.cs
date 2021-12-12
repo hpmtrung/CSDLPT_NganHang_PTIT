@@ -284,5 +284,21 @@ namespace NganHangPhanTan
                 mdiFormCanCloseState.Add(f, true);
             }
         }
+
+        private void btnCreateLogin_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form form = ControlUtil.CheckFormExists(this, typeof(fCreateLogin));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fCreateLogin f = new fCreateLogin()
+                {
+                    MdiParent = this,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
+        }
     }
 }

@@ -22,22 +22,18 @@ namespace NganHangPhanTan.SimpleForm
         public Action<Form, bool> ReqUpdateCanCloseState { get => reqUpdateCanCloseState; set => reqUpdateCanCloseState = value; }
         public Action<Form> ReqClose { get => reqClose; set => reqClose = value; }
 
+        // X
         private bool acceptFocusedRowChanging;
 
+        // X
         private DataTable bufferAccountDataTable;
 
+        // X
         private MyCache accountUnAllowChangeCache = new MyCache(Account.ID_HEADER);
 
         public fOpenCustomerAccount()
         {
             InitializeComponent();
-        }
-
-        private void khachHangBindingNavigatorSaveItem_Click(object sender, System.EventArgs e)
-        {
-            this.Validate();
-            this.bdsCustomer.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DS);
         }
 
         private bool IsAccountIdExistedInGridView(string accountId)
@@ -71,10 +67,7 @@ namespace NganHangPhanTan.SimpleForm
                     cbBrand.Enabled = false;
                     btnInsertAcc.Enabled = btnDeleteAcc.Enabled = true;
 
-                    if (bdsCustomer.Count > 0)
-                        this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
-                    else
-                        this.gridBrandID = BrandDAO.UniqueInstance.GetBrandIdOfSubcriber();
+                    this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
 
                     // Tao cac cot cho data table luu du lieu
                     bufferAccountDataTable = new DataTable();
@@ -96,10 +89,6 @@ namespace NganHangPhanTan.SimpleForm
 
         private void LoadAccountFromCustomer()
         {
-            // DEBUG
-            //if (btnSave.Enabled == true)
-            //    throw new Exception();
-
             if (bdsCustomer.Count > 0)
             {
                 string customerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
@@ -109,7 +98,7 @@ namespace NganHangPhanTan.SimpleForm
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageUtil.ShowErrorMsgDialog(ex.Message);
                 }
             }
             else
@@ -125,7 +114,7 @@ namespace NganHangPhanTan.SimpleForm
             accountUnAllowChangeCache.Clear();
         }
 
-        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        private void gvCustomer_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
             if (acceptFocusedRowChanging == false)
                 return;
@@ -172,10 +161,10 @@ namespace NganHangPhanTan.SimpleForm
             taCustomer.Fill(this.DS.KhachHang);
             this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
-            if (bdsCustomer.Count > 0)
-                this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
-            else
-                this.gridBrandID = BrandDAO.UniqueInstance.GetBrandIdOfSubcriber();
+            //if (bdsCustomer.Count > 0)
+            //    this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
+            //else
+                this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
         }
 
         private void btnReload_Click(object sender, EventArgs e)

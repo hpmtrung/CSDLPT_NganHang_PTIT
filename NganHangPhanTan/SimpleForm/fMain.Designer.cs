@@ -255,8 +255,8 @@ namespace NganHangPhanTan
             this.btnCreateLogin.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateLogin.ImageOptions.Image")));
             this.btnCreateLogin.LargeWidth = 100;
             this.btnCreateLogin.Name = "btnCreateLogin";
-            this.btnCreateLogin.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnCreateLogin.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnCreateLogin.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCreateLogin_ItemClick);
             // 
             // ribSystem
             // 

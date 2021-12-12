@@ -302,7 +302,7 @@ namespace NganHangPhanTan.Report
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "fReportTransaction";
-            this.Text = "Sao kê tài khoản";
+            this.Text = "Báo cáo sao kê tài khoản";
             this.Load += new System.EventHandler(this.fReportTransaction_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);

@@ -17,6 +17,11 @@
 
         private EmployeeDAO() { }
 
+        /// <summary>
+        /// Kiểm tra mã nhân viên tồn tại trên site chủ
+        /// </summary>
+        /// <param name="employeeID"></param>
+        /// <returns></returns>
         public bool IsEmployeeIDExisted(string employeeID)
         {
             return (bool) DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckEmployeeIDExisted(N'{employeeID}')");

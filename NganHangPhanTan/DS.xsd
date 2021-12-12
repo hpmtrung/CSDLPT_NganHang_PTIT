@@ -267,7 +267,7 @@ SELECT SOTK, CMND, SODU, MACN, NGAYMOTK FROM TaiKhoan WHERE (SOTK = @SOTK)</Comm
                   </DbCommand>
                 </InsertCommand>
                 <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT SOTK, CMND, SODU, MACN, NGAYMOTK FROM dbo.TaiKhoan</CommandText>
                     <Parameters />
                   </DbCommand>
@@ -857,4 +857,9 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
       <xs:field xpath="mstns:SOTK_CHUYEN" />
     </xs:keyref>
   </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="TaiKhoan_KhachHang" msdata:parent="TaiKhoan" msdata:child="KhachHang" msdata:parentkey="CMND" msdata:childkey="CMND" msprop:Generator_UserChildTable="KhachHang" msprop:Generator_ChildPropName="GetKhachHangRows" msprop:Generator_UserRelationName="TaiKhoan_KhachHang" msprop:Generator_ParentPropName="TaiKhoanRow" msprop:Generator_RelationVarName="relationTaiKhoan_KhachHang" msprop:Generator_UserParentTable="TaiKhoan" />
+    </xs:appinfo>
+  </xs:annotation>
 </xs:schema>

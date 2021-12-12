@@ -28,6 +28,7 @@ namespace NganHangPhanTan.SimpleForm
             this.usp_GetOtherBrandFromSubcriberTableAdapter.Fill(this.dS.usp_GetOtherBrandFromSubcriber);
             if (bdsBrandOption.Count > 0)
                 bdsBrandOption.Position = 0;
+            btnMove.Enabled = bdsBrandOption.Count > 0;
         }
     }
 }

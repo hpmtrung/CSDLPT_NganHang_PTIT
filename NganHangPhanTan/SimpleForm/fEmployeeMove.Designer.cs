@@ -41,21 +41,21 @@ namespace NganHangPhanTan.SimpleForm
             this.colTENCN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDIACHI = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSoDT = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsBrandOption)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usp_GetOtherBrandFromSubcriberGridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
-            this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
+            this.groupControl2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnMove
             // 
-            this.btnMove.Location = new System.Drawing.Point(784, 392);
+            this.btnMove.Location = new System.Drawing.Point(1010, 342);
+            this.btnMove.Margin = new System.Windows.Forms.Padding(4);
             this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(154, 31);
+            this.btnMove.Size = new System.Drawing.Size(198, 45);
             this.btnMove.TabIndex = 1;
             this.btnMove.Text = "Chuyển";
             this.btnMove.UseVisualStyleBackColor = true;
@@ -81,27 +81,37 @@ namespace NganHangPhanTan.SimpleForm
             this.tableAdapterManager.Connection = null;
             this.tableAdapterManager.GD_CHUYENTIENTableAdapter = null;
             this.tableAdapterManager.GD_GOIRUTTableAdapter = null;
+            this.tableAdapterManager.KhachHangTableAdapter = null;
             this.tableAdapterManager.NhanVienTableAdapter = null;
+            this.tableAdapterManager.TaiKhoanTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = NganHangPhanTan.DSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // usp_GetOtherBrandFromSubcriberGridControl
             // 
             this.usp_GetOtherBrandFromSubcriberGridControl.DataSource = this.bdsBrandOption;
-            this.usp_GetOtherBrandFromSubcriberGridControl.Location = new System.Drawing.Point(0, 51);
+            this.usp_GetOtherBrandFromSubcriberGridControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.usp_GetOtherBrandFromSubcriberGridControl.Location = new System.Drawing.Point(2, 28);
             this.usp_GetOtherBrandFromSubcriberGridControl.MainView = this.gridView1;
+            this.usp_GetOtherBrandFromSubcriberGridControl.Margin = new System.Windows.Forms.Padding(4);
             this.usp_GetOtherBrandFromSubcriberGridControl.Name = "usp_GetOtherBrandFromSubcriberGridControl";
-            this.usp_GetOtherBrandFromSubcriberGridControl.Size = new System.Drawing.Size(950, 323);
+            this.usp_GetOtherBrandFromSubcriberGridControl.Size = new System.Drawing.Size(1217, 294);
             this.usp_GetOtherBrandFromSubcriberGridControl.TabIndex = 2;
             this.usp_GetOtherBrandFromSubcriberGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
             // 
             // gridView1
             // 
+            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.Row.Options.UseFont = true;
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colMACN,
             this.colTENCN,
             this.colDIACHI,
             this.colSoDT});
+            this.gridView1.DetailHeight = 503;
+            this.gridView1.FixedLineWidth = 3;
             this.gridView1.GridControl = this.usp_GetOtherBrandFromSubcriberGridControl;
             this.gridView1.Name = "gridView1";
             // 
@@ -109,74 +119,67 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.colMACN.Caption = "Mã CN";
             this.colMACN.FieldName = "MACN";
-            this.colMACN.MinWidth = 25;
+            this.colMACN.MinWidth = 32;
             this.colMACN.Name = "colMACN";
-            this.colMACN.OptionsColumn.AllowEdit = false;
+            this.colMACN.OptionsColumn.ReadOnly = true;
             this.colMACN.Visible = true;
             this.colMACN.VisibleIndex = 0;
-            this.colMACN.Width = 94;
+            this.colMACN.Width = 121;
             // 
             // colTENCN
             // 
-            this.colTENCN.Caption = "Tên CN";
+            this.colTENCN.Caption = "Tên chi nhánh";
             this.colTENCN.FieldName = "TENCN";
-            this.colTENCN.MinWidth = 25;
+            this.colTENCN.MinWidth = 32;
             this.colTENCN.Name = "colTENCN";
-            this.colTENCN.OptionsColumn.AllowEdit = false;
+            this.colTENCN.OptionsColumn.ReadOnly = true;
             this.colTENCN.Visible = true;
             this.colTENCN.VisibleIndex = 1;
-            this.colTENCN.Width = 94;
+            this.colTENCN.Width = 121;
             // 
             // colDIACHI
             // 
             this.colDIACHI.Caption = "Địa chỉ";
             this.colDIACHI.FieldName = "DIACHI";
-            this.colDIACHI.MinWidth = 25;
+            this.colDIACHI.MinWidth = 32;
             this.colDIACHI.Name = "colDIACHI";
-            this.colDIACHI.OptionsColumn.AllowEdit = false;
+            this.colDIACHI.OptionsColumn.ReadOnly = true;
             this.colDIACHI.Visible = true;
             this.colDIACHI.VisibleIndex = 2;
-            this.colDIACHI.Width = 94;
+            this.colDIACHI.Width = 121;
             // 
             // colSoDT
             // 
             this.colSoDT.Caption = "Số ĐT";
             this.colSoDT.FieldName = "SoDT";
-            this.colSoDT.MinWidth = 25;
+            this.colSoDT.MinWidth = 32;
             this.colSoDT.Name = "colSoDT";
-            this.colSoDT.OptionsColumn.AllowEdit = false;
+            this.colSoDT.OptionsColumn.ReadOnly = true;
             this.colSoDT.Visible = true;
             this.colSoDT.VisibleIndex = 3;
-            this.colSoDT.Width = 94;
+            this.colSoDT.Width = 121;
             // 
-            // label1
+            // groupControl2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(308, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Chọn chi nhánh cần chuyển nhân viên:";
-            // 
-            // panelControl1
-            // 
-            this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.panelControl1.Controls.Add(this.label1);
-            this.panelControl1.Location = new System.Drawing.Point(0, 0);
-            this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(950, 45);
-            this.panelControl1.TabIndex = 3;
+            this.groupControl2.Controls.Add(this.btnMove);
+            this.groupControl2.Controls.Add(this.usp_GetOtherBrandFromSubcriberGridControl);
+            this.groupControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupControl2.Location = new System.Drawing.Point(0, 0);
+            this.groupControl2.Name = "groupControl2";
+            this.groupControl2.Size = new System.Drawing.Size(1221, 403);
+            this.groupControl2.TabIndex = 4;
+            this.groupControl2.Text = "Chọn chi nhánh cần chuyển nhân viên:";
             // 
             // fEmployeeMove
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.Appearance.Options.UseFont = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 445);
-            this.Controls.Add(this.panelControl1);
-            this.Controls.Add(this.usp_GetOtherBrandFromSubcriberGridControl);
-            this.Controls.Add(this.btnMove);
+            this.ClientSize = new System.Drawing.Size(1221, 403);
+            this.Controls.Add(this.groupControl2);
+            this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "fEmployeeMove";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Điều chuyển nhân viên sang chi nhánh";
@@ -185,9 +188,8 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.bdsBrandOption)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.usp_GetOtherBrandFromSubcriberGridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
-            this.panelControl1.ResumeLayout(false);
-            this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
+            this.groupControl2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -204,7 +206,6 @@ namespace NganHangPhanTan.SimpleForm
         private DevExpress.XtraGrid.Columns.GridColumn colTENCN;
         private DevExpress.XtraGrid.Columns.GridColumn colDIACHI;
         private DevExpress.XtraGrid.Columns.GridColumn colSoDT;
-        private System.Windows.Forms.Label label1;
-        private DevExpress.XtraEditors.PanelControl panelControl1;
+        private DevExpress.XtraEditors.GroupControl groupControl2;
     }
 }

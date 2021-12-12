@@ -4,7 +4,7 @@
     {
         private static BrandDAO uniqueInstance;
 
-        public static BrandDAO UniqueInstance
+        public static BrandDAO Instance
         {
             get
             {

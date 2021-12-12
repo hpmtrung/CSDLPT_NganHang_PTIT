@@ -100,19 +100,21 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // cbBrand
             // 
+            this.cbBrand.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbBrand.FormattingEnabled = true;
-            this.cbBrand.Location = new System.Drawing.Point(93, 24);
+            this.cbBrand.Location = new System.Drawing.Point(140, 24);
             this.cbBrand.Name = "cbBrand";
-            this.cbBrand.Size = new System.Drawing.Size(391, 24);
+            this.cbBrand.Size = new System.Drawing.Size(391, 31);
             this.cbBrand.TabIndex = 1;
             this.cbBrand.SelectionChangeCommitted += new System.EventHandler(this.cbBrand_SelectionChangeCommitted);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 27);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(30, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 17);
+            this.label1.Size = new System.Drawing.Size(93, 23);
             this.label1.TabIndex = 0;
             this.label1.Text = "Chi nhánh:";
             // 
@@ -154,6 +156,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // gvCustomer
             // 
+            this.gvCustomer.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvCustomer.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvCustomer.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvCustomer.Appearance.Row.Options.UseFont = true;
             this.gvCustomer.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colCMND,
             this.colHO,
@@ -165,7 +171,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colMACN});
             this.gvCustomer.GridControl = this.gcCustomer;
             this.gvCustomer.Name = "gvCustomer";
-            this.gvCustomer.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
+            this.gvCustomer.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gvCustomer_FocusedRowChanged);
             // 
             // colCMND
             // 
@@ -173,7 +179,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colCMND.FieldName = "CMND";
             this.colCMND.MinWidth = 25;
             this.colCMND.Name = "colCMND";
-            this.colCMND.OptionsColumn.AllowEdit = false;
+            this.colCMND.OptionsColumn.ReadOnly = true;
             this.colCMND.Visible = true;
             this.colCMND.VisibleIndex = 0;
             this.colCMND.Width = 94;
@@ -184,7 +190,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colHO.FieldName = "HO";
             this.colHO.MinWidth = 25;
             this.colHO.Name = "colHO";
-            this.colHO.OptionsColumn.AllowEdit = false;
+            this.colHO.OptionsColumn.ReadOnly = true;
             this.colHO.Visible = true;
             this.colHO.VisibleIndex = 1;
             this.colHO.Width = 94;
@@ -195,7 +201,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colTEN.FieldName = "TEN";
             this.colTEN.MinWidth = 25;
             this.colTEN.Name = "colTEN";
-            this.colTEN.OptionsColumn.AllowEdit = false;
+            this.colTEN.OptionsColumn.ReadOnly = true;
             this.colTEN.Visible = true;
             this.colTEN.VisibleIndex = 2;
             this.colTEN.Width = 94;
@@ -206,7 +212,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colDIACHI.FieldName = "DIACHI";
             this.colDIACHI.MinWidth = 25;
             this.colDIACHI.Name = "colDIACHI";
-            this.colDIACHI.OptionsColumn.AllowEdit = false;
+            this.colDIACHI.OptionsColumn.ReadOnly = true;
             this.colDIACHI.Visible = true;
             this.colDIACHI.VisibleIndex = 3;
             this.colDIACHI.Width = 94;
@@ -217,7 +223,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colPHAI.FieldName = "PHAI";
             this.colPHAI.MinWidth = 25;
             this.colPHAI.Name = "colPHAI";
-            this.colPHAI.OptionsColumn.AllowEdit = false;
+            this.colPHAI.OptionsColumn.ReadOnly = true;
             this.colPHAI.Visible = true;
             this.colPHAI.VisibleIndex = 4;
             this.colPHAI.Width = 94;
@@ -228,7 +234,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colNGAYCAP.FieldName = "NGAYCAP";
             this.colNGAYCAP.MinWidth = 25;
             this.colNGAYCAP.Name = "colNGAYCAP";
-            this.colNGAYCAP.OptionsColumn.AllowEdit = false;
+            this.colNGAYCAP.OptionsColumn.ReadOnly = true;
             this.colNGAYCAP.Visible = true;
             this.colNGAYCAP.VisibleIndex = 5;
             this.colNGAYCAP.Width = 94;
@@ -239,7 +245,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colSODT.FieldName = "SODT";
             this.colSODT.MinWidth = 25;
             this.colSODT.Name = "colSODT";
-            this.colSODT.OptionsColumn.AllowEdit = false;
+            this.colSODT.OptionsColumn.ReadOnly = true;
             this.colSODT.Visible = true;
             this.colSODT.VisibleIndex = 6;
             this.colSODT.Width = 94;
@@ -250,7 +256,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colMACN.FieldName = "MACN";
             this.colMACN.MinWidth = 25;
             this.colMACN.Name = "colMACN";
-            this.colMACN.OptionsColumn.AllowEdit = false;
+            this.colMACN.OptionsColumn.ReadOnly = true;
             this.colMACN.Visible = true;
             this.colMACN.VisibleIndex = 7;
             this.colMACN.Width = 94;
@@ -263,7 +269,7 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(1273, 403);
             this.groupControl1.TabIndex = 9;
-            this.groupControl1.Text = "Khách hàng";
+            this.groupControl1.Text = "Danh sách khách hàng thuộc chi nhánh";
             // 
             // groupControl2
             // 
@@ -274,7 +280,7 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl2.Name = "groupControl2";
             this.groupControl2.Size = new System.Drawing.Size(1273, 454);
             this.groupControl2.TabIndex = 10;
-            this.groupControl2.Text = "Danh sách tài khoản";
+            this.groupControl2.Text = "Danh sách tài khoản ";
             // 
             // gcAccount
             // 

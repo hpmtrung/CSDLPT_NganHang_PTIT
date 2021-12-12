@@ -21,5 +21,10 @@
         {
             return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountIdExisted(N'{accountId}')");
         }
+
+        public bool CheckAccountExistedByPersonalId(string personalId)
+        {
+            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountExistedByPersonalId(N'{personalId}')");
+        }
     }
 }

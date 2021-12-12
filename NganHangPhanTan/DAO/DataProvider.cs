@@ -103,12 +103,14 @@ namespace NganHangPhanTan.DAO
             SqlDataReader sqlDataReader;
             try
             {
+                if (sqlCommand.Connection.State == ConnectionState.Closed)
+                    sqlCommand.Connection.Open();
                 sqlDataReader = sqlCommand.ExecuteReader();
                 return sqlDataReader;
             }
             catch (Exception ex)
             {
-                MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại tên đăng nhập và mật khẩu.\nChi tiết lỗi: {ex.Message}");
                 return null;
             }
         }
@@ -132,11 +134,13 @@ namespace NganHangPhanTan.DAO
                     int i = 0;
                     foreach (string item in Regex.Split(query, @"\s+"))
                     {
-                        int id = item.IndexOf(',');
-                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
-                            command.Parameters.AddWithValue(item, parameters[i]);
+                            int id = item.IndexOf(',');
+                            if (id > 0)
+                                command.Parameters.AddWithValue(item.Remove(id), parameters[i]);
+                            else
+                                command.Parameters.AddWithValue(item, parameters[i]);
                             i++;
                         }
                     }
@@ -185,11 +189,13 @@ namespace NganHangPhanTan.DAO
                     int i = 0;
                     foreach (string item in Regex.Split(query, @"\s+"))
                     {
-                        int id = item.IndexOf(',');
-                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
-                            command.Parameters.AddWithValue(item, parameters[i]);
+                            int id = item.IndexOf(',');
+                            if (id > 0)
+                                command.Parameters.AddWithValue(item.Remove(id), parameters[i]);
+                            else
+                                command.Parameters.AddWithValue(item, parameters[i]);
                             i++;
                         }
                     }
@@ -202,7 +208,7 @@ namespace NganHangPhanTan.DAO
                 }
                 catch (Exception ex)
                 {
-                    MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                    MessageUtil.ShowErrorMsgDialog(ex.Message);
                     rowsAffected = - 2;
                 }
             }
@@ -230,11 +236,13 @@ namespace NganHangPhanTan.DAO
                     int i = 0;
                     foreach (string item in Regex.Split(query, @"\s+"))
                     {
-                        int id = item.IndexOf(',');
-                        if (id > 0) item.Remove(id);
                         if (item.Contains("@"))
                         {
-                            command.Parameters.AddWithValue(item, parameters[i]);
+                            int id = item.IndexOf(',');
+                            if (id > 0)
+                                command.Parameters.AddWithValue(item.Remove(id), parameters[i]);
+                            else
+                                command.Parameters.AddWithValue(item, parameters[i]);
                             i++;
                         }
                     }
@@ -247,7 +255,7 @@ namespace NganHangPhanTan.DAO
                 }
                 catch (SqlException ex)
                 {
-                    MessageUtil.ShowErrorMsgDialog($"Lỗi kết nối cơ sở dữ liệu.\nKiểm tra lại username và password.\nChi tiết lỗi: {ex.Message}");
+                    MessageUtil.ShowErrorMsgDialog(ex.Message);
                     return null;
                 }
             }

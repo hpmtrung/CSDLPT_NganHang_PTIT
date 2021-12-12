@@ -35,17 +35,18 @@ namespace NganHangPhanTan.DAO
         /// <returns></returns>
         public User Login(string loginName)
         {
-            DataTable data = DataProvider.Instance.ExecuteDataTable($"EXEC dbo.usp_Login @loginName", new object[] { loginName });
-            if (data == null)
+            SqlDataReader dataReader = DataProvider.Instance.ExecuteSqlDataReader($"EXEC dbo.usp_Login '{loginName}'");
+            if (dataReader == null)
                 return null;
 
-            if (data.Rows.Count == 0)
+            if (!dataReader.Read())
             {
                 MessageUtil.ShowInfoMsgDialog("Login bạn nhập không có quyền truy cập dữ liệu.\nVui lòng nhập lại mã nhân viên.");
                 return null;
             }
-
-            return new User(data.Rows[0]);
+            User user = new User(dataReader);
+            dataReader.Close();
+            return user;
         }
     }
 
