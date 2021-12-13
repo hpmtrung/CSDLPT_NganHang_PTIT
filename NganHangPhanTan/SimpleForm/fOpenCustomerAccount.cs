@@ -22,28 +22,13 @@ namespace NganHangPhanTan.SimpleForm
         public Action<Form, bool> ReqUpdateCanCloseState { get => reqUpdateCanCloseState; set => reqUpdateCanCloseState = value; }
         public Action<Form> ReqClose { get => reqClose; set => reqClose = value; }
 
-        // X
-        private bool acceptFocusedRowChanging;
-
-        // X
+        private bool acceptGvCustomerFocusedRowChanging;
         private DataTable bufferAccountDataTable;
-
-        // X
-        private MyCache accountUnAllowChangeCache = new MyCache(Account.ID_HEADER);
+        private HashSet<string> unAllowChangeAccountId = new HashSet<string>();
 
         public fOpenCustomerAccount()
         {
             InitializeComponent();
-        }
-
-        private bool IsAccountIdExistedInGridView(string accountId)
-        {
-            foreach (DataRowView row in bdsAccount)
-            {
-                if (row[Account.ID_HEADER].ToString().Equals(accountId))
-                    return true;
-            }
-            return false;
         }
 
         private void fOpenCustomerAccount_Load(object sender, System.EventArgs e)
@@ -76,6 +61,7 @@ namespace NganHangPhanTan.SimpleForm
                     bufferAccountDataTable.Columns.Add(Account.BALANCE_HEADER, typeof(decimal));
                     bufferAccountDataTable.Columns.Add(Account.BRAND_ID_HEADER, typeof(string));
                     bufferAccountDataTable.Columns.Add(Account.OPEN_DATE_HEADER, typeof(DateTime));
+
                     break;
                 default:
                     // DEBUG
@@ -84,60 +70,66 @@ namespace NganHangPhanTan.SimpleForm
 
             btnReload.Enabled = true;
             btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
-            acceptFocusedRowChanging = true;
+            acceptGvCustomerFocusedRowChanging = true;
         }
 
         private void LoadAccountFromCustomer()
         {
+            unAllowChangeAccountId.Clear();
+
             if (bdsCustomer.Count > 0)
             {
                 string customerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
                 try
                 {
+                    // Fill makes gvAccount fires focus row change to the first row
                     this.taAccount.Fill(this.DS.usp_GetAccountByCustomerId, customerId);
+                    foreach (DataRowView row in bdsAccount)
+                    {
+                        unAllowChangeAccountId.Add((string)row[Account.ID_HEADER]);
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageUtil.ShowErrorMsgDialog(ex.Message);
                 }
             }
-            else
-            {
-                bdsAccount.Clear();
-            }
 
             undoStack.Clear();
             redoStack.Clear();
-            btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
+            if (SecurityContext.User.Group == User.GroupENM.CHI_NHANH)
+                btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
             btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
-
-            accountUnAllowChangeCache.Clear();
+            gvAccount.Columns[Account.ID_HEADER].OptionsColumn.ReadOnly = true;
+            gvAccount.Columns[Account.BALANCE_HEADER].OptionsColumn.ReadOnly = true;
         }
 
         private void gvCustomer_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            if (acceptFocusedRowChanging == false)
+            if (acceptGvCustomerFocusedRowChanging == false)
                 return;
 
-            if (btnSave.Enabled == true)
+            if (!btnSave.Enabled)
             {
-                DialogResult res = MessageBox.Show("Lưu các thay đổi trên danh sách tài khoản của khách hàng hiện tại?", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (res == DialogResult.Yes)
+                LoadAccountFromCustomer();
+                return;
+            }
+
+            DialogResult res = MessageBox.Show("Lưu các thay đổi trên danh sách tài khoản của khách hàng hiện tại?", "Xác nhận", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+                btnSave_Click(null, new EventArgs());
+            else if (res == DialogResult.No)
+                LoadAccountFromCustomer();
+            else
+            {
+                // Return to previous row in customer table
+                if (e.PrevFocusedRowHandle >= 0)
                 {
-                    btnSave_Click(null, new EventArgs());
-                }
-                else if (res == DialogResult.Cancel)
-                {
-                    if (e.PrevFocusedRowHandle >= 0)
-                    {
-                        acceptFocusedRowChanging = false;
-                        gvCustomer.FocusedRowHandle = e.PrevFocusedRowHandle;
-                        acceptFocusedRowChanging = true;
-                    }
-                    return;
+                    acceptGvCustomerFocusedRowChanging = false;
+                    gvCustomer.FocusedRowHandle = e.PrevFocusedRowHandle;
+                    acceptGvCustomerFocusedRowChanging = true;
                 }
             }
-            LoadAccountFromCustomer();
         }
 
         private void cbBrand_SelectionChangeCommitted(object sender, EventArgs e)
@@ -156,78 +148,87 @@ namespace NganHangPhanTan.SimpleForm
                 MessageBox.Show("Lỗi kết nối sang chi nhánh mới.");
                 return;
             }
-            // Tải dữ liệu từ site mới về
+
+            // Load lại dữ liệu khách hàng
             taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             taCustomer.Fill(this.DS.KhachHang);
+
             this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
-            //if (bdsCustomer.Count > 0)
-            //    this.gridBrandID = ((DataRowView)bdsCustomer[0])[Brand.ID_HEADER].ToString();
-            //else
-                this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
+            this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
+
+            // Load lại dữ liệu tài khoản theo khách hàng
+            LoadAccountFromCustomer();
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            if (btnSave.Enabled == true)
+            if (!btnSave.Enabled)
             {
-                DialogResult res = MessageBox.Show("Bạn đang muốn xem lại danh sách tài khoản mới nhất của khách hàng.\nLưu các thay đổi hiện tại?", "Cảnh báo", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (res == DialogResult.Yes)
-                {
-                    btnSave_Click(null, new EventArgs());
-                }
-                else if (res == DialogResult.Cancel)
-                    return;
+                LoadAccountFromCustomer();
+                return;
             }
-            LoadAccountFromCustomer();
+            DialogResult res = MessageBox.Show("Bạn đang muốn xem lại danh sách tài khoản mới nhất của khách hàng.\nLưu các thay đổi hiện tại?", "Xác nhận", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+                SaveAccountData();
+            else if (res == DialogResult.No)
+                LoadAccountFromCustomer();
         }
 
         private void btnInsertAcc_Click(object sender, EventArgs e)
         {
             int gridPos = bdsAccount.Position;
+            // bdsAccount.Count tăng lên 1
             bdsAccount.AddNew();
 
-            //DataRowView row = (DataRowView)bdsAccount[bdsAccount.Position];
-            //row[Account.BALANCE_HEADER] = 0;
-            //row[Account.BRAND_ID_HEADER] = this.gridBrandID;
-            //row[Account.OPEN_DATE_HEADER] = DateTime.Now;
+            DataRowView row = (DataRowView)bdsAccount[bdsAccount.Position];
+            row[Account.BALANCE_HEADER] = 0;
+            row[Account.BRAND_ID_HEADER] = this.gridBrandID;
+            row[Account.OPEN_DATE_HEADER] = DateTime.Now;
 
-            gvAccount.SetRowCellValue(bdsAccount.Position, Account.BALANCE_HEADER, 0);
-            gvAccount.SetRowCellValue(bdsAccount.Position, Account.BRAND_ID_HEADER, this.gridBrandID);
-            gvAccount.SetRowCellValue(bdsAccount.Position, Account.OPEN_DATE_HEADER, DateTime.Now);
-
+            // Open for editting
             gvAccount.Columns[Account.ID_HEADER].OptionsColumn.ReadOnly = false;
             gvAccount.Columns[Account.BALANCE_HEADER].OptionsColumn.ReadOnly = false;
 
             gvAccount.FocusedColumn = gvAccount.Columns[Account.ID_HEADER];
             gvAccount.ShowEditor();
 
-            btnInsertAcc.Enabled = btnDeleteAcc.Enabled = btnReload.Enabled = false;
-            btnUndo.Enabled = true;
-
-            btnRedo.Enabled = false;
+            btnSave.Enabled = btnInsertAcc.Enabled = btnDeleteAcc.Enabled = btnRedo.Enabled = btnReload.Enabled = false;
 
             ReqUpdateCanCloseState.Invoke(this, false);
 
             // Push cancel-editing event to undo stack
             undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
+            btnUndo.Enabled = true;
         }
 
         private void btnDeleteAcc_Click(object sender, EventArgs e)
         {
             Account deletedAccount = new Account((DataRowView)bdsAccount[bdsAccount.Position]);
-            if (MessageBox.Show($"Xác nhận xóa tài khoản mã số {deletedAccount.Id}?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+
+            bool accountHavingTransation = (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountHavingTransaction(N'{deletedAccount.Id}')");
+
+            if (accountHavingTransation)
+            {
+                MessageUtil.ShowErrorMsgDialog($"Không thể xóa tài khoản mã số {deletedAccount.Id} vì đã thực hiện giao dịch.\n");
+                return;
+            }
+
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa tài khoản mã số {deletedAccount.Id}?") == DialogResult.OK)
             {
                 try
                 {
+                    // Xóa accountId trong set unAllowChangeAccountId
+                    unAllowChangeAccountId.Remove(deletedAccount.Id);
                     // Xóa trên máy trước
                     bdsAccount.RemoveCurrent();
                 }
                 catch (Exception ex)
                 {
                     // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa tài khoản mã số {deletedAccount.Id}. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
+                    unAllowChangeAccountId.Add(deletedAccount.Id);
                     bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, deletedAccount.Id);
+                    MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa tài khoản mã số {deletedAccount.Id}. Thử thực hiện lại.\nChi tiết: {ex.Message}");
                     return;
                 }
 
@@ -235,6 +236,7 @@ namespace NganHangPhanTan.SimpleForm
 
                 // Ignore to save grid pos
                 undoStack.AddLast(new UserEventData(UserEventData.EventType.INSERT, deletedAccount, -1));
+                btnUndo.Enabled = true;
                 ControlUtil.ResolveStackStorage(undoStack);
                 redoStack.Clear();
                 btnRedo.Enabled = false;
@@ -242,26 +244,49 @@ namespace NganHangPhanTan.SimpleForm
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Save all accounts modified
+        /// </summary>
+        private void SaveAccountData()
         {
             string customerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
             foreach (DataRowView row in bdsAccount)
             {
-                bufferAccountDataTable.Rows.Add(row[Account.ID_HEADER], customerId,
-                    row[Account.BALANCE_HEADER], row[Account.BRAND_ID_HEADER], row[Account.OPEN_DATE_HEADER]);
+                bufferAccountDataTable.Rows.Add(
+                    row[Account.ID_HEADER],
+                    customerId, //CMND
+                    row[Account.BALANCE_HEADER],
+                    row[Account.BRAND_ID_HEADER],
+                    row[Account.OPEN_DATE_HEADER]);
             }
 
-            int res = DataProvider.Instance.ExecuteNonQuery("EXEC dbo.usp_UpdateCustomerAccounts @UpdatedAccounts", new object[] { bufferAccountDataTable });
+            int rowAffected = DataProvider.Instance.ExecuteNonQuery("EXEC dbo.usp_UpdateCustomerAccounts @UpdatedAccounts", 
+                new object[] { bufferAccountDataTable }, new SqlDbType[] { SqlDbType.Structured }, new string[] { "dbo.TBTYPE_TAIKHOAN" });
 
-            if (res > 0)
+            if (rowAffected > 0)
             {
-                MessageBox.Show("Lưu thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageUtil.ShowInfoMsgDialog("Lưu thay đổi tài khoản của khách hàng thành công");
+                btnSave.Enabled = false;
+                ReqUpdateCanCloseState.Invoke(this, true);
+                // reload accounts
+                LoadAccountFromCustomer();
+            }
+            else if (rowAffected == 0)
+            {
+                MessageUtil.ShowInfoMsgDialog("Không tìm thấy thay đổi trong dữ liệu tài khoản khách hàng");
                 btnSave.Enabled = false;
                 ReqUpdateCanCloseState.Invoke(this, true);
             }
+
+            bufferAccountDataTable.Clear();
         }
 
-        private void btnUndo_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveAccountData();
+        }
+
+        private void Undo()
         {
             if (undoStack.Count > 0)
             {
@@ -297,10 +322,13 @@ namespace NganHangPhanTan.SimpleForm
                         }
                     case UserEventData.EventType.UPDATE:
                         {
-                            UpdateDataCell updatedCell = action.Content as UpdateDataCell;
-                            object oldValue = UndoByUpdateAction(action);
-                            updatedCell.Content = oldValue;
-                            redoStack.AddLast(action);
+                            Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
+                            if (UndoByUpdateAction(action))
+                            {
+                                action.Type = UserEventData.EventType.UPDATE;
+                                action.Content = oldAccount;
+                                redoStack.AddLast(action);
+                            }
                             break;
                         }
                     default:
@@ -309,6 +337,11 @@ namespace NganHangPhanTan.SimpleForm
                 btnRedo.Enabled = (redoStack.Count > 0);
             }
             btnUndo.Enabled = (undoStack.Count > 0);
+        }
+
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            Undo();
         }
 
         private void btnRedo_Click(object sender, EventArgs e)
@@ -342,13 +375,13 @@ namespace NganHangPhanTan.SimpleForm
                         }
                     case UserEventData.EventType.UPDATE:
                         {
-                            UpdateDataCell updatedCell = action.Content as UpdateDataCell;
-                            //updatedCell.Content = UndoByUpdateAction(action);
-                            object oldValue = UndoByUpdateAction(action);
-                            if (oldValue == null)
-                                oldValue = Activator.CreateInstance(gvAccount.Columns[updatedCell.FieldName].ColumnType);
-                            updatedCell.Content = oldValue;
-                            undoStack.AddLast(action);
+                            Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
+                            if (UndoByUpdateAction(action))
+                            {
+                                action.Type = UserEventData.EventType.UPDATE;
+                                action.Content = oldAccount;
+                                undoStack.AddLast(action);
+                            }
                             break;
                         }
                     default:
@@ -370,13 +403,17 @@ namespace NganHangPhanTan.SimpleForm
 
         private void UndoUnSaveAction(UserEventData action)
         {
-            bdsAccount.CancelEdit();
-            bdsAccount.Position = action.GridPos;
-
+            bdsAccount.RemoveCurrent();
+            gvAccount.CloseEditor();
             btnInsertAcc.Enabled = btnReload.Enabled = true;
             btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
-            btnUndo.Enabled = (undoStack.Count > 0);
+
+            // Nút save enabled khi còn tác vụ chưa lưu, hay undo stack khác rỗng
+            btnSave.Enabled = btnUndo.Enabled = (undoStack.Count > 0);
             btnRedo.Enabled = (redoStack.Count > 0);
+
+            // Nếu nút save enabled thì không thể đóng form
+            ReqUpdateCanCloseState.Invoke(this, btnSave.Enabled);
         }
 
         private bool UndoByInsertAction(UserEventData action)
@@ -399,14 +436,14 @@ namespace NganHangPhanTan.SimpleForm
                 bdsAccount.EndEdit();
                 // Đặt thông tin nhân viên mới lên grid control
                 bdsAccount.ResetCurrentItem();
+                bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi không thể khôi phục tài khoản mã số {account.Id} đã xóa trước đó.\n{ex.Message}", "", MessageBoxButtons.OK);
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể khôi phục tài khoản mã số {account.Id} đã xóa trước đó.\n{ex.Message}");
                 return false;
             }
 
-            bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
             return true;
         }
 
@@ -419,67 +456,66 @@ namespace NganHangPhanTan.SimpleForm
 
             if (accountHavingTransation)
             {
-                MessageBox.Show($"Không thể xóa tài khoản mã số {account.Id} vì đã thực hiện giao dịch.\n", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageUtil.ShowErrorMsgDialog($"Không thể xóa tài khoản mã số {account.Id} vì đã thực hiện giao dịch.\n");
                 return false;
             }
 
-            if (MessageBox.Show($"Xác nhận xóa tài khoản mã số {account.Id}?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa tài khoản mã số {account.Id}?") != DialogResult.OK)
+                return false;
+
+            try
             {
-                try
-                {
-                    bdsAccount.RemoveCurrent();
-                }
-                catch (Exception ex)
-                {
-                    // Phục hồi nếu xóa không thành công
-                    MessageBox.Show($"Lỗi không thể xóa tài khoản mã số {account.Id}. Thử thực hiện lại.\n{ex.Message}", "", MessageBoxButtons.OK);
-                    bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
-                    return false;
-                }
-
-                if (bdsAccount.Count == 0)
-                    btnDeleteAcc.Enabled = false;
-
-                return true;
+                bdsAccount.RemoveCurrent();
             }
-            return false;
+            catch (Exception ex)
+            {
+                // Phục hồi nếu xóa không thành công
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa tài khoản mã số {account.Id}. Thử thực hiện lại.\nChi tiết: {ex.Message}");
+                bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
+                return false;
+            }
+
+            btnDeleteAcc.Enabled = bdsAccount.Count != 0;
+            return true;
         }
 
         /// <summary>
-        /// Undo by update action and return previous data in cell.
+        /// (UNUSED)
+        /// Undo by update action and return previous row data.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        private object UndoByUpdateAction(UserEventData action)
+        private bool UndoByUpdateAction(UserEventData action)
         {
-            UpdateDataCell updatedCell = action.Content as UpdateDataCell;
-            string updatedAccountId = updatedCell.RowId.ToString();
-            string fieldName = updatedCell.FieldName;
-            object content = null;
-            for (int i = 0; i < bdsAccount.Count; i++)
-            {
-                DataRowView row = (DataRowView)bdsAccount[i];
-                if (row[Account.ID_HEADER].Equals(updatedAccountId))
-                {
-                    content = row[fieldName];
-                    row.BeginEdit();
-                    row[fieldName] = updatedCell.Content;
-                    gvAccount.FocusedRowHandle = i;
-                    gvAccount.FocusedColumn = gvAccount.Columns[fieldName];
-                    gvAccount.ShowEditor();
-                    break;
-                }
-            }
-            // DEBUG
-            if (content == null)
-                throw new Exception();
+            Account updatedAccount = (Account)action.Content;
 
-            return content;
+            bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, updatedAccount.Id);
+
+            DataRowView row = (DataRowView)bdsAccount[bdsAccount.Position];
+            row[Account.ID_HEADER] = updatedAccount.Id;
+            row[Account.BALANCE_HEADER] = updatedAccount.Balance;
+            row[Account.BRAND_ID_HEADER] = updatedAccount.BrandId;
+            row[Account.OPEN_DATE_HEADER] = updatedAccount.OpenDate;
+
+            try
+            {
+                // Lưu thông tin trên binding source
+                bdsAccount.EndEdit();
+                // Đặt thông tin tài khoản mới lên grid control
+                bdsAccount.ResetCurrentItem();
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh tài khoản.\nChi tiết: {ex.Message}");
+                return false;
+            }
+            return true;
         }
 
         private void gvAccount_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
         {
             GridView view = sender as GridView;
+
             if (view.FocusedColumn == view.Columns[Account.ID_HEADER])
             {
                 string accountId = ((string)e.Value).Trim().ToUpper();
@@ -504,7 +540,8 @@ namespace NganHangPhanTan.SimpleForm
                     return;
                 }
 
-                if (AccountDAO.Instance.IsAccountIdExisted(accountId))
+                // Kiểm tra mã tài khoản có tồn tại trên các site (TaiKhoan được nhân bản)
+                if (AccountDAO.Instance.ExistById(accountId))
                 {
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản đã tồn tại. Vui lòng chọn mã khác.";
@@ -519,47 +556,33 @@ namespace NganHangPhanTan.SimpleForm
                 if (accountBalance < 0)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Số dư tài khoản không được âm.";
+                    e.ErrorText = "Số dư tài khoản không hợp lệ";
+                    return;
+                }
+
+                if (accountBalance < 100000)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Số dư tài khoản phải ít nhất 100.000 đ";
                     return;
                 }
             }
         }
 
-        private void btnUpdateAcc_Click(object sender, EventArgs e)
-        {
-            string accountId = ((DataRowView)bdsAccount[bdsAccount.Position])[Account.ID_HEADER].ToString();
-
-            if (AccountDAO.Instance.IsAccountIdExisted(accountId))
-            {
-                MessageBox.Show("Không thể hiệu chỉnh trên tài khoản đã lưu vào cơ sở dữ liệu.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            int gridPos = bdsAccount.Position;
-
-            gvAccount.Columns[Account.ID_HEADER].OptionsColumn.ReadOnly = false;
-            gvAccount.Columns[Account.BALANCE_HEADER].OptionsColumn.ReadOnly = false;
-
-            gvAccount.ShowEditor();
-
-            btnInsertAcc.Enabled = btnDeleteAcc.Enabled = btnReload.Enabled = false;
-            btnUndo.Enabled = true;
-            btnRedo.Enabled = false;
-
-            ReqUpdateCanCloseState.Invoke(this, false);
-
-            undoStack.AddLast(new UserEventData(UserEventData.EventType.CANCEL_EDIT, null, gridPos));
-            ControlUtil.ResolveStackStorage(undoStack);
-        }
-
+        /// <summary>
+        /// Tiến hành validate khi đang edit gvAccount nhưng focus nơi khác.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gvAccount_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
         {
-            // If user click undo
-            if (btnUndo.Focused)
-                return;
+            // Nếu chọn undo thì không validate
+            if (btnUndo.Focused) return;
 
-            // Save old data for undoing if save for update
-            if (btnInsertAcc.Enabled == false)
+            bool insertMode = e.RowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle;
+
+            // Validate cho row đang INSERT
+            if (insertMode)
             {
                 DataRowView row = (DataRowView)e.Row;
 
@@ -579,7 +602,7 @@ namespace NganHangPhanTan.SimpleForm
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản không hợp lệ vì chứa kí tự trắng";
                 }
-                else if (AccountDAO.Instance.IsAccountIdExisted(accountId))
+                else if (AccountDAO.Instance.ExistById(accountId))
                 {
                     e.Valid = false;
                     e.ErrorText = "Mã số tài khoản đã tồn tại. Vui lòng chọn mã khác.";
@@ -588,6 +611,7 @@ namespace NganHangPhanTan.SimpleForm
                 if (e.Valid == false)
                 {
                     gvAccount.FocusedColumn = gvAccount.Columns[Account.ID_HEADER];
+                    gvAccount.ShowEditor();
                     return;
                 }
 
@@ -595,19 +619,46 @@ namespace NganHangPhanTan.SimpleForm
                 if (accountBalance < 0)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Số dư tài khoản không được âm.";
+                    e.ErrorText = "Số dư tài khoản không hợp lệ";
+                }
+
+                if (accountBalance < 100000)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Số dư tài khoản phải ít nhất 100.000 đ";
                 }
 
                 if (e.Valid == false)
                 {
                     gvAccount.FocusedColumn = gvAccount.Columns[Account.BALANCE_HEADER];
+                    gvAccount.ShowEditor();
                     return;
                 }
-            }
+            } 
 
+            // Dữ liệu tài khoản được thêm hoặc update trên bdsAccount
             bdsAccount.EndEdit();
             bdsAccount.ResetCurrentItem();
 
+            // Pop cancel-editing event from undo stack
+            UserEventData action = undoStack.Last();
+            undoStack.RemoveLast();
+
+            // Insert mode
+            if (insertMode)
+            {
+                // Nếu INSERT, thêm vào undo stack DELETE action
+                action.Type = UserEventData.EventType.DELETE;
+                action.Content = new Account((DataRowView)bdsAccount.Current);
+                // Không cần lưu action.GridPos vì là DELETE action
+            }
+
+            undoStack.AddLast(action);
+            ControlUtil.ResolveStackStorage(undoStack);
+
+            btnUndo.Enabled = true;
+
+            // Xóa redo stack
             redoStack.Clear();
             btnRedo.Enabled = false;
 
@@ -615,89 +666,31 @@ namespace NganHangPhanTan.SimpleForm
             btnSave.Enabled = true;
         }
 
-        // Fires when a row fails validation or when it cannot be saved to the data source.
+        /// <summary>
+        /// Thực thi khi có lỗi validation trên row gvAccount
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gvAccount_InvalidRowException(object sender, DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventArgs e)
         {
             e.ExceptionMode = DevExpress.XtraEditors.Controls.ExceptionMode.NoAction;
-            // 
             if (btnUndo.Focused)
-            {
-                btnUndo_Click(null, new EventArgs());
-                return;
-            }
-            MessageBox.Show($"{e.ErrorText}.\nVui lòng điền lại thông tin hoặc chọn Undo để thoát.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            gvAccount.ShowEditor();
-        }
-
-        private void gvAccount_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
-        {
-            MessageBox.Show("gvAccount_RowDeleted", "");
-        }
-
-        private void gvAccount_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
-        {
-            MessageBox.Show("gvAccount_RowDeleting", "");
-        }
-
-        private void gvAccount_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-                e.Handled = true;
+                Undo();
+            else
+                MessageUtil.ShowErrorMsgDialog($"{e.ErrorText}.\nVui lòng điền đủ thông tin hoặc chọn Undo để thoát.");
         }
 
         private void gvAccount_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            if (bdsAccount.Count == 0 || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle)
-                return;
-            bool accountIdExisted = AccountDAO.Instance.IsAccountIdExisted(gvAccount.GetRowCellValue(e.FocusedRowHandle, Account.ID_HEADER).ToString());
+            if (bdsAccount.Count == 0 || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle) return;
+
+            string accountId = gvAccount.GetRowCellValue(e.FocusedRowHandle, Account.ID_HEADER).ToString();
+
+            bool accountIdExisted = unAllowChangeAccountId.Contains(accountId);
+
             gvAccount.Columns[Account.ID_HEADER].OptionsColumn.ReadOnly = accountIdExisted;
             gvAccount.Columns[Account.BALANCE_HEADER].OptionsColumn.ReadOnly = accountIdExisted;
         }
 
-        // The event does not fire when a cell value changes on a data source level
-        private void gvAccount_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-        {
-            string fieldName = e.Column.FieldName;
-            if (!fieldName.Equals(Account.ID_HEADER) && !fieldName.Equals(Account.BALANCE_HEADER))
-                return;
-
-            object o = gvAccount.GetRowCellValue(e.RowHandle, Account.ID_HEADER);
-            if (o == null)
-                return;
-            
-            string updatedAccountId = o.ToString();
-
-            object oldValue = gvAccount.ActiveEditor.OldEditValue;
-            //if (oldValue == null)
-            //    oldValue = Activator.CreateInstance(e.Column.ColumnType);
-
-            UpdateDataCell updatedCell = new UpdateDataCell(updatedAccountId, fieldName, oldValue);
-            undoStack.AddLast(new UserEventData(UserEventData.EventType.UPDATE, updatedCell, -1));
-            btnUndo.Enabled = true;
-            redoStack.Clear();
-            btnRedo.Enabled = false;
-        }
-
-        private void gvAccount_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
-        {
-            if (e.Column.FieldName == "Unchanged" && e.IsGetData)
-            {
-                object accountId = gvAccount.GetRowCellValue(e.ListSourceRowIndex, Account.ID_HEADER);
-                // When insert new row
-                if (accountId == null || accountId is System.DBNull)
-                    return;
-
-                object value = accountUnAllowChangeCache.GetValue(e.Row);
-                if (value != null)
-                    e.Value = value;
-                else
-                {
-                    bool accountIdExisted = AccountDAO.Instance.IsAccountIdExisted(accountId.ToString());
-                    value = accountIdExisted ? "" : "*";
-                    accountUnAllowChangeCache.SetValue(e.Row, value);
-                    e.Value = value;
-                }
-            }
-        }
     }
 }

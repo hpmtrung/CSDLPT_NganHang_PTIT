@@ -17,14 +17,14 @@
 
         private AccountDAO() { }
 
-        public bool IsAccountIdExisted(string accountId)
+        public bool ExistById(string accountId)
         {
-            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountIdExisted(N'{accountId}')");
+            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountIdExisted('{accountId}')");
         }
 
         public bool CheckAccountExistedByPersonalId(string personalId)
         {
-            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountExistedByPersonalId(N'{personalId}')");
+            return (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountExistedByPersonalId('{personalId}')");
         }
     }
 }

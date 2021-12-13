@@ -179,7 +179,6 @@
     <Compile Include="SimpleForm\fOpenCustomerAccount.Designer.cs">
       <DependentUpon>fOpenCustomerAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpdateDataCell.cs" />
     <Compile Include="UserEventData.cs" />
     <Compile Include="Util\MessageUtil.cs" />
     <Compile Include="Util\ControlUtil.cs" />

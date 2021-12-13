@@ -53,7 +53,6 @@ namespace NganHangPhanTan.SimpleForm
             this.gcAccount = new DevExpress.XtraGrid.GridControl();
             this.bdsAccount = new System.Windows.Forms.BindingSource(this.components);
             this.gvAccount = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.Unchanged = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSOTK = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemTextEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.colSODU = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -280,7 +279,7 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl2.Name = "groupControl2";
             this.groupControl2.Size = new System.Drawing.Size(1273, 454);
             this.groupControl2.TabIndex = 10;
-            this.groupControl2.Text = "Danh sách tài khoản ";
+            this.groupControl2.Text = "Danh sách tài khoản thuộc khách hàng";
             // 
             // gcAccount
             // 
@@ -304,8 +303,11 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // gvAccount
             // 
+            this.gvAccount.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvAccount.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvAccount.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvAccount.Appearance.Row.Options.UseFont = true;
             this.gvAccount.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.Unchanged,
             this.colSOTK,
             this.colSODU,
             this.colMACN1,
@@ -313,29 +315,9 @@ namespace NganHangPhanTan.SimpleForm
             this.gvAccount.GridControl = this.gcAccount;
             this.gvAccount.Name = "gvAccount";
             this.gvAccount.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gvAccount_FocusedRowChanged);
-            this.gvAccount.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gvAccount_CellValueChanged);
             this.gvAccount.InvalidRowException += new DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventHandler(this.gvAccount_InvalidRowException);
             this.gvAccount.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.gvAccount_ValidateRow);
-            this.gvAccount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gvAccount_KeyDown);
             this.gvAccount.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gvAccount_ValidatingEditor);
-            // 
-            // Unchanged
-            // 
-            this.Unchanged.AppearanceCell.Options.UseTextOptions = true;
-            this.Unchanged.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.Unchanged.Caption = " ";
-            this.Unchanged.FieldName = "Unchanged";
-            this.Unchanged.MaxWidth = 25;
-            this.Unchanged.MinWidth = 25;
-            this.Unchanged.Name = "Unchanged";
-            this.Unchanged.OptionsColumn.AllowEdit = false;
-            this.Unchanged.OptionsColumn.AllowFocus = false;
-            this.Unchanged.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
-            this.Unchanged.OptionsColumn.AllowIncrementalSearch = false;
-            this.Unchanged.UnboundType = DevExpress.Data.UnboundColumnType.String;
-            this.Unchanged.Visible = true;
-            this.Unchanged.VisibleIndex = 0;
-            this.Unchanged.Width = 25;
             // 
             // colSOTK
             // 
@@ -346,7 +328,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colSOTK.Name = "colSOTK";
             this.colSOTK.OptionsColumn.ReadOnly = true;
             this.colSOTK.Visible = true;
-            this.colSOTK.VisibleIndex = 1;
+            this.colSOTK.VisibleIndex = 0;
             this.colSOTK.Width = 300;
             // 
             // repositoryItemTextEdit2
@@ -366,7 +348,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colSODU.Name = "colSODU";
             this.colSODU.OptionsColumn.ReadOnly = true;
             this.colSODU.Visible = true;
-            this.colSODU.VisibleIndex = 2;
+            this.colSODU.VisibleIndex = 1;
             this.colSODU.Width = 293;
             // 
             // repositoryItemTextEdit1
@@ -386,7 +368,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colMACN1.Name = "colMACN1";
             this.colMACN1.OptionsColumn.ReadOnly = true;
             this.colMACN1.Visible = true;
-            this.colMACN1.VisibleIndex = 3;
+            this.colMACN1.VisibleIndex = 2;
             this.colMACN1.Width = 309;
             // 
             // colNGAYMOTK
@@ -397,7 +379,7 @@ namespace NganHangPhanTan.SimpleForm
             this.colNGAYMOTK.Name = "colNGAYMOTK";
             this.colNGAYMOTK.OptionsColumn.ReadOnly = true;
             this.colNGAYMOTK.Visible = true;
-            this.colNGAYMOTK.VisibleIndex = 4;
+            this.colNGAYMOTK.VisibleIndex = 3;
             this.colNGAYMOTK.Width = 314;
             // 
             // panel1
@@ -581,7 +563,6 @@ namespace NganHangPhanTan.SimpleForm
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnDeleteAcc;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
-        private DevExpress.XtraGrid.Columns.GridColumn Unchanged;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit2;
     }
 }

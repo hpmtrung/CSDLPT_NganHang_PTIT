@@ -217,6 +217,63 @@ namespace NganHangPhanTan.DAO
         }
 
         /// <summary>
+        /// For UPDATE, INSERT, and DELETE statements, the return value is the 
+        /// number of rows affected by the command. For all other types of statements, 
+        /// the return value is -1.
+        /// If no statements are detected that contribute to the count, the return value is -1.
+        /// If a rollback occurs, the return value is also -1.
+        /// If any error is found, result is -2.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public int ExecuteNonQuery(string query, object[] parameters, SqlDbType[] types, string[] typenames)
+        {
+            int rowsAffected = -1;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionStr))
+            {
+                SqlCommand command = new SqlCommand(query, connection)
+                {
+                    CommandTimeout = 600, // 10 mins
+                };
+
+                if (parameters != null)
+                {
+                    int i = 0;
+                    foreach (string item in Regex.Split(query, @"\s+"))
+                    {
+                        if (item.Contains("@"))
+                        {
+                            int id = item.IndexOf(',');
+                            SqlParameter param;
+                            if (id > 0)
+                                param = command.Parameters.AddWithValue(item.Remove(id), parameters[i]);
+                            else
+                                param = command.Parameters.AddWithValue(item, parameters[i]);
+                            param.SqlDbType = types[i];
+                            param.TypeName = typenames[i];
+                            i++;
+                        }
+                    }
+                }
+
+                try
+                {
+                    connection.Open();
+                    rowsAffected = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageUtil.ShowErrorMsgDialog(ex.Message);
+                    rowsAffected = -2;
+                }
+            }
+
+            return rowsAffected;
+        }
+
+        /// <summary>
         /// Execute query and return result at the first column and first row,
         /// null if result set is empty or catching error.
         /// </summary>

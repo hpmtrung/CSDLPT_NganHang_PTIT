@@ -293,7 +293,7 @@ namespace NganHangPhanTan.SimpleForm
                         }
                     case UserEventData.EventType.UPDATE:
                         {
-                            Customer oldCustomer = new Customer(((DataRowView)bdsCustomer[bdsCustomer.Find(Customer.ID_HEADER, ((Customer)action.Content).Id)]));
+                            Customer oldCustomer = new Customer((DataRowView)bdsCustomer[bdsCustomer.Find(Customer.ID_HEADER, ((Customer)action.Content).Id)]);
                             if (UndoByUpdateAction(action))
                             {
                                 action.Type = UserEventData.EventType.UPDATE;
