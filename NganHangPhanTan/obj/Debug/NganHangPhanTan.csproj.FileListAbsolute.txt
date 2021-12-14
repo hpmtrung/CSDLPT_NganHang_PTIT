@@ -95,7 +95,6 @@ F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\bin\Debug\ru\DevExpress
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fEmployeeMove.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fCustomerManage.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fCreateLogin.resources
-F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fCreateCustomerAccount.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fOpenCustomerAccount.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\bin\Debug\DevExpress.Charts.v19.2.Core.dll
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\bin\Debug\DevExpress.CodeParser.v19.2.dll
@@ -200,3 +199,6 @@ F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanT
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.ReportOpenedAccountAllBrand.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.fReportAccountDetail.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.Report.ReportAccountDetail.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fTransSendWithdrawal.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fTransExchange.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fChangeEndpointsExchangeTrans.resources

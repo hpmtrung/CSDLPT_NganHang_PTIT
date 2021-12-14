@@ -42,15 +42,23 @@ namespace NganHangPhanTan {
         
         private usp_GetCustomerAccountsDataTable tableusp_GetCustomerAccounts;
         
-        private global::System.Data.DataRelation relationFK_GD_CHUYENTIEN_NhanVien;
+        private usp_GetTransSendWithdrawalByAccountIdDataTable tableusp_GetTransSendWithdrawalByAccountId;
+        
+        private usp_GetCustomerHavingAccountInSubcriberDataTable tableusp_GetCustomerHavingAccountInSubcriber;
+        
+        private usp_GetTransExchangeByAccountIdDataTable tableusp_GetTransExchangeByAccountId;
+        
+        private global::System.Data.DataRelation relationFK_TaiKhoan_KhachHang;
+        
+        private global::System.Data.DataRelation relationusp_GetCustomerHavingAccountInSubcriber_TaiKhoan;
+        
+        private global::System.Data.DataRelation relationFK_GD_GOIRUT_TaiKhoan;
         
         private global::System.Data.DataRelation relationFK_SOTKCHUYEN_TAIKHOAN;
         
         private global::System.Data.DataRelation relationFK_GD_GOIRUT_NhanVien;
         
-        private global::System.Data.DataRelation relationFK_GD_GOIRUT_TaiKhoan;
-        
-        private global::System.Data.DataRelation relationTaiKhoan_KhachHang;
+        private global::System.Data.DataRelation relationFK_GD_CHUYENTIEN_NhanVien;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -106,6 +114,15 @@ namespace NganHangPhanTan {
                 }
                 if ((ds.Tables["usp_GetCustomerAccounts"] != null)) {
                     base.Tables.Add(new usp_GetCustomerAccountsDataTable(ds.Tables["usp_GetCustomerAccounts"]));
+                }
+                if ((ds.Tables["usp_GetTransSendWithdrawalByAccountId"] != null)) {
+                    base.Tables.Add(new usp_GetTransSendWithdrawalByAccountIdDataTable(ds.Tables["usp_GetTransSendWithdrawalByAccountId"]));
+                }
+                if ((ds.Tables["usp_GetCustomerHavingAccountInSubcriber"] != null)) {
+                    base.Tables.Add(new usp_GetCustomerHavingAccountInSubcriberDataTable(ds.Tables["usp_GetCustomerHavingAccountInSubcriber"]));
+                }
+                if ((ds.Tables["usp_GetTransExchangeByAccountId"] != null)) {
+                    base.Tables.Add(new usp_GetTransExchangeByAccountIdDataTable(ds.Tables["usp_GetTransExchangeByAccountId"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -217,6 +234,36 @@ namespace NganHangPhanTan {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public usp_GetTransSendWithdrawalByAccountIdDataTable usp_GetTransSendWithdrawalByAccountId {
+            get {
+                return this.tableusp_GetTransSendWithdrawalByAccountId;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public usp_GetCustomerHavingAccountInSubcriberDataTable usp_GetCustomerHavingAccountInSubcriber {
+            get {
+                return this.tableusp_GetCustomerHavingAccountInSubcriber;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public usp_GetTransExchangeByAccountIdDataTable usp_GetTransExchangeByAccountId {
+            get {
+                return this.tableusp_GetTransExchangeByAccountId;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -309,6 +356,15 @@ namespace NganHangPhanTan {
                 if ((ds.Tables["usp_GetCustomerAccounts"] != null)) {
                     base.Tables.Add(new usp_GetCustomerAccountsDataTable(ds.Tables["usp_GetCustomerAccounts"]));
                 }
+                if ((ds.Tables["usp_GetTransSendWithdrawalByAccountId"] != null)) {
+                    base.Tables.Add(new usp_GetTransSendWithdrawalByAccountIdDataTable(ds.Tables["usp_GetTransSendWithdrawalByAccountId"]));
+                }
+                if ((ds.Tables["usp_GetCustomerHavingAccountInSubcriber"] != null)) {
+                    base.Tables.Add(new usp_GetCustomerHavingAccountInSubcriberDataTable(ds.Tables["usp_GetCustomerHavingAccountInSubcriber"]));
+                }
+                if ((ds.Tables["usp_GetTransExchangeByAccountId"] != null)) {
+                    base.Tables.Add(new usp_GetTransExchangeByAccountIdDataTable(ds.Tables["usp_GetTransExchangeByAccountId"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -396,11 +452,30 @@ namespace NganHangPhanTan {
                     this.tableusp_GetCustomerAccounts.InitVars();
                 }
             }
-            this.relationFK_GD_CHUYENTIEN_NhanVien = this.Relations["FK_GD_CHUYENTIEN_NhanVien"];
+            this.tableusp_GetTransSendWithdrawalByAccountId = ((usp_GetTransSendWithdrawalByAccountIdDataTable)(base.Tables["usp_GetTransSendWithdrawalByAccountId"]));
+            if ((initTable == true)) {
+                if ((this.tableusp_GetTransSendWithdrawalByAccountId != null)) {
+                    this.tableusp_GetTransSendWithdrawalByAccountId.InitVars();
+                }
+            }
+            this.tableusp_GetCustomerHavingAccountInSubcriber = ((usp_GetCustomerHavingAccountInSubcriberDataTable)(base.Tables["usp_GetCustomerHavingAccountInSubcriber"]));
+            if ((initTable == true)) {
+                if ((this.tableusp_GetCustomerHavingAccountInSubcriber != null)) {
+                    this.tableusp_GetCustomerHavingAccountInSubcriber.InitVars();
+                }
+            }
+            this.tableusp_GetTransExchangeByAccountId = ((usp_GetTransExchangeByAccountIdDataTable)(base.Tables["usp_GetTransExchangeByAccountId"]));
+            if ((initTable == true)) {
+                if ((this.tableusp_GetTransExchangeByAccountId != null)) {
+                    this.tableusp_GetTransExchangeByAccountId.InitVars();
+                }
+            }
+            this.relationFK_TaiKhoan_KhachHang = this.Relations["FK_TaiKhoan_KhachHang"];
+            this.relationusp_GetCustomerHavingAccountInSubcriber_TaiKhoan = this.Relations["usp_GetCustomerHavingAccountInSubcriber_TaiKhoan"];
+            this.relationFK_GD_GOIRUT_TaiKhoan = this.Relations["FK_GD_GOIRUT_TaiKhoan"];
             this.relationFK_SOTKCHUYEN_TAIKHOAN = this.Relations["FK_SOTKCHUYEN_TAIKHOAN"];
             this.relationFK_GD_GOIRUT_NhanVien = this.Relations["FK_GD_GOIRUT_NhanVien"];
-            this.relationFK_GD_GOIRUT_TaiKhoan = this.Relations["FK_GD_GOIRUT_TaiKhoan"];
-            this.relationTaiKhoan_KhachHang = this.Relations["TaiKhoan_KhachHang"];
+            this.relationFK_GD_CHUYENTIEN_NhanVien = this.Relations["FK_GD_CHUYENTIEN_NhanVien"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -429,39 +504,24 @@ namespace NganHangPhanTan {
             base.Tables.Add(this.tableusp_GetAccountByCustomerId);
             this.tableusp_GetCustomerAccounts = new usp_GetCustomerAccountsDataTable();
             base.Tables.Add(this.tableusp_GetCustomerAccounts);
-            global::System.Data.ForeignKeyConstraint fkc;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_GD_CHUYENTIEN_NhanVien", new global::System.Data.DataColumn[] {
-                        this.tableNhanVien.MANVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_CHUYENTIEN.MANVColumn});
-            this.tableGD_CHUYENTIEN.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_SOTKCHUYEN_TAIKHOAN", new global::System.Data.DataColumn[] {
+            this.tableusp_GetTransSendWithdrawalByAccountId = new usp_GetTransSendWithdrawalByAccountIdDataTable();
+            base.Tables.Add(this.tableusp_GetTransSendWithdrawalByAccountId);
+            this.tableusp_GetCustomerHavingAccountInSubcriber = new usp_GetCustomerHavingAccountInSubcriberDataTable();
+            base.Tables.Add(this.tableusp_GetCustomerHavingAccountInSubcriber);
+            this.tableusp_GetTransExchangeByAccountId = new usp_GetTransExchangeByAccountIdDataTable();
+            base.Tables.Add(this.tableusp_GetTransExchangeByAccountId);
+            this.relationFK_TaiKhoan_KhachHang = new global::System.Data.DataRelation("FK_TaiKhoan_KhachHang", new global::System.Data.DataColumn[] {
+                        this.tableKhachHang.CMNDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTaiKhoan.CMNDColumn}, false);
+            this.Relations.Add(this.relationFK_TaiKhoan_KhachHang);
+            this.relationusp_GetCustomerHavingAccountInSubcriber_TaiKhoan = new global::System.Data.DataRelation("usp_GetCustomerHavingAccountInSubcriber_TaiKhoan", new global::System.Data.DataColumn[] {
+                        this.tableusp_GetCustomerHavingAccountInSubcriber.CMNDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTaiKhoan.CMNDColumn}, false);
+            this.Relations.Add(this.relationusp_GetCustomerHavingAccountInSubcriber_TaiKhoan);
+            this.relationFK_GD_GOIRUT_TaiKhoan = new global::System.Data.DataRelation("FK_GD_GOIRUT_TaiKhoan", new global::System.Data.DataColumn[] {
                         this.tableTaiKhoan.SOTKColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_CHUYENTIEN.SOTK_CHUYENColumn});
-            this.tableGD_CHUYENTIEN.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_GD_GOIRUT_NhanVien", new global::System.Data.DataColumn[] {
-                        this.tableNhanVien.MANVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_GOIRUT.MANVColumn});
-            this.tableGD_GOIRUT.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_GD_GOIRUT_TaiKhoan", new global::System.Data.DataColumn[] {
-                        this.tableTaiKhoan.SOTKColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_GOIRUT.SOTKColumn});
-            this.tableGD_GOIRUT.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            this.relationFK_GD_CHUYENTIEN_NhanVien = new global::System.Data.DataRelation("FK_GD_CHUYENTIEN_NhanVien", new global::System.Data.DataColumn[] {
-                        this.tableNhanVien.MANVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_CHUYENTIEN.MANVColumn}, false);
-            this.Relations.Add(this.relationFK_GD_CHUYENTIEN_NhanVien);
+                        this.tableGD_GOIRUT.SOTKColumn}, false);
+            this.Relations.Add(this.relationFK_GD_GOIRUT_TaiKhoan);
             this.relationFK_SOTKCHUYEN_TAIKHOAN = new global::System.Data.DataRelation("FK_SOTKCHUYEN_TAIKHOAN", new global::System.Data.DataColumn[] {
                         this.tableTaiKhoan.SOTKColumn}, new global::System.Data.DataColumn[] {
                         this.tableGD_CHUYENTIEN.SOTK_CHUYENColumn}, false);
@@ -470,14 +530,10 @@ namespace NganHangPhanTan {
                         this.tableNhanVien.MANVColumn}, new global::System.Data.DataColumn[] {
                         this.tableGD_GOIRUT.MANVColumn}, false);
             this.Relations.Add(this.relationFK_GD_GOIRUT_NhanVien);
-            this.relationFK_GD_GOIRUT_TaiKhoan = new global::System.Data.DataRelation("FK_GD_GOIRUT_TaiKhoan", new global::System.Data.DataColumn[] {
-                        this.tableTaiKhoan.SOTKColumn}, new global::System.Data.DataColumn[] {
-                        this.tableGD_GOIRUT.SOTKColumn}, false);
-            this.Relations.Add(this.relationFK_GD_GOIRUT_TaiKhoan);
-            this.relationTaiKhoan_KhachHang = new global::System.Data.DataRelation("TaiKhoan_KhachHang", new global::System.Data.DataColumn[] {
-                        this.tableTaiKhoan.CMNDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableKhachHang.CMNDColumn}, false);
-            this.Relations.Add(this.relationTaiKhoan_KhachHang);
+            this.relationFK_GD_CHUYENTIEN_NhanVien = new global::System.Data.DataRelation("FK_GD_CHUYENTIEN_NhanVien", new global::System.Data.DataColumn[] {
+                        this.tableNhanVien.MANVColumn}, new global::System.Data.DataColumn[] {
+                        this.tableGD_CHUYENTIEN.MANVColumn}, false);
+            this.Relations.Add(this.relationFK_GD_CHUYENTIEN_NhanVien);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -531,6 +587,24 @@ namespace NganHangPhanTan {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private bool ShouldSerializeusp_GetCustomerAccounts() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeusp_GetTransSendWithdrawalByAccountId() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeusp_GetCustomerHavingAccountInSubcriber() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeusp_GetTransExchangeByAccountId() {
             return false;
         }
         
@@ -616,6 +690,15 @@ namespace NganHangPhanTan {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void usp_GetCustomerAccountsRowChangeEventHandler(object sender, usp_GetCustomerAccountsRowChangeEvent e);
         
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void usp_GetTransSendWithdrawalByAccountIdRowChangeEventHandler(object sender, usp_GetTransSendWithdrawalByAccountIdRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void usp_GetCustomerHavingAccountInSubcriberRowChangeEventHandler(object sender, usp_GetCustomerHavingAccountInSubcriberRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void usp_GetTransExchangeByAccountIdRowChangeEventHandler(object sender, usp_GetTransExchangeByAccountIdRowChangeEvent e);
+        
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
@@ -634,6 +717,8 @@ namespace NganHangPhanTan {
             private global::System.Data.DataColumn columnSOTK_NHAN;
             
             private global::System.Data.DataColumn columnMANV;
+            
+            private global::System.Data.DataColumn columnSODUSAU;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -718,6 +803,14 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SODUSAUColumn {
+                get {
+                    return this.columnSODUSAU;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -753,7 +846,7 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public GD_CHUYENTIENRow AddGD_CHUYENTIENRow(TaiKhoanRow parentTaiKhoanRowByFK_SOTKCHUYEN_TAIKHOAN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, NhanVienRow parentNhanVienRowByFK_GD_CHUYENTIEN_NhanVien) {
+            public GD_CHUYENTIENRow AddGD_CHUYENTIENRow(TaiKhoanRow parentTaiKhoanRowByFK_SOTKCHUYEN_TAIKHOAN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, NhanVienRow parentNhanVienRowByFK_GD_CHUYENTIEN_NhanVien, decimal SODUSAU) {
                 GD_CHUYENTIENRow rowGD_CHUYENTIENRow = ((GD_CHUYENTIENRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -761,7 +854,8 @@ namespace NganHangPhanTan {
                         NGAYGD,
                         SOTIEN,
                         SOTK_NHAN,
-                        null};
+                        null,
+                        SODUSAU};
                 if ((parentTaiKhoanRowByFK_SOTKCHUYEN_TAIKHOAN != null)) {
                     columnValuesArray[1] = parentTaiKhoanRowByFK_SOTKCHUYEN_TAIKHOAN[0];
                 }
@@ -803,6 +897,7 @@ namespace NganHangPhanTan {
                 this.columnSOTIEN = base.Columns["SOTIEN"];
                 this.columnSOTK_NHAN = base.Columns["SOTK_NHAN"];
                 this.columnMANV = base.Columns["MANV"];
+                this.columnSODUSAU = base.Columns["SODUSAU"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -820,6 +915,8 @@ namespace NganHangPhanTan {
                 base.Columns.Add(this.columnSOTK_NHAN);
                 this.columnMANV = new global::System.Data.DataColumn("MANV", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMANV);
+                this.columnSODUSAU = new global::System.Data.DataColumn("SODUSAU", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSODUSAU);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnMAGD}, true));
                 this.columnMAGD.AutoIncrement = true;
@@ -836,6 +933,7 @@ namespace NganHangPhanTan {
                 this.columnSOTK_NHAN.MaxLength = 9;
                 this.columnMANV.AllowDBNull = false;
                 this.columnMANV.MaxLength = 10;
+                this.columnSODUSAU.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -981,6 +1079,8 @@ namespace NganHangPhanTan {
             
             private global::System.Data.DataColumn columnMANV;
             
+            private global::System.Data.DataColumn columnSODUSAU;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public GD_GOIRUTDataTable() {
@@ -1064,6 +1164,14 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SODUSAUColumn {
+                get {
+                    return this.columnSODUSAU;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1099,7 +1207,7 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public GD_GOIRUTRow AddGD_GOIRUTRow(TaiKhoanRow parentTaiKhoanRowByFK_GD_GOIRUT_TaiKhoan, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, NhanVienRow parentNhanVienRowByFK_GD_GOIRUT_NhanVien) {
+            public GD_GOIRUTRow AddGD_GOIRUTRow(TaiKhoanRow parentTaiKhoanRowByFK_GD_GOIRUT_TaiKhoan, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, NhanVienRow parentNhanVienRowByFK_GD_GOIRUT_NhanVien, decimal SODUSAU) {
                 GD_GOIRUTRow rowGD_GOIRUTRow = ((GD_GOIRUTRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1107,7 +1215,8 @@ namespace NganHangPhanTan {
                         LOAIGD,
                         NGAYGD,
                         SOTIEN,
-                        null};
+                        null,
+                        SODUSAU};
                 if ((parentTaiKhoanRowByFK_GD_GOIRUT_TaiKhoan != null)) {
                     columnValuesArray[1] = parentTaiKhoanRowByFK_GD_GOIRUT_TaiKhoan[0];
                 }
@@ -1149,6 +1258,7 @@ namespace NganHangPhanTan {
                 this.columnNGAYGD = base.Columns["NGAYGD"];
                 this.columnSOTIEN = base.Columns["SOTIEN"];
                 this.columnMANV = base.Columns["MANV"];
+                this.columnSODUSAU = base.Columns["SODUSAU"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1166,6 +1276,8 @@ namespace NganHangPhanTan {
                 base.Columns.Add(this.columnSOTIEN);
                 this.columnMANV = new global::System.Data.DataColumn("MANV", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMANV);
+                this.columnSODUSAU = new global::System.Data.DataColumn("SODUSAU", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSODUSAU);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnMAGD}, true));
                 this.columnMAGD.AutoIncrement = true;
@@ -1182,6 +1294,7 @@ namespace NganHangPhanTan {
                 this.columnSOTIEN.AllowDBNull = false;
                 this.columnMANV.AllowDBNull = false;
                 this.columnMANV.MaxLength = 10;
+                this.columnSODUSAU.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2096,14 +2209,17 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public TaiKhoanRow AddTaiKhoanRow(string SOTK, string CMND, decimal SODU, string MACN, System.DateTime NGAYMOTK) {
+            public TaiKhoanRow AddTaiKhoanRow(string SOTK, KhachHangRow parentKhachHangRowByFK_TaiKhoan_KhachHang, decimal SODU, string MACN, System.DateTime NGAYMOTK) {
                 TaiKhoanRow rowTaiKhoanRow = ((TaiKhoanRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SOTK,
-                        CMND,
+                        null,
                         SODU,
                         MACN,
                         NGAYMOTK};
+                if ((parentKhachHangRowByFK_TaiKhoan_KhachHang != null)) {
+                    columnValuesArray[1] = parentKhachHangRowByFK_TaiKhoan_KhachHang[0];
+                }
                 rowTaiKhoanRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTaiKhoanRow);
                 return rowTaiKhoanRow;
@@ -2155,13 +2271,10 @@ namespace NganHangPhanTan {
                 base.Columns.Add(this.columnNGAYMOTK);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnSOTK}, true));
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint2", new global::System.Data.DataColumn[] {
-                                this.columnCMND}, false));
                 this.columnSOTK.AllowDBNull = false;
                 this.columnSOTK.Unique = true;
                 this.columnSOTK.MaxLength = 9;
                 this.columnCMND.AllowDBNull = false;
-                this.columnCMND.Unique = true;
                 this.columnCMND.MaxLength = 10;
                 this.columnSODU.AllowDBNull = false;
                 this.columnMACN.AllowDBNull = false;
@@ -2804,10 +2917,10 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public KhachHangRow AddKhachHangRow(TaiKhoanRow parentTaiKhoanRowByTaiKhoan_KhachHang, string HO, string TEN, string DIACHI, string PHAI, System.DateTime NGAYCAP, string SODT, string MACN) {
+            public KhachHangRow AddKhachHangRow(string CMND, string HO, string TEN, string DIACHI, string PHAI, System.DateTime NGAYCAP, string SODT, string MACN) {
                 KhachHangRow rowKhachHangRow = ((KhachHangRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
+                        CMND,
                         HO,
                         TEN,
                         DIACHI,
@@ -2815,9 +2928,6 @@ namespace NganHangPhanTan {
                         NGAYCAP,
                         SODT,
                         MACN};
-                if ((parentTaiKhoanRowByTaiKhoan_KhachHang != null)) {
-                    columnValuesArray[0] = parentTaiKhoanRowByTaiKhoan_KhachHang[1];
-                }
                 rowKhachHangRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowKhachHangRow);
                 return rowKhachHangRow;
@@ -3631,6 +3741,975 @@ namespace NganHangPhanTan {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class usp_GetTransSendWithdrawalByAccountIdDataTable : global::System.Data.TypedTableBase<usp_GetTransSendWithdrawalByAccountIdRow> {
+            
+            private global::System.Data.DataColumn columnMAGD;
+            
+            private global::System.Data.DataColumn columnLOAIGD;
+            
+            private global::System.Data.DataColumn columnSOTIEN;
+            
+            private global::System.Data.DataColumn columnMANV;
+            
+            private global::System.Data.DataColumn columnNGAYGD;
+            
+            private global::System.Data.DataColumn columnSOTK;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdDataTable() {
+                this.TableName = "usp_GetTransSendWithdrawalByAccountId";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetTransSendWithdrawalByAccountIdDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected usp_GetTransSendWithdrawalByAccountIdDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MAGDColumn {
+                get {
+                    return this.columnMAGD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn LOAIGDColumn {
+                get {
+                    return this.columnLOAIGD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SOTIENColumn {
+                get {
+                    return this.columnSOTIEN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MANVColumn {
+                get {
+                    return this.columnMANV;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn NGAYGDColumn {
+                get {
+                    return this.columnNGAYGD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SOTKColumn {
+                get {
+                    return this.columnSOTK;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRow this[int index] {
+                get {
+                    return ((usp_GetTransSendWithdrawalByAccountIdRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransSendWithdrawalByAccountIdRowChangeEventHandler usp_GetTransSendWithdrawalByAccountIdRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransSendWithdrawalByAccountIdRowChangeEventHandler usp_GetTransSendWithdrawalByAccountIdRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransSendWithdrawalByAccountIdRowChangeEventHandler usp_GetTransSendWithdrawalByAccountIdRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransSendWithdrawalByAccountIdRowChangeEventHandler usp_GetTransSendWithdrawalByAccountIdRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Addusp_GetTransSendWithdrawalByAccountIdRow(usp_GetTransSendWithdrawalByAccountIdRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRow Addusp_GetTransSendWithdrawalByAccountIdRow(int MAGD, string LOAIGD, decimal SOTIEN, string MANV, System.DateTime NGAYGD, string SOTK) {
+                usp_GetTransSendWithdrawalByAccountIdRow rowusp_GetTransSendWithdrawalByAccountIdRow = ((usp_GetTransSendWithdrawalByAccountIdRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        MAGD,
+                        LOAIGD,
+                        SOTIEN,
+                        MANV,
+                        NGAYGD,
+                        SOTK};
+                rowusp_GetTransSendWithdrawalByAccountIdRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowusp_GetTransSendWithdrawalByAccountIdRow);
+                return rowusp_GetTransSendWithdrawalByAccountIdRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRow FindByMAGD(int MAGD) {
+                return ((usp_GetTransSendWithdrawalByAccountIdRow)(this.Rows.Find(new object[] {
+                            MAGD})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                usp_GetTransSendWithdrawalByAccountIdDataTable cln = ((usp_GetTransSendWithdrawalByAccountIdDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new usp_GetTransSendWithdrawalByAccountIdDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnMAGD = base.Columns["MAGD"];
+                this.columnLOAIGD = base.Columns["LOAIGD"];
+                this.columnSOTIEN = base.Columns["SOTIEN"];
+                this.columnMANV = base.Columns["MANV"];
+                this.columnNGAYGD = base.Columns["NGAYGD"];
+                this.columnSOTK = base.Columns["SOTK"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnMAGD = new global::System.Data.DataColumn("MAGD", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMAGD);
+                this.columnLOAIGD = new global::System.Data.DataColumn("LOAIGD", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLOAIGD);
+                this.columnSOTIEN = new global::System.Data.DataColumn("SOTIEN", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSOTIEN);
+                this.columnMANV = new global::System.Data.DataColumn("MANV", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMANV);
+                this.columnNGAYGD = new global::System.Data.DataColumn("NGAYGD", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNGAYGD);
+                this.columnSOTK = new global::System.Data.DataColumn("SOTK", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSOTK);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnMAGD}, true));
+                this.columnMAGD.AutoIncrementSeed = -1;
+                this.columnMAGD.AutoIncrementStep = -1;
+                this.columnMAGD.AllowDBNull = false;
+                this.columnMAGD.ReadOnly = true;
+                this.columnMAGD.Unique = true;
+                this.columnLOAIGD.AllowDBNull = false;
+                this.columnLOAIGD.MaxLength = 2;
+                this.columnSOTIEN.AllowDBNull = false;
+                this.columnMANV.AllowDBNull = false;
+                this.columnMANV.MaxLength = 10;
+                this.columnNGAYGD.AllowDBNull = false;
+                this.columnSOTK.AllowDBNull = false;
+                this.columnSOTK.MaxLength = 9;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRow Newusp_GetTransSendWithdrawalByAccountIdRow() {
+                return ((usp_GetTransSendWithdrawalByAccountIdRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new usp_GetTransSendWithdrawalByAccountIdRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(usp_GetTransSendWithdrawalByAccountIdRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.usp_GetTransSendWithdrawalByAccountIdRowChanged != null)) {
+                    this.usp_GetTransSendWithdrawalByAccountIdRowChanged(this, new usp_GetTransSendWithdrawalByAccountIdRowChangeEvent(((usp_GetTransSendWithdrawalByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.usp_GetTransSendWithdrawalByAccountIdRowChanging != null)) {
+                    this.usp_GetTransSendWithdrawalByAccountIdRowChanging(this, new usp_GetTransSendWithdrawalByAccountIdRowChangeEvent(((usp_GetTransSendWithdrawalByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.usp_GetTransSendWithdrawalByAccountIdRowDeleted != null)) {
+                    this.usp_GetTransSendWithdrawalByAccountIdRowDeleted(this, new usp_GetTransSendWithdrawalByAccountIdRowChangeEvent(((usp_GetTransSendWithdrawalByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.usp_GetTransSendWithdrawalByAccountIdRowDeleting != null)) {
+                    this.usp_GetTransSendWithdrawalByAccountIdRowDeleting(this, new usp_GetTransSendWithdrawalByAccountIdRowChangeEvent(((usp_GetTransSendWithdrawalByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Removeusp_GetTransSendWithdrawalByAccountIdRow(usp_GetTransSendWithdrawalByAccountIdRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DS ds = new DS();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "usp_GetTransSendWithdrawalByAccountIdDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class usp_GetCustomerHavingAccountInSubcriberDataTable : global::System.Data.TypedTableBase<usp_GetCustomerHavingAccountInSubcriberRow> {
+            
+            private global::System.Data.DataColumn columnCMND;
+            
+            private global::System.Data.DataColumn columnHOTEN;
+            
+            private global::System.Data.DataColumn columnDIACHI;
+            
+            private global::System.Data.DataColumn columnNGAYCAP;
+            
+            private global::System.Data.DataColumn columnSODT;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberDataTable() {
+                this.TableName = "usp_GetCustomerHavingAccountInSubcriber";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetCustomerHavingAccountInSubcriberDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected usp_GetCustomerHavingAccountInSubcriberDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CMNDColumn {
+                get {
+                    return this.columnCMND;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn HOTENColumn {
+                get {
+                    return this.columnHOTEN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DIACHIColumn {
+                get {
+                    return this.columnDIACHI;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn NGAYCAPColumn {
+                get {
+                    return this.columnNGAYCAP;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SODTColumn {
+                get {
+                    return this.columnSODT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow this[int index] {
+                get {
+                    return ((usp_GetCustomerHavingAccountInSubcriberRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetCustomerHavingAccountInSubcriberRowChangeEventHandler usp_GetCustomerHavingAccountInSubcriberRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetCustomerHavingAccountInSubcriberRowChangeEventHandler usp_GetCustomerHavingAccountInSubcriberRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetCustomerHavingAccountInSubcriberRowChangeEventHandler usp_GetCustomerHavingAccountInSubcriberRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetCustomerHavingAccountInSubcriberRowChangeEventHandler usp_GetCustomerHavingAccountInSubcriberRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Addusp_GetCustomerHavingAccountInSubcriberRow(usp_GetCustomerHavingAccountInSubcriberRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow Addusp_GetCustomerHavingAccountInSubcriberRow(string CMND, string HOTEN, string DIACHI, System.DateTime NGAYCAP, string SODT) {
+                usp_GetCustomerHavingAccountInSubcriberRow rowusp_GetCustomerHavingAccountInSubcriberRow = ((usp_GetCustomerHavingAccountInSubcriberRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        CMND,
+                        HOTEN,
+                        DIACHI,
+                        NGAYCAP,
+                        SODT};
+                rowusp_GetCustomerHavingAccountInSubcriberRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowusp_GetCustomerHavingAccountInSubcriberRow);
+                return rowusp_GetCustomerHavingAccountInSubcriberRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow FindByCMND(string CMND) {
+                return ((usp_GetCustomerHavingAccountInSubcriberRow)(this.Rows.Find(new object[] {
+                            CMND})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                usp_GetCustomerHavingAccountInSubcriberDataTable cln = ((usp_GetCustomerHavingAccountInSubcriberDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new usp_GetCustomerHavingAccountInSubcriberDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnCMND = base.Columns["CMND"];
+                this.columnHOTEN = base.Columns["HOTEN"];
+                this.columnDIACHI = base.Columns["DIACHI"];
+                this.columnNGAYCAP = base.Columns["NGAYCAP"];
+                this.columnSODT = base.Columns["SODT"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnCMND = new global::System.Data.DataColumn("CMND", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCMND);
+                this.columnHOTEN = new global::System.Data.DataColumn("HOTEN", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHOTEN);
+                this.columnDIACHI = new global::System.Data.DataColumn("DIACHI", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDIACHI);
+                this.columnNGAYCAP = new global::System.Data.DataColumn("NGAYCAP", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNGAYCAP);
+                this.columnSODT = new global::System.Data.DataColumn("SODT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSODT);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnCMND}, true));
+                this.columnCMND.AllowDBNull = false;
+                this.columnCMND.Unique = true;
+                this.columnCMND.MaxLength = 10;
+                this.columnHOTEN.ReadOnly = true;
+                this.columnHOTEN.MaxLength = 61;
+                this.columnDIACHI.AllowDBNull = false;
+                this.columnDIACHI.MaxLength = 100;
+                this.columnNGAYCAP.AllowDBNull = false;
+                this.columnSODT.AllowDBNull = false;
+                this.columnSODT.MaxLength = 15;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow Newusp_GetCustomerHavingAccountInSubcriberRow() {
+                return ((usp_GetCustomerHavingAccountInSubcriberRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new usp_GetCustomerHavingAccountInSubcriberRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(usp_GetCustomerHavingAccountInSubcriberRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.usp_GetCustomerHavingAccountInSubcriberRowChanged != null)) {
+                    this.usp_GetCustomerHavingAccountInSubcriberRowChanged(this, new usp_GetCustomerHavingAccountInSubcriberRowChangeEvent(((usp_GetCustomerHavingAccountInSubcriberRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.usp_GetCustomerHavingAccountInSubcriberRowChanging != null)) {
+                    this.usp_GetCustomerHavingAccountInSubcriberRowChanging(this, new usp_GetCustomerHavingAccountInSubcriberRowChangeEvent(((usp_GetCustomerHavingAccountInSubcriberRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.usp_GetCustomerHavingAccountInSubcriberRowDeleted != null)) {
+                    this.usp_GetCustomerHavingAccountInSubcriberRowDeleted(this, new usp_GetCustomerHavingAccountInSubcriberRowChangeEvent(((usp_GetCustomerHavingAccountInSubcriberRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.usp_GetCustomerHavingAccountInSubcriberRowDeleting != null)) {
+                    this.usp_GetCustomerHavingAccountInSubcriberRowDeleting(this, new usp_GetCustomerHavingAccountInSubcriberRowChangeEvent(((usp_GetCustomerHavingAccountInSubcriberRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Removeusp_GetCustomerHavingAccountInSubcriberRow(usp_GetCustomerHavingAccountInSubcriberRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DS ds = new DS();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "usp_GetCustomerHavingAccountInSubcriberDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class usp_GetTransExchangeByAccountIdDataTable : global::System.Data.TypedTableBase<usp_GetTransExchangeByAccountIdRow> {
+            
+            private global::System.Data.DataColumn columnMAGD;
+            
+            private global::System.Data.DataColumn columnSOTIEN;
+            
+            private global::System.Data.DataColumn columnMANV;
+            
+            private global::System.Data.DataColumn columnNGAYGD;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdDataTable() {
+                this.TableName = "usp_GetTransExchangeByAccountId";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetTransExchangeByAccountIdDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected usp_GetTransExchangeByAccountIdDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MAGDColumn {
+                get {
+                    return this.columnMAGD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SOTIENColumn {
+                get {
+                    return this.columnSOTIEN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MANVColumn {
+                get {
+                    return this.columnMANV;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn NGAYGDColumn {
+                get {
+                    return this.columnNGAYGD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRow this[int index] {
+                get {
+                    return ((usp_GetTransExchangeByAccountIdRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransExchangeByAccountIdRowChangeEventHandler usp_GetTransExchangeByAccountIdRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransExchangeByAccountIdRowChangeEventHandler usp_GetTransExchangeByAccountIdRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransExchangeByAccountIdRowChangeEventHandler usp_GetTransExchangeByAccountIdRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event usp_GetTransExchangeByAccountIdRowChangeEventHandler usp_GetTransExchangeByAccountIdRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Addusp_GetTransExchangeByAccountIdRow(usp_GetTransExchangeByAccountIdRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRow Addusp_GetTransExchangeByAccountIdRow(decimal SOTIEN, string MANV, System.DateTime NGAYGD) {
+                usp_GetTransExchangeByAccountIdRow rowusp_GetTransExchangeByAccountIdRow = ((usp_GetTransExchangeByAccountIdRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        SOTIEN,
+                        MANV,
+                        NGAYGD};
+                rowusp_GetTransExchangeByAccountIdRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowusp_GetTransExchangeByAccountIdRow);
+                return rowusp_GetTransExchangeByAccountIdRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRow FindByMAGD(int MAGD) {
+                return ((usp_GetTransExchangeByAccountIdRow)(this.Rows.Find(new object[] {
+                            MAGD})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                usp_GetTransExchangeByAccountIdDataTable cln = ((usp_GetTransExchangeByAccountIdDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new usp_GetTransExchangeByAccountIdDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnMAGD = base.Columns["MAGD"];
+                this.columnSOTIEN = base.Columns["SOTIEN"];
+                this.columnMANV = base.Columns["MANV"];
+                this.columnNGAYGD = base.Columns["NGAYGD"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnMAGD = new global::System.Data.DataColumn("MAGD", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMAGD);
+                this.columnSOTIEN = new global::System.Data.DataColumn("SOTIEN", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSOTIEN);
+                this.columnMANV = new global::System.Data.DataColumn("MANV", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMANV);
+                this.columnNGAYGD = new global::System.Data.DataColumn("NGAYGD", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNGAYGD);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnMAGD}, true));
+                this.columnMAGD.AutoIncrement = true;
+                this.columnMAGD.AutoIncrementSeed = -1;
+                this.columnMAGD.AutoIncrementStep = -1;
+                this.columnMAGD.AllowDBNull = false;
+                this.columnMAGD.ReadOnly = true;
+                this.columnMAGD.Unique = true;
+                this.columnSOTIEN.AllowDBNull = false;
+                this.columnMANV.AllowDBNull = false;
+                this.columnMANV.MaxLength = 10;
+                this.columnNGAYGD.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRow Newusp_GetTransExchangeByAccountIdRow() {
+                return ((usp_GetTransExchangeByAccountIdRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new usp_GetTransExchangeByAccountIdRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(usp_GetTransExchangeByAccountIdRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.usp_GetTransExchangeByAccountIdRowChanged != null)) {
+                    this.usp_GetTransExchangeByAccountIdRowChanged(this, new usp_GetTransExchangeByAccountIdRowChangeEvent(((usp_GetTransExchangeByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.usp_GetTransExchangeByAccountIdRowChanging != null)) {
+                    this.usp_GetTransExchangeByAccountIdRowChanging(this, new usp_GetTransExchangeByAccountIdRowChangeEvent(((usp_GetTransExchangeByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.usp_GetTransExchangeByAccountIdRowDeleted != null)) {
+                    this.usp_GetTransExchangeByAccountIdRowDeleted(this, new usp_GetTransExchangeByAccountIdRowChangeEvent(((usp_GetTransExchangeByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.usp_GetTransExchangeByAccountIdRowDeleting != null)) {
+                    this.usp_GetTransExchangeByAccountIdRowDeleting(this, new usp_GetTransExchangeByAccountIdRowChangeEvent(((usp_GetTransExchangeByAccountIdRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Removeusp_GetTransExchangeByAccountIdRow(usp_GetTransExchangeByAccountIdRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DS ds = new DS();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "usp_GetTransExchangeByAccountIdDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class GD_CHUYENTIENRow : global::System.Data.DataRow {
@@ -3712,12 +4791,12 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public NhanVienRow NhanVienRow {
+            public decimal SODUSAU {
                 get {
-                    return ((NhanVienRow)(this.GetParentRow(this.Table.ParentRelations["FK_GD_CHUYENTIEN_NhanVien"])));
+                    return ((decimal)(this[this.tableGD_CHUYENTIEN.SODUSAUColumn]));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_GD_CHUYENTIEN_NhanVien"]);
+                    this[this.tableGD_CHUYENTIEN.SODUSAUColumn] = value;
                 }
             }
             
@@ -3729,6 +4808,17 @@ namespace NganHangPhanTan {
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_SOTKCHUYEN_TAIKHOAN"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public NhanVienRow NhanVienRow {
+                get {
+                    return ((NhanVienRow)(this.GetParentRow(this.Table.ParentRelations["FK_GD_CHUYENTIEN_NhanVien"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_GD_CHUYENTIEN_NhanVien"]);
                 }
             }
         }
@@ -3815,12 +4905,12 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public NhanVienRow NhanVienRow {
+            public decimal SODUSAU {
                 get {
-                    return ((NhanVienRow)(this.GetParentRow(this.Table.ParentRelations["FK_GD_GOIRUT_NhanVien"])));
+                    return ((decimal)(this[this.tableGD_GOIRUT.SODUSAUColumn]));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_GD_GOIRUT_NhanVien"]);
+                    this[this.tableGD_GOIRUT.SODUSAUColumn] = value;
                 }
             }
             
@@ -3832,6 +4922,17 @@ namespace NganHangPhanTan {
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_GD_GOIRUT_TaiKhoan"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public NhanVienRow NhanVienRow {
+                get {
+                    return ((NhanVienRow)(this.GetParentRow(this.Table.ParentRelations["FK_GD_GOIRUT_NhanVien"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_GD_GOIRUT_NhanVien"]);
                 }
             }
         }
@@ -4097,6 +5198,28 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public KhachHangRow KhachHangRow {
+                get {
+                    return ((KhachHangRow)(this.GetParentRow(this.Table.ParentRelations["FK_TaiKhoan_KhachHang"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TaiKhoan_KhachHang"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow usp_GetCustomerHavingAccountInSubcriberRow {
+                get {
+                    return ((usp_GetCustomerHavingAccountInSubcriberRow)(this.GetParentRow(this.Table.ParentRelations["usp_GetCustomerHavingAccountInSubcriber_TaiKhoan"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["usp_GetCustomerHavingAccountInSubcriber_TaiKhoan"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public GD_GOIRUTRow[] GetGD_GOIRUTRows() {
                 if ((this.Table.ChildRelations["FK_GD_GOIRUT_TaiKhoan"] == null)) {
                     return new GD_GOIRUTRow[0];
@@ -4114,17 +5237,6 @@ namespace NganHangPhanTan {
                 }
                 else {
                     return ((GD_CHUYENTIENRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SOTKCHUYEN_TAIKHOAN"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public KhachHangRow[] GetKhachHangRows() {
-                if ((this.Table.ChildRelations["TaiKhoan_KhachHang"] == null)) {
-                    return new KhachHangRow[0];
-                }
-                else {
-                    return ((KhachHangRow[])(base.GetChildRows(this.Table.ChildRelations["TaiKhoan_KhachHang"])));
                 }
             }
         }
@@ -4353,17 +5465,6 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public TaiKhoanRow TaiKhoanRow {
-                get {
-                    return ((TaiKhoanRow)(this.GetParentRow(this.Table.ParentRelations["TaiKhoan_KhachHang"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["TaiKhoan_KhachHang"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsPHAINull() {
                 return this.IsNull(this.tableKhachHang.PHAIColumn);
             }
@@ -4384,6 +5485,17 @@ namespace NganHangPhanTan {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetMACNNull() {
                 this[this.tableKhachHang.MACNColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public TaiKhoanRow[] GetTaiKhoanRows() {
+                if ((this.Table.ChildRelations["FK_TaiKhoan_KhachHang"] == null)) {
+                    return new TaiKhoanRow[0];
+                }
+                else {
+                    return ((TaiKhoanRow[])(base.GetChildRows(this.Table.ChildRelations["FK_TaiKhoan_KhachHang"])));
+                }
             }
         }
         
@@ -4536,6 +5648,245 @@ namespace NganHangPhanTan {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetNGAYMOTKNull() {
                 this[this.tableusp_GetCustomerAccounts.NGAYMOTKColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class usp_GetTransSendWithdrawalByAccountIdRow : global::System.Data.DataRow {
+            
+            private usp_GetTransSendWithdrawalByAccountIdDataTable tableusp_GetTransSendWithdrawalByAccountId;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetTransSendWithdrawalByAccountIdRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableusp_GetTransSendWithdrawalByAccountId = ((usp_GetTransSendWithdrawalByAccountIdDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int MAGD {
+                get {
+                    return ((int)(this[this.tableusp_GetTransSendWithdrawalByAccountId.MAGDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.MAGDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string LOAIGD {
+                get {
+                    return ((string)(this[this.tableusp_GetTransSendWithdrawalByAccountId.LOAIGDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.LOAIGDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal SOTIEN {
+                get {
+                    return ((decimal)(this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTIENColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTIENColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string MANV {
+                get {
+                    return ((string)(this[this.tableusp_GetTransSendWithdrawalByAccountId.MANVColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.MANVColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime NGAYGD {
+                get {
+                    return ((global::System.DateTime)(this[this.tableusp_GetTransSendWithdrawalByAccountId.NGAYGDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.NGAYGDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string SOTK {
+                get {
+                    return ((string)(this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTKColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTKColumn] = value;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class usp_GetCustomerHavingAccountInSubcriberRow : global::System.Data.DataRow {
+            
+            private usp_GetCustomerHavingAccountInSubcriberDataTable tableusp_GetCustomerHavingAccountInSubcriber;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetCustomerHavingAccountInSubcriberRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableusp_GetCustomerHavingAccountInSubcriber = ((usp_GetCustomerHavingAccountInSubcriberDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CMND {
+                get {
+                    return ((string)(this[this.tableusp_GetCustomerHavingAccountInSubcriber.CMNDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetCustomerHavingAccountInSubcriber.CMNDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string HOTEN {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_GetCustomerHavingAccountInSubcriber.HOTENColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HOTEN\' in table \'usp_GetCustomerHavingAccountInSubcriber\' i" +
+                                "s DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_GetCustomerHavingAccountInSubcriber.HOTENColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DIACHI {
+                get {
+                    return ((string)(this[this.tableusp_GetCustomerHavingAccountInSubcriber.DIACHIColumn]));
+                }
+                set {
+                    this[this.tableusp_GetCustomerHavingAccountInSubcriber.DIACHIColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime NGAYCAP {
+                get {
+                    return ((global::System.DateTime)(this[this.tableusp_GetCustomerHavingAccountInSubcriber.NGAYCAPColumn]));
+                }
+                set {
+                    this[this.tableusp_GetCustomerHavingAccountInSubcriber.NGAYCAPColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string SODT {
+                get {
+                    return ((string)(this[this.tableusp_GetCustomerHavingAccountInSubcriber.SODTColumn]));
+                }
+                set {
+                    this[this.tableusp_GetCustomerHavingAccountInSubcriber.SODTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsHOTENNull() {
+                return this.IsNull(this.tableusp_GetCustomerHavingAccountInSubcriber.HOTENColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetHOTENNull() {
+                this[this.tableusp_GetCustomerHavingAccountInSubcriber.HOTENColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public TaiKhoanRow[] GetTaiKhoanRows() {
+                if ((this.Table.ChildRelations["usp_GetCustomerHavingAccountInSubcriber_TaiKhoan"] == null)) {
+                    return new TaiKhoanRow[0];
+                }
+                else {
+                    return ((TaiKhoanRow[])(base.GetChildRows(this.Table.ChildRelations["usp_GetCustomerHavingAccountInSubcriber_TaiKhoan"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class usp_GetTransExchangeByAccountIdRow : global::System.Data.DataRow {
+            
+            private usp_GetTransExchangeByAccountIdDataTable tableusp_GetTransExchangeByAccountId;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal usp_GetTransExchangeByAccountIdRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableusp_GetTransExchangeByAccountId = ((usp_GetTransExchangeByAccountIdDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int MAGD {
+                get {
+                    return ((int)(this[this.tableusp_GetTransExchangeByAccountId.MAGDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransExchangeByAccountId.MAGDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public decimal SOTIEN {
+                get {
+                    return ((decimal)(this[this.tableusp_GetTransExchangeByAccountId.SOTIENColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransExchangeByAccountId.SOTIENColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string MANV {
+                get {
+                    return ((string)(this[this.tableusp_GetTransExchangeByAccountId.MANVColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransExchangeByAccountId.MANVColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public System.DateTime NGAYGD {
+                get {
+                    return ((global::System.DateTime)(this[this.tableusp_GetTransExchangeByAccountId.NGAYGDColumn]));
+                }
+                set {
+                    this[this.tableusp_GetTransExchangeByAccountId.NGAYGDColumn] = value;
+                }
             }
         }
         
@@ -4844,6 +6195,108 @@ namespace NganHangPhanTan {
                 }
             }
         }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class usp_GetTransSendWithdrawalByAccountIdRowChangeEvent : global::System.EventArgs {
+            
+            private usp_GetTransSendWithdrawalByAccountIdRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRowChangeEvent(usp_GetTransSendWithdrawalByAccountIdRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransSendWithdrawalByAccountIdRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class usp_GetCustomerHavingAccountInSubcriberRowChangeEvent : global::System.EventArgs {
+            
+            private usp_GetCustomerHavingAccountInSubcriberRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRowChangeEvent(usp_GetCustomerHavingAccountInSubcriberRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetCustomerHavingAccountInSubcriberRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class usp_GetTransExchangeByAccountIdRowChangeEvent : global::System.EventArgs {
+            
+            private usp_GetTransExchangeByAccountIdRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRowChangeEvent(usp_GetTransExchangeByAccountIdRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public usp_GetTransExchangeByAccountIdRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
     }
 }
 namespace NganHangPhanTan.DSTableAdapters {
@@ -4976,13 +6429,11 @@ namespace NganHangPhanTan.DSTableAdapters {
             tableMapping.ColumnMappings.Add("SOTIEN", "SOTIEN");
             tableMapping.ColumnMappings.Add("SOTK_NHAN", "SOTK_NHAN");
             tableMapping.ColumnMappings.Add("MANV", "MANV");
+            tableMapping.ColumnMappings.Add("SODUSAU", "SODUSAU");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[GD_CHUYENTIEN] WHERE (([MAGD] = @Original_MAGD) AND ([SOTK_CHU" +
-                "YEN] = @Original_SOTK_CHUYEN) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = " +
-                "@Original_SOTIEN) AND ([SOTK_NHAN] = @Original_SOTK_NHAN) AND ([MANV] = @Origina" +
-                "l_MANV))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [GD_CHUYENTIEN] WHERE (([MAGD] = @Original_MAGD) AND ([SOTK_CHUYEN] = @Original_SOTK_CHUYEN) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = @Original_SOTIEN) AND ([SOTK_NHAN] = @Original_SOTK_NHAN) AND ([MANV] = @Original_MANV) AND ([SODUSAU] = @Original_SODUSAU))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MAGD", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK_CHUYEN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_CHUYEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4990,32 +6441,36 @@ namespace NganHangPhanTan.DSTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK_NHAN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_NHAN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[GD_CHUYENTIEN] ([SOTK_CHUYEN], [NGAYGD], [SOTIEN], [SOTK_NHAN], [MANV]) VALUES (@SOTK_CHUYEN, @NGAYGD, @SOTIEN, @SOTK_NHAN, @MANV);
-SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHERE (MAGD = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [GD_CHUYENTIEN] ([SOTK_CHUYEN], [NGAYGD], [SOTIEN], [SOTK_NHAN], [MANV], [SODUSAU]) VALUES (@SOTK_CHUYEN, @NGAYGD, @SOTIEN, @SOTK_NHAN, @MANV, @SODUSAU);
+SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV, SODUSAU FROM GD_CHUYENTIEN WHERE (MAGD = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK_CHUYEN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_CHUYEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK_NHAN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_NHAN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[GD_CHUYENTIEN] SET [SOTK_CHUYEN] = @SOTK_CHUYEN, [NGAYGD] = @NGAYGD, [SOTIEN] = @SOTIEN, [SOTK_NHAN] = @SOTK_NHAN, [MANV] = @MANV WHERE (([MAGD] = @Original_MAGD) AND ([SOTK_CHUYEN] = @Original_SOTK_CHUYEN) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = @Original_SOTIEN) AND ([SOTK_NHAN] = @Original_SOTK_NHAN) AND ([MANV] = @Original_MANV));
-SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHERE (MAGD = @MAGD)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [GD_CHUYENTIEN] SET [SOTK_CHUYEN] = @SOTK_CHUYEN, [NGAYGD] = @NGAYGD, [SOTIEN] = @SOTIEN, [SOTK_NHAN] = @SOTK_NHAN, [MANV] = @MANV, [SODUSAU] = @SODUSAU WHERE (([MAGD] = @Original_MAGD) AND ([SOTK_CHUYEN] = @Original_SOTK_CHUYEN) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = @Original_SOTIEN) AND ([SOTK_NHAN] = @Original_SOTK_NHAN) AND ([MANV] = @Original_MANV) AND ([SODUSAU] = @Original_SODUSAU));
+SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV, SODUSAU FROM GD_CHUYENTIEN WHERE (MAGD = @MAGD)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK_CHUYEN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_CHUYEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK_NHAN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_NHAN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MAGD", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK_CHUYEN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_CHUYEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK_NHAN", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK_NHAN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MAGD", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -5032,7 +6487,8 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM dbo.GD_CHUYENTIEN";
+            this._commandCollection[0].CommandText = "SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV, SODUSAU FROM GD_CHUYEN" +
+                "TIEN";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -5093,8 +6549,13 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_MAGD));
+        public virtual int Delete(global::System.Nullable<int> Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV, decimal Original_SODUSAU) {
+            if ((Original_MAGD.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_MAGD.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((Original_SOTK_CHUYEN == null)) {
                 throw new global::System.ArgumentNullException("Original_SOTK_CHUYEN");
             }
@@ -5115,6 +6576,7 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_MANV));
             }
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((decimal)(Original_SODUSAU));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5135,7 +6597,7 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV) {
+        public virtual int Insert(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV, decimal SODUSAU) {
             if ((SOTK_CHUYEN == null)) {
                 throw new global::System.ArgumentNullException("SOTK_CHUYEN");
             }
@@ -5156,6 +6618,7 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             else {
                 this.Adapter.InsertCommand.Parameters[4].Value = ((string)(MANV));
             }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((decimal)(SODUSAU));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5176,7 +6639,7 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV, int Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV, int MAGD) {
+        public virtual int Update(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV, decimal SODUSAU, global::System.Nullable<int> Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV, decimal Original_SODUSAU, global::System.Nullable<int> MAGD) {
             if ((SOTK_CHUYEN == null)) {
                 throw new global::System.ArgumentNullException("SOTK_CHUYEN");
             }
@@ -5197,28 +6660,40 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             else {
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(MANV));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_MAGD));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((decimal)(SODUSAU));
+            if ((Original_MAGD.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_MAGD.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
             if ((Original_SOTK_CHUYEN == null)) {
                 throw new global::System.ArgumentNullException("Original_SOTK_CHUYEN");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_SOTK_CHUYEN));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_SOTK_CHUYEN));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((System.DateTime)(Original_NGAYGD));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((decimal)(Original_SOTIEN));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((System.DateTime)(Original_NGAYGD));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((decimal)(Original_SOTIEN));
             if ((Original_SOTK_NHAN == null)) {
                 throw new global::System.ArgumentNullException("Original_SOTK_NHAN");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_SOTK_NHAN));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_SOTK_NHAN));
             }
             if ((Original_MANV == null)) {
                 throw new global::System.ArgumentNullException("Original_MANV");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_MANV));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_MANV));
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(MAGD));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((decimal)(Original_SODUSAU));
+            if ((MAGD.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(MAGD.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5239,8 +6714,8 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV, int Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV) {
-            return this.Update(SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV, Original_MAGD, Original_SOTK_CHUYEN, Original_NGAYGD, Original_SOTIEN, Original_SOTK_NHAN, Original_MANV, Original_MAGD);
+        public virtual int Update(string SOTK_CHUYEN, System.DateTime NGAYGD, decimal SOTIEN, string SOTK_NHAN, string MANV, decimal SODUSAU, global::System.Nullable<int> Original_MAGD, string Original_SOTK_CHUYEN, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_SOTK_NHAN, string Original_MANV, decimal Original_SODUSAU) {
+            return this.Update(SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV, SODUSAU, Original_MAGD, Original_SOTK_CHUYEN, Original_NGAYGD, Original_SOTIEN, Original_SOTK_NHAN, Original_MANV, Original_SODUSAU, Original_MAGD);
         }
     }
     
@@ -5371,12 +6846,14 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             tableMapping.ColumnMappings.Add("NGAYGD", "NGAYGD");
             tableMapping.ColumnMappings.Add("SOTIEN", "SOTIEN");
             tableMapping.ColumnMappings.Add("MANV", "MANV");
+            tableMapping.ColumnMappings.Add("SODUSAU", "SODUSAU");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[GD_GOIRUT] WHERE (([MAGD] = @Original_MAGD) AND ([SOTK] = @Ori" +
-                "ginal_SOTK) AND ([LOAIGD] = @Original_LOAIGD) AND ([NGAYGD] = @Original_NGAYGD) " +
-                "AND ([SOTIEN] = @Original_SOTIEN) AND ([MANV] = @Original_MANV))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [GD_GOIRUT] WHERE (([MAGD] = @Original_MAGD) AND ([SOTK] = @Original_" +
+                "SOTK) AND ([LOAIGD] = @Original_LOAIGD) AND ([NGAYGD] = @Original_NGAYGD) AND ([" +
+                "SOTIEN] = @Original_SOTIEN) AND ([MANV] = @Original_MANV) AND ([SODUSAU] = @Orig" +
+                "inal_SODUSAU))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MAGD", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -5384,33 +6861,38 @@ SELECT MAGD, SOTK_CHUYEN, NGAYGD, SOTIEN, SOTK_NHAN, MANV FROM GD_CHUYENTIEN WHE
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[GD_GOIRUT] ([SOTK], [LOAIGD], [NGAYGD], [SOTIEN], [MANV]) VALU" +
-                "ES (@SOTK, @LOAIGD, @NGAYGD, @SOTIEN, @MANV);\r\nSELECT MAGD, SOTK, LOAIGD, NGAYGD" +
-                ", SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [GD_GOIRUT] ([SOTK], [LOAIGD], [NGAYGD], [SOTIEN], [MANV], [SODUSAU])" +
+                " VALUES (@SOTK, @LOAIGD, @NGAYGD, @SOTIEN, @MANV, @SODUSAU);\r\nSELECT MAGD, SOTK," +
+                " LOAIGD, NGAYGD, SOTIEN, MANV, SODUSAU FROM GD_GOIRUT WHERE (MAGD = SCOPE_IDENTI" +
+                "TY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LOAIGD", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOAIGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[GD_GOIRUT] SET [SOTK] = @SOTK, [LOAIGD] = @LOAIGD, [NGAYGD] = @NGAYGD, [SOTIEN] = @SOTIEN, [MANV] = @MANV WHERE (([MAGD] = @Original_MAGD) AND ([SOTK] = @Original_SOTK) AND ([LOAIGD] = @Original_LOAIGD) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = @Original_SOTIEN) AND ([MANV] = @Original_MANV));
-SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MAGD)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [GD_GOIRUT] SET [SOTK] = @SOTK, [LOAIGD] = @LOAIGD, [NGAYGD] = @NGAYGD, [SOTIEN] = @SOTIEN, [MANV] = @MANV, [SODUSAU] = @SODUSAU WHERE (([MAGD] = @Original_MAGD) AND ([SOTK] = @Original_SOTK) AND ([LOAIGD] = @Original_LOAIGD) AND ([NGAYGD] = @Original_NGAYGD) AND ([SOTIEN] = @Original_SOTIEN) AND ([MANV] = @Original_MANV) AND ([SODUSAU] = @Original_SODUSAU));
+SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV, SODUSAU FROM GD_GOIRUT WHERE (MAGD = @MAGD)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LOAIGD", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOAIGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MAGD", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTK", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTK", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LOAIGD", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOAIGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NGAYGD", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NGAYGD", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SOTIEN", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SOTIEN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_MANV", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MANV", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SODUSAU", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SODUSAU", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MAGD", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "MAGD", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -5427,7 +6909,7 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM dbo.GD_GOIRUT";
+            this._commandCollection[0].CommandText = "SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV, SODUSAU FROM GD_GOIRUT";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -5488,8 +6970,13 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_MAGD));
+        public virtual int Delete(global::System.Nullable<int> Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV, decimal Original_SODUSAU) {
+            if ((Original_MAGD.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_MAGD.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((Original_SOTK == null)) {
                 throw new global::System.ArgumentNullException("Original_SOTK");
             }
@@ -5510,6 +6997,7 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_MANV));
             }
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((decimal)(Original_SODUSAU));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5530,7 +7018,7 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV) {
+        public virtual int Insert(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV, decimal SODUSAU) {
             if ((SOTK == null)) {
                 throw new global::System.ArgumentNullException("SOTK");
             }
@@ -5551,6 +7039,7 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
             else {
                 this.Adapter.InsertCommand.Parameters[4].Value = ((string)(MANV));
             }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((decimal)(SODUSAU));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5571,7 +7060,7 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV, int Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV, int MAGD) {
+        public virtual int Update(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV, decimal SODUSAU, global::System.Nullable<int> Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV, decimal Original_SODUSAU, global::System.Nullable<int> MAGD) {
             if ((SOTK == null)) {
                 throw new global::System.ArgumentNullException("SOTK");
             }
@@ -5592,28 +7081,40 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
             else {
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(MANV));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_MAGD));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((decimal)(SODUSAU));
+            if ((Original_MAGD.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_MAGD.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
             if ((Original_SOTK == null)) {
                 throw new global::System.ArgumentNullException("Original_SOTK");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_SOTK));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_SOTK));
             }
             if ((Original_LOAIGD == null)) {
                 throw new global::System.ArgumentNullException("Original_LOAIGD");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_LOAIGD));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_LOAIGD));
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((System.DateTime)(Original_NGAYGD));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((decimal)(Original_SOTIEN));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((System.DateTime)(Original_NGAYGD));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((decimal)(Original_SOTIEN));
             if ((Original_MANV == null)) {
                 throw new global::System.ArgumentNullException("Original_MANV");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_MANV));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_MANV));
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(MAGD));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((decimal)(Original_SODUSAU));
+            if ((MAGD.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(MAGD.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5634,8 +7135,8 @@ SELECT MAGD, SOTK, LOAIGD, NGAYGD, SOTIEN, MANV FROM GD_GOIRUT WHERE (MAGD = @MA
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV, int Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV) {
-            return this.Update(SOTK, LOAIGD, NGAYGD, SOTIEN, MANV, Original_MAGD, Original_SOTK, Original_LOAIGD, Original_NGAYGD, Original_SOTIEN, Original_MANV, Original_MAGD);
+        public virtual int Update(string SOTK, string LOAIGD, System.DateTime NGAYGD, decimal SOTIEN, string MANV, decimal SODUSAU, global::System.Nullable<int> Original_MAGD, string Original_SOTK, string Original_LOAIGD, System.DateTime Original_NGAYGD, decimal Original_SOTIEN, string Original_MANV, decimal Original_SODUSAU) {
+            return this.Update(SOTK, LOAIGD, NGAYGD, SOTIEN, MANV, SODUSAU, Original_MAGD, Original_SOTK, Original_LOAIGD, Original_NGAYGD, Original_SOTIEN, Original_MANV, Original_SODUSAU, Original_MAGD);
         }
     }
     
@@ -7717,6 +9218,548 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class usp_GetTransSendWithdrawalByAccountIdTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public usp_GetTransSendWithdrawalByAccountIdTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "usp_GetTransSendWithdrawalByAccountId";
+            tableMapping.ColumnMappings.Add("MAGD", "MAGD");
+            tableMapping.ColumnMappings.Add("LOAIGD", "LOAIGD");
+            tableMapping.ColumnMappings.Add("SOTIEN", "SOTIEN");
+            tableMapping.ColumnMappings.Add("MANV", "MANV");
+            tableMapping.ColumnMappings.Add("NGAYGD", "NGAYGD");
+            tableMapping.ColumnMappings.Add("SOTK", "SOTK");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::NganHangPhanTan.Properties.Settings.Default.NGANHANGConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "dbo.usp_GetTransSendWithdrawalByAccountId";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK", global::System.Data.SqlDbType.NChar, 9, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DS.usp_GetTransSendWithdrawalByAccountIdDataTable dataTable, string SOTK) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((SOTK == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(SOTK));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DS.usp_GetTransSendWithdrawalByAccountIdDataTable GetData(string SOTK) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((SOTK == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(SOTK));
+            }
+            DS.usp_GetTransSendWithdrawalByAccountIdDataTable dataTable = new DS.usp_GetTransSendWithdrawalByAccountIdDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class usp_GetCustomerHavingAccountInSubcriberTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public usp_GetCustomerHavingAccountInSubcriberTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "usp_GetCustomerHavingAccountInSubcriber";
+            tableMapping.ColumnMappings.Add("CMND", "CMND");
+            tableMapping.ColumnMappings.Add("HOTEN", "HOTEN");
+            tableMapping.ColumnMappings.Add("DIACHI", "DIACHI");
+            tableMapping.ColumnMappings.Add("NGAYCAP", "NGAYCAP");
+            tableMapping.ColumnMappings.Add("SODT", "SODT");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::NganHangPhanTan.Properties.Settings.Default.NGANHANGConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "dbo.usp_GetCustomerHavingAccountInSubcriber";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DS.usp_GetCustomerHavingAccountInSubcriberDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DS.usp_GetCustomerHavingAccountInSubcriberDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            DS.usp_GetCustomerHavingAccountInSubcriberDataTable dataTable = new DS.usp_GetCustomerHavingAccountInSubcriberDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class usp_GetTransExchangeByAccountIdTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public usp_GetTransExchangeByAccountIdTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "usp_GetTransExchangeByAccountId";
+            tableMapping.ColumnMappings.Add("MAGD", "MAGD");
+            tableMapping.ColumnMappings.Add("SOTIEN", "SOTIEN");
+            tableMapping.ColumnMappings.Add("MANV", "MANV");
+            tableMapping.ColumnMappings.Add("NGAYGD", "NGAYGD");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::NganHangPhanTan.Properties.Settings.Default.NGANHANGConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "dbo.usp_GetTransExchangeByAccountId";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SOTK", global::System.Data.SqlDbType.NChar, 9, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DS.usp_GetTransExchangeByAccountIdDataTable dataTable, string SOTK) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((SOTK == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(SOTK));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DS.usp_GetTransExchangeByAccountIdDataTable GetData(string SOTK) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((SOTK == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(SOTK));
+            }
+            DS.usp_GetTransExchangeByAccountIdDataTable dataTable = new DS.usp_GetTransExchangeByAccountIdDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7901,6 +9944,15 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateUpdatedRows(DS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._khachHangTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._khachHangTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._nhanVienTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.NhanVien.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -7937,15 +9989,6 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._khachHangTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._khachHangTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             return result;
         }
         
@@ -7956,6 +9999,14 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateInsertedRows(DS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._khachHangTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._khachHangTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._nhanVienTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.NhanVien.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -7988,14 +10039,6 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._khachHangTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._khachHangTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             return result;
         }
         
@@ -8006,14 +10049,6 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateDeletedRows(DS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._khachHangTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._khachHangTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._gD_GOIRUTTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.GD_GOIRUT.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -8043,6 +10078,14 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._nhanVienTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._khachHangTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.KhachHang.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._khachHangTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

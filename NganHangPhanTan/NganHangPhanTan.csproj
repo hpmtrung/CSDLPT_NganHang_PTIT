@@ -129,11 +129,11 @@
     <Compile Include="Report\ReportTransaction.Designer.cs">
       <DependentUpon>ReportTransaction.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimpleForm\fCreateCustomerAccount.cs">
+    <Compile Include="SimpleForm\fChangeEndpointsExchangeTrans.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SimpleForm\fCreateCustomerAccount.Designer.cs">
-      <DependentUpon>fCreateCustomerAccount.cs</DependentUpon>
+    <Compile Include="SimpleForm\fChangeEndpointsExchangeTrans.Designer.cs">
+      <DependentUpon>fChangeEndpointsExchangeTrans.cs</DependentUpon>
     </Compile>
     <Compile Include="SimpleForm\fCreateLogin.cs">
       <SubType>Form</SubType>
@@ -179,10 +179,21 @@
     <Compile Include="SimpleForm\fOpenCustomerAccount.Designer.cs">
       <DependentUpon>fOpenCustomerAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleForm\fTransExchange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fTransExchange.Designer.cs">
+      <DependentUpon>fTransExchange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleForm\fTransSendWithdrawal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimpleForm\fTransSendWithdrawal.Designer.cs">
+      <DependentUpon>fTransSendWithdrawal.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserEventData.cs" />
     <Compile Include="Util\MessageUtil.cs" />
     <Compile Include="Util\ControlUtil.cs" />
-    <Compile Include="Util\MyCache.cs" />
     <Compile Include="Util\SecurityContext.cs" />
     <EmbeddedResource Include="Report\fReportAccountDetail.resx">
       <DependentUpon>fReportAccountDetail.cs</DependentUpon>
@@ -205,8 +216,8 @@
     <EmbeddedResource Include="Report\ReportTransaction.resx">
       <DependentUpon>ReportTransaction.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SimpleForm\fCreateCustomerAccount.resx">
-      <DependentUpon>fCreateCustomerAccount.cs</DependentUpon>
+    <EmbeddedResource Include="SimpleForm\fChangeEndpointsExchangeTrans.resx">
+      <DependentUpon>fChangeEndpointsExchangeTrans.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SimpleForm\fCreateLogin.resx">
       <DependentUpon>fCreateLogin.cs</DependentUpon>
@@ -240,6 +251,12 @@
     <EmbeddedResource Include="SimpleForm\fOpenCustomerAccount.resx">
       <DependentUpon>fOpenCustomerAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fTransExchange.resx">
+      <DependentUpon>fTransExchange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleForm\fTransSendWithdrawal.resx">
+      <DependentUpon>fTransSendWithdrawal.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="DS.xsc">
       <DependentUpon>DS.xsd</DependentUpon>
@@ -262,9 +279,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SubForm\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resource\add.png" />
   </ItemGroup>

@@ -539,8 +539,8 @@ namespace NganHangPhanTan.SimpleForm
             bdsCustomer.AddNew();
 
             pnInput.Enabled = true;
-            txbBrandId.Text = this.gridBrandID;
             gcCustomer.Enabled = false;
+            txbBrandId.Text = this.gridBrandID;
             cbGender.SelectedIndex = 0;
             txbId.Enabled = true;
             txbId.Focus();

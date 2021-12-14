@@ -206,17 +206,44 @@ namespace NganHangPhanTan
                     MdiParent = this,
                 };
                 f.Show();
+                mdiFormCanCloseState.Add(f, true);
             }
         }
 
         private void btnSendWithdrawService_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Form form = ControlUtil.CheckFormExists(this, typeof(fTransSendWithdrawal));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fTransSendWithdrawal f = new fTransSendWithdrawal()
+                {
+                    MdiParent = this,
+                    ReqUpdateCanCloseState = UpdateCanCloseMDIFormStatus,
+                    ReqClose = CloseMDIForm,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
         }
 
         private void btnTransferService_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Form form = ControlUtil.CheckFormExists(this, typeof(fTransExchange));
+            if (form != null)
+                form.Activate();
+            else
+            {
+                fTransExchange f = new fTransExchange()
+                {
+                    MdiParent = this,
+                    ReqUpdateCanCloseState = UpdateCanCloseMDIFormStatus,
+                    ReqClose = CloseMDIForm,
+                };
+                f.Show();
+                mdiFormCanCloseState.Add(f, true);
+            }
         }
 
         private void btnAccTransactionReport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
