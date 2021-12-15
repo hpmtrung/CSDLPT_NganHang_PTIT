@@ -224,38 +224,24 @@ namespace NganHangPhanTan.DAO
         /// If a rollback occurs, the return value is also -1.
         /// If any error is found, result is -2.
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="spName"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public int ExecuteNonQuery(string query, object[] parameters, SqlDbType[] types, string[] typenames)
+        public int ExecuteNonQuery(string spName, SqlParameter[] parameters)
         {
             int rowsAffected = -1;
 
             using (SqlConnection connection = new SqlConnection(ConnectionStr))
             {
-                SqlCommand command = new SqlCommand(query, connection)
+                SqlCommand command = new SqlCommand(spName, connection)
                 {
                     CommandTimeout = 600, // 10 mins
+                    CommandType = CommandType.StoredProcedure
                 };
 
                 if (parameters != null)
                 {
-                    int i = 0;
-                    foreach (string item in Regex.Split(query, @"\s+"))
-                    {
-                        if (item.Contains("@"))
-                        {
-                            int id = item.IndexOf(',');
-                            SqlParameter param;
-                            if (id > 0)
-                                param = command.Parameters.AddWithValue(item.Remove(id), parameters[i]);
-                            else
-                                param = command.Parameters.AddWithValue(item, parameters[i]);
-                            param.SqlDbType = types[i];
-                            param.TypeName = typenames[i];
-                            i++;
-                        }
-                    }
+                    command.Parameters.AddRange(parameters);
                 }
 
                 try

@@ -48,10 +48,6 @@ namespace NganHangPhanTan.SimpleForm
             this.gcTrans = new DevExpress.XtraGrid.GridControl();
             this.bdsTrans = new System.Windows.Forms.BindingSource(this.components);
             this.gvTrans = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colMAGD = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colSOTIEN = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMANV = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colNGAYGD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.usp_GetAccountByCustomerIdGridControl = new DevExpress.XtraGrid.GridControl();
             this.bdsAccount = new System.Windows.Forms.BindingSource(this.components);
@@ -63,14 +59,10 @@ namespace NganHangPhanTan.SimpleForm
             this.pnInput = new System.Windows.Forms.Panel();
             this.gcEndpoints = new DevExpress.XtraGrid.GridControl();
             this.gvEndpoints = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnReload = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.teModifiedBalance = new DevExpress.XtraEditors.TextEdit();
+            this.teRemainBalance = new DevExpress.XtraEditors.TextEdit();
             this.btnChangeEndpoints = new System.Windows.Forms.Button();
             this.btnCommit = new System.Windows.Forms.Button();
             this.teInitBalance = new DevExpress.XtraEditors.TextEdit();
@@ -80,6 +72,12 @@ namespace NganHangPhanTan.SimpleForm
             this.tableAdapterManager = new NganHangPhanTan.DSTableAdapters.TableAdapterManager();
             this.taCustomer = new NganHangPhanTan.DSTableAdapters.usp_GetCustomerHavingAccountInSubcriberTableAdapter();
             this.taAccount = new NganHangPhanTan.DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter();
+            this.colMAGD = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSOTIEN = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMANV = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colNGAYGD = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSOTK_NHAN = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCMND1 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountInSubcriberGridControl)).BeginInit();
@@ -106,7 +104,7 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.gvEndpoints)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.teModifiedBalance.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teInitBalance.Properties)).BeginInit();
             this.SuspendLayout();
             // 
@@ -281,69 +279,11 @@ namespace NganHangPhanTan.SimpleForm
             this.colMAGD,
             this.colSOTIEN,
             this.colMANV,
-            this.colNGAYGD});
+            this.colNGAYGD,
+            this.colSOTK_NHAN,
+            this.colCMND1});
             this.gvTrans.GridControl = this.gcTrans;
             this.gvTrans.Name = "gvTrans";
-            // 
-            // colMAGD
-            // 
-            this.colMAGD.AppearanceCell.Options.UseTextOptions = true;
-            this.colMAGD.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colMAGD.AppearanceHeader.Options.UseTextOptions = true;
-            this.colMAGD.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colMAGD.Caption = "Mã GD";
-            this.colMAGD.FieldName = "MAGD";
-            this.colMAGD.MinWidth = 25;
-            this.colMAGD.Name = "colMAGD";
-            this.colMAGD.OptionsColumn.ReadOnly = true;
-            this.colMAGD.Visible = true;
-            this.colMAGD.VisibleIndex = 0;
-            this.colMAGD.Width = 94;
-            // 
-            // colSOTIEN
-            // 
-            this.colSOTIEN.AppearanceCell.Options.UseTextOptions = true;
-            this.colSOTIEN.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.colSOTIEN.AppearanceHeader.Options.UseTextOptions = true;
-            this.colSOTIEN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colSOTIEN.Caption = "Số tiền";
-            this.colSOTIEN.FieldName = "SOTIEN";
-            this.colSOTIEN.MinWidth = 25;
-            this.colSOTIEN.Name = "colSOTIEN";
-            this.colSOTIEN.OptionsColumn.ReadOnly = true;
-            this.colSOTIEN.Visible = true;
-            this.colSOTIEN.VisibleIndex = 1;
-            this.colSOTIEN.Width = 94;
-            // 
-            // colMANV
-            // 
-            this.colMANV.AppearanceCell.Options.UseTextOptions = true;
-            this.colMANV.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colMANV.AppearanceHeader.Options.UseTextOptions = true;
-            this.colMANV.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colMANV.Caption = "Mã NV";
-            this.colMANV.FieldName = "MANV";
-            this.colMANV.MinWidth = 25;
-            this.colMANV.Name = "colMANV";
-            this.colMANV.OptionsColumn.ReadOnly = true;
-            this.colMANV.Visible = true;
-            this.colMANV.VisibleIndex = 2;
-            this.colMANV.Width = 94;
-            // 
-            // colNGAYGD
-            // 
-            this.colNGAYGD.AppearanceCell.Options.UseTextOptions = true;
-            this.colNGAYGD.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colNGAYGD.AppearanceHeader.Options.UseTextOptions = true;
-            this.colNGAYGD.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colNGAYGD.Caption = "Ngày GD";
-            this.colNGAYGD.FieldName = "NGAYGD";
-            this.colNGAYGD.MinWidth = 25;
-            this.colNGAYGD.Name = "colNGAYGD";
-            this.colNGAYGD.OptionsColumn.ReadOnly = true;
-            this.colNGAYGD.Visible = true;
-            this.colNGAYGD.VisibleIndex = 3;
-            this.colNGAYGD.Width = 94;
             // 
             // groupControl3
             // 
@@ -471,67 +411,11 @@ namespace NganHangPhanTan.SimpleForm
             this.gvEndpoints.Appearance.HeaderPanel.Options.UseFont = true;
             this.gvEndpoints.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gvEndpoints.Appearance.Row.Options.UseFont = true;
-            this.gvEndpoints.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.gridColumn2,
-            this.gridColumn3,
-            this.gridColumn4});
             this.gvEndpoints.GridControl = this.gcEndpoints;
             this.gvEndpoints.Name = "gvEndpoints";
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn1.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn1.AppearanceHeader.Options.UseTextOptions = true;
-            this.gridColumn1.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn1.Caption = "Số TK";
-            this.gridColumn1.MinWidth = 25;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 0;
-            this.gridColumn1.Width = 94;
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn2.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn2.AppearanceHeader.Options.UseTextOptions = true;
-            this.gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn2.Caption = "Họ tên";
-            this.gridColumn2.MinWidth = 25;
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 1;
-            this.gridColumn2.Width = 94;
-            // 
-            // gridColumn3
-            // 
-            this.gridColumn3.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn3.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn3.AppearanceHeader.Options.UseTextOptions = true;
-            this.gridColumn3.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn3.Caption = "CMND";
-            this.gridColumn3.MinWidth = 25;
-            this.gridColumn3.Name = "gridColumn3";
-            this.gridColumn3.Visible = true;
-            this.gridColumn3.VisibleIndex = 2;
-            this.gridColumn3.Width = 94;
-            // 
-            // gridColumn4
-            // 
-            this.gridColumn4.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn4.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn4.AppearanceHeader.Options.UseTextOptions = true;
-            this.gridColumn4.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridColumn4.Caption = "Số tiền chuyển";
-            this.gridColumn4.DisplayFormat.FormatString = "{0:c0}";
-            this.gridColumn4.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.gridColumn4.MinWidth = 25;
-            this.gridColumn4.Name = "gridColumn4";
-            this.gridColumn4.Visible = true;
-            this.gridColumn4.VisibleIndex = 3;
-            this.gridColumn4.Width = 94;
+            this.gvEndpoints.InvalidRowException += new DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventHandler(this.gvEndpoints_InvalidRowException);
+            this.gvEndpoints.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.gvEndpoints_ValidateRow);
+            this.gvEndpoints.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gvEndpoints_ValidatingEditor);
             // 
             // panel2
             // 
@@ -550,14 +434,14 @@ namespace NganHangPhanTan.SimpleForm
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(297, 33);
             this.btnReload.TabIndex = 7;
-            this.btnReload.Text = "Làm mới";
+            this.btnReload.Text = "Reload";
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.teModifiedBalance);
+            this.panel1.Controls.Add(this.teRemainBalance);
             this.panel1.Controls.Add(this.btnChangeEndpoints);
             this.panel1.Controls.Add(this.btnCommit);
             this.panel1.Controls.Add(this.teInitBalance);
@@ -568,22 +452,22 @@ namespace NganHangPhanTan.SimpleForm
             this.panel1.Size = new System.Drawing.Size(297, 143);
             this.panel1.TabIndex = 4;
             // 
-            // teModifiedBalance
+            // teRemainBalance
             // 
-            this.teModifiedBalance.Location = new System.Drawing.Point(106, 56);
-            this.teModifiedBalance.Name = "teModifiedBalance";
-            this.teModifiedBalance.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teModifiedBalance.Properties.Appearance.Options.UseFont = true;
-            this.teModifiedBalance.Properties.DisplayFormat.FormatString = "{0:c0}";
-            this.teModifiedBalance.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.teModifiedBalance.Properties.EditFormat.FormatString = "{0:c0}";
-            this.teModifiedBalance.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.teModifiedBalance.Properties.Mask.EditMask = "c0";
-            this.teModifiedBalance.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.teModifiedBalance.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.teModifiedBalance.Properties.ReadOnly = true;
-            this.teModifiedBalance.Size = new System.Drawing.Size(174, 30);
-            this.teModifiedBalance.TabIndex = 3;
+            this.teRemainBalance.Location = new System.Drawing.Point(106, 56);
+            this.teRemainBalance.Name = "teRemainBalance";
+            this.teRemainBalance.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teRemainBalance.Properties.Appearance.Options.UseFont = true;
+            this.teRemainBalance.Properties.DisplayFormat.FormatString = "{0:c0}";
+            this.teRemainBalance.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.teRemainBalance.Properties.EditFormat.FormatString = "{0:c0}";
+            this.teRemainBalance.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.teRemainBalance.Properties.Mask.EditMask = "c0";
+            this.teRemainBalance.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.teRemainBalance.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.teRemainBalance.Properties.ReadOnly = true;
+            this.teRemainBalance.Size = new System.Drawing.Size(174, 30);
+            this.teRemainBalance.TabIndex = 3;
             // 
             // btnChangeEndpoints
             // 
@@ -667,6 +551,76 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.taAccount.ClearBeforeFill = true;
             // 
+            // colMAGD
+            // 
+            this.colMAGD.Caption = "Mã GD";
+            this.colMAGD.FieldName = "MAGD";
+            this.colMAGD.MinWidth = 25;
+            this.colMAGD.Name = "colMAGD";
+            this.colMAGD.OptionsColumn.ReadOnly = true;
+            this.colMAGD.Visible = true;
+            this.colMAGD.VisibleIndex = 0;
+            this.colMAGD.Width = 94;
+            // 
+            // colSOTIEN
+            // 
+            this.colSOTIEN.Caption = "Số tiền chuyển";
+            this.colSOTIEN.DisplayFormat.FormatString = "{0:c0}";
+            this.colSOTIEN.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colSOTIEN.FieldName = "SOTIEN";
+            this.colSOTIEN.MinWidth = 25;
+            this.colSOTIEN.Name = "colSOTIEN";
+            this.colSOTIEN.OptionsColumn.ReadOnly = true;
+            this.colSOTIEN.Visible = true;
+            this.colSOTIEN.VisibleIndex = 1;
+            this.colSOTIEN.Width = 94;
+            // 
+            // colMANV
+            // 
+            this.colMANV.Caption = "Mã NV";
+            this.colMANV.FieldName = "MANV";
+            this.colMANV.MinWidth = 25;
+            this.colMANV.Name = "colMANV";
+            this.colMANV.OptionsColumn.ReadOnly = true;
+            this.colMANV.Visible = true;
+            this.colMANV.VisibleIndex = 2;
+            this.colMANV.Width = 94;
+            // 
+            // colNGAYGD
+            // 
+            this.colNGAYGD.Caption = "Ngày GD";
+            this.colNGAYGD.DisplayFormat.FormatString = "d";
+            this.colNGAYGD.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.colNGAYGD.FieldName = "NGAYGD";
+            this.colNGAYGD.MinWidth = 25;
+            this.colNGAYGD.Name = "colNGAYGD";
+            this.colNGAYGD.OptionsColumn.ReadOnly = true;
+            this.colNGAYGD.Visible = true;
+            this.colNGAYGD.VisibleIndex = 3;
+            this.colNGAYGD.Width = 94;
+            // 
+            // colSOTK_NHAN
+            // 
+            this.colSOTK_NHAN.Caption = "Số TK nhận";
+            this.colSOTK_NHAN.FieldName = "SOTK_NHAN";
+            this.colSOTK_NHAN.MinWidth = 25;
+            this.colSOTK_NHAN.Name = "colSOTK_NHAN";
+            this.colSOTK_NHAN.OptionsColumn.ReadOnly = true;
+            this.colSOTK_NHAN.Visible = true;
+            this.colSOTK_NHAN.VisibleIndex = 4;
+            this.colSOTK_NHAN.Width = 94;
+            // 
+            // colCMND1
+            // 
+            this.colCMND1.Caption = "CMND KH nhận";
+            this.colCMND1.FieldName = "CMND";
+            this.colCMND1.MinWidth = 25;
+            this.colCMND1.Name = "colCMND1";
+            this.colCMND1.OptionsColumn.ReadOnly = true;
+            this.colCMND1.Visible = true;
+            this.colCMND1.VisibleIndex = 5;
+            this.colCMND1.Width = 94;
+            // 
             // fTransExchange
             // 
             this.Appearance.Options.UseFont = true;
@@ -712,7 +666,7 @@ namespace NganHangPhanTan.SimpleForm
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.teModifiedBalance.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teInitBalance.Properties)).EndInit();
             this.ResumeLayout(false);
 
@@ -739,21 +693,13 @@ namespace NganHangPhanTan.SimpleForm
         private DSTableAdapters.usp_GetCustomerHavingAccountInSubcriberTableAdapter taCustomer;
         private System.Windows.Forms.BindingSource bdsAccount;
         private DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter taAccount;
-        private DevExpress.XtraGrid.Columns.GridColumn colMAGD;
-        private DevExpress.XtraGrid.Columns.GridColumn colSOTIEN;
-        private DevExpress.XtraGrid.Columns.GridColumn colMANV;
-        private DevExpress.XtraGrid.Columns.GridColumn colNGAYGD;
         private DevExpress.XtraGrid.GridControl gcEndpoints;
         private DevExpress.XtraGrid.Views.Grid.GridView gvEndpoints;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnCommit;
         private System.Windows.Forms.Button btnChangeEndpoints;
         private System.Windows.Forms.Panel panel1;
-        private DevExpress.XtraEditors.TextEdit teModifiedBalance;
+        private DevExpress.XtraEditors.TextEdit teRemainBalance;
         private DevExpress.XtraEditors.TextEdit teInitBalance;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -770,5 +716,11 @@ namespace NganHangPhanTan.SimpleForm
         private DevExpress.XtraGrid.Columns.GridColumn colSOTK;
         private DevExpress.XtraGrid.Columns.GridColumn colSODU;
         private DevExpress.XtraGrid.Columns.GridColumn colNGAYMOTK;
+        private DevExpress.XtraGrid.Columns.GridColumn colMAGD;
+        private DevExpress.XtraGrid.Columns.GridColumn colSOTIEN;
+        private DevExpress.XtraGrid.Columns.GridColumn colMANV;
+        private DevExpress.XtraGrid.Columns.GridColumn colNGAYGD;
+        private DevExpress.XtraGrid.Columns.GridColumn colSOTK_NHAN;
+        private DevExpress.XtraGrid.Columns.GridColumn colCMND1;
     }
 }

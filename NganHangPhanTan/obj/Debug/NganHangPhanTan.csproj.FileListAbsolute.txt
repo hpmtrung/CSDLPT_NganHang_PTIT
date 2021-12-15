@@ -202,3 +202,4 @@ F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanT
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fTransSendWithdrawal.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fTransExchange.resources
 F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\obj\Debug\NganHangPhanTan.SimpleForm.fChangeEndpointsExchangeTrans.resources
+F:\IT\School\CSDLPhanTan\NganHangPhanTan\NganHangPhanTan\bin\Debug\System.ComponentModel.Annotations.dll

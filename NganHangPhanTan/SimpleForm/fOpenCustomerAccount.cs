@@ -5,6 +5,7 @@ using NganHangPhanTan.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,7 +23,7 @@ namespace NganHangPhanTan.SimpleForm
         public Action<Form, bool> ReqUpdateCanCloseState { get => reqUpdateCanCloseState; set => reqUpdateCanCloseState = value; }
         public Action<Form> ReqClose { get => reqClose; set => reqClose = value; }
 
-        private bool acceptGvCustomerFocusedRowChanging;
+        private bool acceptGvFocusedRowChanging;
         private DataTable bufferAccountDataTable;
         private HashSet<string> unAllowChangeAccountId = new HashSet<string>();
 
@@ -70,7 +71,7 @@ namespace NganHangPhanTan.SimpleForm
 
             btnReload.Enabled = true;
             btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
-            acceptGvCustomerFocusedRowChanging = true;
+            acceptGvFocusedRowChanging = true;
         }
 
         private void LoadAccountFromCustomer()
@@ -106,7 +107,7 @@ namespace NganHangPhanTan.SimpleForm
 
         private void gvCustomer_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            if (acceptGvCustomerFocusedRowChanging == false)
+            if (acceptGvFocusedRowChanging == false)
                 return;
 
             if (!btnSave.Enabled)
@@ -117,7 +118,7 @@ namespace NganHangPhanTan.SimpleForm
 
             DialogResult res = MessageBox.Show("Lưu các thay đổi trên danh sách tài khoản của khách hàng hiện tại?", "Xác nhận", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (res == DialogResult.Yes)
-                btnSave_Click(null, new EventArgs());
+                SaveAccountData();
             else if (res == DialogResult.No)
                 LoadAccountFromCustomer();
             else
@@ -125,9 +126,9 @@ namespace NganHangPhanTan.SimpleForm
                 // Return to previous row in customer table
                 if (e.PrevFocusedRowHandle >= 0)
                 {
-                    acceptGvCustomerFocusedRowChanging = false;
+                    acceptGvFocusedRowChanging = false;
                     gvCustomer.FocusedRowHandle = e.PrevFocusedRowHandle;
-                    acceptGvCustomerFocusedRowChanging = true;
+                    acceptGvFocusedRowChanging = true;
                 }
             }
         }
@@ -260,8 +261,11 @@ namespace NganHangPhanTan.SimpleForm
                     row[Account.OPEN_DATE_HEADER]);
             }
 
-            int rowAffected = DataProvider.Instance.ExecuteNonQuery("EXEC dbo.usp_UpdateCustomerAccounts @UpdatedAccounts", 
-                new object[] { bufferAccountDataTable }, new SqlDbType[] { SqlDbType.Structured }, new string[] { "dbo.TBTYPE_TAIKHOAN" });
+            SqlParameter tableParam = new SqlParameter("@UpdatedAccounts", bufferAccountDataTable);
+            tableParam.SqlDbType = SqlDbType.Structured;
+            tableParam.TypeName = "dbo.TBTYPE_TAIKHOAN";
+
+            int rowAffected = DataProvider.Instance.ExecuteNonQuery("dbo.usp_UpdateCustomerAccounts", new SqlParameter[] { tableParam });
 
             if (rowAffected > 0)
             {

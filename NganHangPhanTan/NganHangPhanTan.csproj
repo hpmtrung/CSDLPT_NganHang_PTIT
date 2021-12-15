@@ -57,6 +57,10 @@
     <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v19.2.Extensions, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -86,6 +90,8 @@
     <Compile Include="DTO\Brand.cs" />
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Employee.cs" />
+    <Compile Include="DTO\ExchangeEndpoint.cs" />
+    <Compile Include="DTO\ExchangeTransaction.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="Report\fReportAccountDetail.cs">
       <SubType>Form</SubType>
@@ -269,6 +275,7 @@
     <None Include="DS.xss">
       <DependentUpon>DS.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
