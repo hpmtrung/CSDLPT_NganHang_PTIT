@@ -480,7 +480,7 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
               <Mapping SourceColumn="SOTIEN" DataSetColumn="SOTIEN" />
               <Mapping SourceColumn="MANV" DataSetColumn="MANV" />
               <Mapping SourceColumn="NGAYGD" DataSetColumn="NGAYGD" />
-              <Mapping SourceColumn="SOTK" DataSetColumn="SOTK" />
+              <Mapping SourceColumn="HOTENNV" DataSetColumn="HOTENNV" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -526,7 +526,7 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
               <Mapping SourceColumn="MANV" DataSetColumn="MANV" />
               <Mapping SourceColumn="NGAYGD" DataSetColumn="NGAYGD" />
               <Mapping SourceColumn="SOTK_NHAN" DataSetColumn="SOTK_NHAN" />
-              <Mapping SourceColumn="CMND" DataSetColumn="CMND" />
+              <Mapping SourceColumn="HOTENNV" DataSetColumn="HOTENNV" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -923,10 +923,10 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
                 </xs:simpleType>
               </xs:element>
               <xs:element name="NGAYGD" msprop:Generator_ColumnVarNameInTable="columnNGAYGD" msprop:Generator_ColumnPropNameInRow="NGAYGD" msprop:Generator_ColumnPropNameInTable="NGAYGDColumn" msprop:Generator_UserColumnName="NGAYGD" type="xs:dateTime" />
-              <xs:element name="SOTK" msprop:Generator_ColumnVarNameInTable="columnSOTK" msprop:Generator_ColumnPropNameInRow="SOTK" msprop:Generator_ColumnPropNameInTable="SOTKColumn" msprop:Generator_UserColumnName="SOTK">
+              <xs:element name="HOTENNV" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHOTENNV" msprop:Generator_ColumnPropNameInRow="HOTENNV" msprop:Generator_ColumnPropNameInTable="HOTENNVColumn" msprop:Generator_UserColumnName="HOTENNV" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="9" />
+                    <xs:maxLength value="61" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -988,10 +988,10 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CMND" msprop:Generator_ColumnVarNameInTable="columnCMND" msprop:Generator_ColumnPropNameInRow="CMND" msprop:Generator_ColumnPropNameInTable="CMNDColumn" msprop:Generator_UserColumnName="CMND">
+              <xs:element name="HOTENNV" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnHOTENNV" msprop:Generator_ColumnPropNameInRow="HOTENNV" msprop:Generator_ColumnPropNameInTable="HOTENNVColumn" msprop:Generator_UserColumnName="HOTENNV" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="10" />
+                    <xs:maxLength value="61" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

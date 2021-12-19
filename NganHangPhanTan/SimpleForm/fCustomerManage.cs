@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace NganHangPhanTan.SimpleForm
@@ -79,16 +80,9 @@ namespace NganHangPhanTan.SimpleForm
                     return;
                 }
 
-                if (customerId.Contains(" "))
+                if (customerId.Contains(" ") || !Regex.Match(customerId, "\\d{10}").Success)
                 {
-                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không hợp lệ");
-                    txbId.Focus();
-                    return;
-                }
-
-                if (customerId.Length > 10)
-                {
-                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không được vượt quá 10 kí tự");
+                    MessageUtil.ShowErrorMsgDialog("Mã khách hàng (CMND) không hợp lệ hoặc chưa đủ 10 chữ số");
                     txbId.Focus();
                     return;
                 }
@@ -278,16 +272,23 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.DELETE;
                                 action.GridPos = gridPos;
                                 redoStack.AddLast(action);
+                            } else
+                            {
+                                undoStack.AddLast(action);
                             }
                             break;
                         }
                     case UserEventData.EventType.DELETE:
                         {
-                            if (UndoByDeleteAction(action))
+                            int res = UndoByDeleteAction(action);
+                            if (res == 1)
                             {
                                 action.Type = UserEventData.EventType.INSERT;
                                 redoStack.AddLast(action);
                                 bdsCustomer.Position = action.GridPos;
+                            } else if (res == 0)
+                            {
+                                undoStack.AddLast(action);
                             }
                             break;
                         }
@@ -299,6 +300,9 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.UPDATE;
                                 action.Content = oldCustomer;
                                 redoStack.AddLast(action);
+                            } else
+                            {
+                                undoStack.AddLast(action);
                             }
                             break;
                         }
@@ -326,16 +330,23 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.DELETE;
                                 action.GridPos = gridPos;
                                 undoStack.AddLast(action);
+                            } else
+                            {
+                                redoStack.AddLast(action);
                             }
                             break;
                         }
                     case UserEventData.EventType.DELETE:
                         {
-                            if (UndoByDeleteAction(action))
+                            int res = UndoByDeleteAction(action);
+                            if (res == 1)
                             {
                                 action.Type = UserEventData.EventType.INSERT;
                                 undoStack.AddLast(action);
                                 bdsCustomer.Position = action.GridPos;
+                            } else if (res == 0)
+                            {
+                                redoStack.AddLast(action);
                             }
                             break;
                         }
@@ -347,6 +358,10 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.UPDATE;
                                 action.Content = oldCustomer;
                                 undoStack.AddLast(action);
+                            }
+                            else
+                            {
+                                redoStack.AddLast(action);
                             }
                             break;
                         }
@@ -419,6 +434,10 @@ namespace NganHangPhanTan.SimpleForm
             txbPhoneNum.Text = customer.PhoneNum;
             cbGender.SelectedItem = customer.Gender;
             deDateAccept.DateTime = customer.DateAccept;
+
+            cbGender.DataBindings[0].WriteValue();
+            deDateAccept.DataBindings[0].WriteValue();
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -431,26 +450,25 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                string msg = btnSave.Tag == btnInsert ? "Lỗi không thể thêm khách hàng mới" : "Lỗi không thể hiệu chỉnh khách hàng";
-                MessageUtil.ShowErrorMsgDialog($"{msg}.\n{ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể khôi phục khách hàng đã xóa có số CMND là {customer.Id}, thử thực hiện lại.\nChi tiết: {ex.Message}");
                 return false;
             }
             return true;
         }
 
-        private bool UndoByDeleteAction(UserEventData action)
+        private int UndoByDeleteAction(UserEventData action)
         {
             Customer customer = (Customer)action.Content;
             bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
 
-            if (AccountDAO.Instance.CheckAccountExistedByPersonalId(customer.Id))
+            if (CustomerDAO.Instance.HavingAnyAccount(customer.Id))
             {
-                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n");
-                return false;
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản. Vui lòng thực hiện xóa tài khoản trước.\n");
+                return -1;
             }
 
-            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa khách hàng?") != DialogResult.OK)
-                return false;
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa khách hàng có số CMND {customer.Id}?") != DialogResult.OK)
+                return 0;
 
             try
             {
@@ -462,14 +480,14 @@ namespace NganHangPhanTan.SimpleForm
             catch (Exception ex)
             {
                 // Phục hồi nếu xóa không thành công
-                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa khách hàng. Thử thực hiện lại.\n{ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa khách hàng, vui lòng thực hiện lại.\nChi tiết: {ex.Message}");
                 taCustomer.Fill(this.DS.KhachHang);
                 bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customer.Id);
-                return false;
+                return 0;
             }
 
             btnDelete.Enabled = bdsCustomer.Count != 0;
-            return true;
+            return 1;
         }
 
         private bool UndoByUpdateAction(UserEventData action)
@@ -485,6 +503,9 @@ namespace NganHangPhanTan.SimpleForm
             cbGender.SelectedItem = updatedCustomer.Gender;
             deDateAccept.DateTime = updatedCustomer.DateAccept;
 
+            cbGender.DataBindings[0].WriteValue();
+            deDateAccept.DataBindings[0].WriteValue();
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -495,32 +516,11 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh khách hàng.\nChi tiết: {ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh khách hàng, thử thực hiện lại.\nChi tiết: {ex.Message}");
                 return false;
             }
 
             return true;
-        }
-
-        private void cbBrand_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Nếu combobox chi nhánh chưa load danh sách phân mãnh thì thoát
-            if (cbBrand.SelectedValue.ToString().Equals("System.Data.RowView"))
-                return;
-            string serverName = cbBrand.SelectedValue.ToString();
-            User user = SecurityContext.User;
-            if (cbBrand.SelectedIndex != user.BrandIndex)
-                DataProvider.Instance.SetServerToRemote(serverName);
-            else
-                DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
-            if (!DataProvider.Instance.CheckConnection())
-            {
-                MessageUtil.ShowErrorMsgDialog("Lỗi kết nối sang chi nhánh mới");
-                return;
-            }
-            // Tải dữ liệu từ site mới về
-            taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
-            taCustomer.Fill(this.DS.KhachHang);
         }
 
         private void fCustomerManage_FormClosing(object sender, FormClosingEventArgs e)
@@ -560,13 +560,13 @@ namespace NganHangPhanTan.SimpleForm
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             string customerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
-            if (AccountDAO.Instance.CheckAccountExistedByPersonalId(customerId))
+            if (CustomerDAO.Instance.HavingAnyAccount(customerId))
             {
-                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản.\nVui lòng thực hiện xóa tài khoản trước.\n");
+                MessageUtil.ShowErrorMsgDialog("Không thể xóa khách hàng đã có tài khoản. Vui lòng thực hiện xóa tài khoản trước.\n");
                 return;
             }
 
-            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa khách hàng?") == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa khách hàng có số CMND {customerId}?") == DialogResult.OK)
             {
                 string deletedCustomerId = ((DataRowView)bdsCustomer[bdsCustomer.Position])[Customer.ID_HEADER].ToString();
                 Customer deletedCustomer;
@@ -607,6 +607,27 @@ namespace NganHangPhanTan.SimpleForm
             view.SetRowCellValue(e.RowHandle, view.Columns[Customer.ADDRESS_HEADER], "");
             view.SetRowCellValue(e.RowHandle, view.Columns[Customer.DATE_ACCEPT_HEADER], DateTime.Today);
             view.SetRowCellValue(e.RowHandle, view.Columns[Customer.PHONENUM_HEADER], "");
+        }
+
+        private void cbBrand_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            // Nếu combobox chi nhánh chưa load danh sách phân mãnh thì thoát
+            if (cbBrand.SelectedValue.ToString().Equals("System.Data.RowView"))
+                return;
+            string serverName = cbBrand.SelectedValue.ToString();
+            User user = SecurityContext.User;
+            if (cbBrand.SelectedIndex != user.BrandIndex)
+                DataProvider.Instance.SetServerToRemote(serverName);
+            else
+                DataProvider.Instance.SetServerToSubcriber(serverName, user.Login, user.Pass);
+            if (!DataProvider.Instance.CheckConnection())
+            {
+                MessageUtil.ShowErrorMsgDialog("Lỗi kết nối sang chi nhánh mới");
+                return;
+            }
+            // Tải dữ liệu từ site mới về
+            taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
+            taCustomer.Fill(this.DS.KhachHang);
         }
     }
 }

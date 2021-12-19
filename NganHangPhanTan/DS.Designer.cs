@@ -3792,7 +3792,7 @@ namespace NganHangPhanTan {
             
             private global::System.Data.DataColumn columnNGAYGD;
             
-            private global::System.Data.DataColumn columnSOTK;
+            private global::System.Data.DataColumn columnHOTENNV;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -3869,9 +3869,9 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn SOTKColumn {
+            public global::System.Data.DataColumn HOTENNVColumn {
                 get {
-                    return this.columnSOTK;
+                    return this.columnHOTENNV;
                 }
             }
             
@@ -3912,7 +3912,7 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public usp_GetTransSendWithdrawalByAccountIdRow Addusp_GetTransSendWithdrawalByAccountIdRow(int MAGD, string LOAIGD, decimal SOTIEN, string MANV, System.DateTime NGAYGD, string SOTK) {
+            public usp_GetTransSendWithdrawalByAccountIdRow Addusp_GetTransSendWithdrawalByAccountIdRow(int MAGD, string LOAIGD, decimal SOTIEN, string MANV, System.DateTime NGAYGD, string HOTENNV) {
                 usp_GetTransSendWithdrawalByAccountIdRow rowusp_GetTransSendWithdrawalByAccountIdRow = ((usp_GetTransSendWithdrawalByAccountIdRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         MAGD,
@@ -3920,7 +3920,7 @@ namespace NganHangPhanTan {
                         SOTIEN,
                         MANV,
                         NGAYGD,
-                        SOTK};
+                        HOTENNV};
                 rowusp_GetTransSendWithdrawalByAccountIdRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowusp_GetTransSendWithdrawalByAccountIdRow);
                 return rowusp_GetTransSendWithdrawalByAccountIdRow;
@@ -3955,7 +3955,7 @@ namespace NganHangPhanTan {
                 this.columnSOTIEN = base.Columns["SOTIEN"];
                 this.columnMANV = base.Columns["MANV"];
                 this.columnNGAYGD = base.Columns["NGAYGD"];
-                this.columnSOTK = base.Columns["SOTK"];
+                this.columnHOTENNV = base.Columns["HOTENNV"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3971,8 +3971,8 @@ namespace NganHangPhanTan {
                 base.Columns.Add(this.columnMANV);
                 this.columnNGAYGD = new global::System.Data.DataColumn("NGAYGD", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNGAYGD);
-                this.columnSOTK = new global::System.Data.DataColumn("SOTK", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSOTK);
+                this.columnHOTENNV = new global::System.Data.DataColumn("HOTENNV", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHOTENNV);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnMAGD}, true));
                 this.columnMAGD.AutoIncrementSeed = -1;
@@ -3986,8 +3986,8 @@ namespace NganHangPhanTan {
                 this.columnMANV.AllowDBNull = false;
                 this.columnMANV.MaxLength = 10;
                 this.columnNGAYGD.AllowDBNull = false;
-                this.columnSOTK.AllowDBNull = false;
-                this.columnSOTK.MaxLength = 9;
+                this.columnHOTENNV.ReadOnly = true;
+                this.columnHOTENNV.MaxLength = 61;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4453,7 +4453,7 @@ namespace NganHangPhanTan {
             
             private global::System.Data.DataColumn columnSOTK_NHAN;
             
-            private global::System.Data.DataColumn columnCMND;
+            private global::System.Data.DataColumn columnHOTENNV;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -4530,9 +4530,9 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn CMNDColumn {
+            public global::System.Data.DataColumn HOTENNVColumn {
                 get {
-                    return this.columnCMND;
+                    return this.columnHOTENNV;
                 }
             }
             
@@ -4573,7 +4573,7 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public usp_GetTransExchangeByAccountIdRow Addusp_GetTransExchangeByAccountIdRow(decimal SOTIEN, string MANV, System.DateTime NGAYGD, string SOTK_NHAN, string CMND) {
+            public usp_GetTransExchangeByAccountIdRow Addusp_GetTransExchangeByAccountIdRow(decimal SOTIEN, string MANV, System.DateTime NGAYGD, string SOTK_NHAN, string HOTENNV) {
                 usp_GetTransExchangeByAccountIdRow rowusp_GetTransExchangeByAccountIdRow = ((usp_GetTransExchangeByAccountIdRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4581,7 +4581,7 @@ namespace NganHangPhanTan {
                         MANV,
                         NGAYGD,
                         SOTK_NHAN,
-                        CMND};
+                        HOTENNV};
                 rowusp_GetTransExchangeByAccountIdRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowusp_GetTransExchangeByAccountIdRow);
                 return rowusp_GetTransExchangeByAccountIdRow;
@@ -4616,7 +4616,7 @@ namespace NganHangPhanTan {
                 this.columnMANV = base.Columns["MANV"];
                 this.columnNGAYGD = base.Columns["NGAYGD"];
                 this.columnSOTK_NHAN = base.Columns["SOTK_NHAN"];
-                this.columnCMND = base.Columns["CMND"];
+                this.columnHOTENNV = base.Columns["HOTENNV"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4632,8 +4632,8 @@ namespace NganHangPhanTan {
                 base.Columns.Add(this.columnNGAYGD);
                 this.columnSOTK_NHAN = new global::System.Data.DataColumn("SOTK_NHAN", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSOTK_NHAN);
-                this.columnCMND = new global::System.Data.DataColumn("CMND", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCMND);
+                this.columnHOTENNV = new global::System.Data.DataColumn("HOTENNV", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHOTENNV);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnMAGD}, true));
                 this.columnMAGD.AutoIncrement = true;
@@ -4648,8 +4648,8 @@ namespace NganHangPhanTan {
                 this.columnNGAYGD.AllowDBNull = false;
                 this.columnSOTK_NHAN.AllowDBNull = false;
                 this.columnSOTK_NHAN.MaxLength = 9;
-                this.columnCMND.AllowDBNull = false;
-                this.columnCMND.MaxLength = 10;
+                this.columnHOTENNV.ReadOnly = true;
+                this.columnHOTENNV.MaxLength = 61;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6126,13 +6126,31 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string SOTK {
+            public string HOTENNV {
                 get {
-                    return ((string)(this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTKColumn]));
+                    try {
+                        return ((string)(this[this.tableusp_GetTransSendWithdrawalByAccountId.HOTENNVColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HOTENNV\' in table \'usp_GetTransSendWithdrawalByAccountId\' i" +
+                                "s DBNull.", e);
+                    }
                 }
                 set {
-                    this[this.tableusp_GetTransSendWithdrawalByAccountId.SOTKColumn] = value;
+                    this[this.tableusp_GetTransSendWithdrawalByAccountId.HOTENNVColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsHOTENNVNull() {
+                return this.IsNull(this.tableusp_GetTransSendWithdrawalByAccountId.HOTENNVColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetHOTENNVNull() {
+                this[this.tableusp_GetTransSendWithdrawalByAccountId.HOTENNVColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -6306,13 +6324,31 @@ namespace NganHangPhanTan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string CMND {
+            public string HOTENNV {
                 get {
-                    return ((string)(this[this.tableusp_GetTransExchangeByAccountId.CMNDColumn]));
+                    try {
+                        return ((string)(this[this.tableusp_GetTransExchangeByAccountId.HOTENNVColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HOTENNV\' in table \'usp_GetTransExchangeByAccountId\' is DBNu" +
+                                "ll.", e);
+                    }
                 }
                 set {
-                    this[this.tableusp_GetTransExchangeByAccountId.CMNDColumn] = value;
+                    this[this.tableusp_GetTransExchangeByAccountId.HOTENNVColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsHOTENNVNull() {
+                return this.IsNull(this.tableusp_GetTransExchangeByAccountId.HOTENNVColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetHOTENNVNull() {
+                this[this.tableusp_GetTransExchangeByAccountId.HOTENNVColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -9920,7 +9956,7 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
             tableMapping.ColumnMappings.Add("SOTIEN", "SOTIEN");
             tableMapping.ColumnMappings.Add("MANV", "MANV");
             tableMapping.ColumnMappings.Add("NGAYGD", "NGAYGD");
-            tableMapping.ColumnMappings.Add("SOTK", "SOTK");
+            tableMapping.ColumnMappings.Add("HOTENNV", "HOTENNV");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -10278,7 +10314,7 @@ SELECT CMND, HO, TEN, DIACHI, PHAI, NGAYCAP, SODT, MACN FROM KhachHang WHERE (CM
             tableMapping.ColumnMappings.Add("MANV", "MANV");
             tableMapping.ColumnMappings.Add("NGAYGD", "NGAYGD");
             tableMapping.ColumnMappings.Add("SOTK_NHAN", "SOTK_NHAN");
-            tableMapping.ColumnMappings.Add("CMND", "CMND");
+            tableMapping.ColumnMappings.Add("HOTENNV", "HOTENNV");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

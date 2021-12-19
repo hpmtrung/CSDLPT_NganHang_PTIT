@@ -31,8 +31,16 @@ namespace NganHangPhanTan.SimpleForm
         {
             this.components = new System.ComponentModel.Container();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.usp_GetCustomerHavingAccountAllGridControl = new DevExpress.XtraGrid.GridControl();
             this.bdsCustomer = new System.Windows.Forms.BindingSource(this.components);
             this.DS = new NganHangPhanTan.DS();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colCMND = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colHOTEN = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDIACHI = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colNGAYCAP = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSODT = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMACN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.gcAccount = new DevExpress.XtraGrid.GridControl();
             this.bdsAccount = new System.Windows.Forms.BindingSource(this.components);
@@ -47,7 +55,7 @@ namespace NganHangPhanTan.SimpleForm
             this.gcEndpoints = new DevExpress.XtraGrid.GridControl();
             this.gvEndpoints = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnReset = new System.Windows.Forms.Button();
+            this.btnDeleteAll = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
             this.teRemainBalance = new DevExpress.XtraEditors.TextEdit();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,18 +64,12 @@ namespace NganHangPhanTan.SimpleForm
             this.taCustomer = new NganHangPhanTan.DSTableAdapters.usp_GetCustomerHavingAccountAllTableAdapter();
             this.tableAdapterManager = new NganHangPhanTan.DSTableAdapters.TableAdapterManager();
             this.taAccount = new NganHangPhanTan.DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter();
-            this.usp_GetCustomerHavingAccountAllGridControl = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colCMND = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colHOTEN = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDIACHI = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colNGAYCAP = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colSODT = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMACN = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountAllGridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCustomer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gcAccount)).BeginInit();
@@ -80,8 +82,6 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.gvEndpoints)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountAllGridControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl1
@@ -94,6 +94,18 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl1.TabIndex = 0;
             this.groupControl1.Text = "Danh sách khách hàng";
             // 
+            // usp_GetCustomerHavingAccountAllGridControl
+            // 
+            this.usp_GetCustomerHavingAccountAllGridControl.DataSource = this.bdsCustomer;
+            this.usp_GetCustomerHavingAccountAllGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.usp_GetCustomerHavingAccountAllGridControl.Location = new System.Drawing.Point(2, 28);
+            this.usp_GetCustomerHavingAccountAllGridControl.MainView = this.gridView1;
+            this.usp_GetCustomerHavingAccountAllGridControl.Name = "usp_GetCustomerHavingAccountAllGridControl";
+            this.usp_GetCustomerHavingAccountAllGridControl.Size = new System.Drawing.Size(969, 190);
+            this.usp_GetCustomerHavingAccountAllGridControl.TabIndex = 0;
+            this.usp_GetCustomerHavingAccountAllGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView1});
+            // 
             // bdsCustomer
             // 
             this.bdsCustomer.DataMember = "usp_GetCustomerHavingAccountAll";
@@ -103,6 +115,89 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.DS.DataSetName = "DS";
             this.DS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // gridView1
+            // 
+            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.Row.Options.UseFont = true;
+            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colCMND,
+            this.colHOTEN,
+            this.colDIACHI,
+            this.colNGAYCAP,
+            this.colSODT,
+            this.colMACN});
+            this.gridView1.GridControl = this.usp_GetCustomerHavingAccountAllGridControl;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gvCustomer_FocusedRowChanged);
+            // 
+            // colCMND
+            // 
+            this.colCMND.Caption = "Số CMND";
+            this.colCMND.FieldName = "CMND";
+            this.colCMND.MinWidth = 25;
+            this.colCMND.Name = "colCMND";
+            this.colCMND.OptionsColumn.ReadOnly = true;
+            this.colCMND.Visible = true;
+            this.colCMND.VisibleIndex = 0;
+            this.colCMND.Width = 94;
+            // 
+            // colHOTEN
+            // 
+            this.colHOTEN.Caption = "Họ tên";
+            this.colHOTEN.FieldName = "HOTEN";
+            this.colHOTEN.MinWidth = 25;
+            this.colHOTEN.Name = "colHOTEN";
+            this.colHOTEN.OptionsColumn.ReadOnly = true;
+            this.colHOTEN.Visible = true;
+            this.colHOTEN.VisibleIndex = 1;
+            this.colHOTEN.Width = 94;
+            // 
+            // colDIACHI
+            // 
+            this.colDIACHI.Caption = "Địa chỉ";
+            this.colDIACHI.FieldName = "DIACHI";
+            this.colDIACHI.MinWidth = 25;
+            this.colDIACHI.Name = "colDIACHI";
+            this.colDIACHI.OptionsColumn.ReadOnly = true;
+            this.colDIACHI.Visible = true;
+            this.colDIACHI.VisibleIndex = 2;
+            this.colDIACHI.Width = 94;
+            // 
+            // colNGAYCAP
+            // 
+            this.colNGAYCAP.Caption = "Ngày cấp";
+            this.colNGAYCAP.FieldName = "NGAYCAP";
+            this.colNGAYCAP.MinWidth = 25;
+            this.colNGAYCAP.Name = "colNGAYCAP";
+            this.colNGAYCAP.OptionsColumn.ReadOnly = true;
+            this.colNGAYCAP.Visible = true;
+            this.colNGAYCAP.VisibleIndex = 3;
+            this.colNGAYCAP.Width = 94;
+            // 
+            // colSODT
+            // 
+            this.colSODT.Caption = "Số ĐT";
+            this.colSODT.FieldName = "SODT";
+            this.colSODT.MinWidth = 25;
+            this.colSODT.Name = "colSODT";
+            this.colSODT.OptionsColumn.ReadOnly = true;
+            this.colSODT.Visible = true;
+            this.colSODT.VisibleIndex = 4;
+            this.colSODT.Width = 94;
+            // 
+            // colMACN
+            // 
+            this.colMACN.Caption = "Mã CN";
+            this.colMACN.FieldName = "MACN";
+            this.colMACN.MinWidth = 25;
+            this.colMACN.Name = "colMACN";
+            this.colMACN.OptionsColumn.ReadOnly = true;
+            this.colMACN.Visible = true;
+            this.colMACN.VisibleIndex = 5;
+            this.colMACN.Width = 94;
             // 
             // groupControl2
             // 
@@ -247,7 +342,7 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnReset);
+            this.panel1.Controls.Add(this.btnDeleteAll);
             this.panel1.Controls.Add(this.btnReload);
             this.panel1.Controls.Add(this.teRemainBalance);
             this.panel1.Controls.Add(this.label1);
@@ -262,13 +357,13 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(568, 21);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(114, 31);
-            this.btnReset.TabIndex = 6;
-            this.btnReset.Text = "Xóa tất cả";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnDeleteAll.Location = new System.Drawing.Point(568, 21);
+            this.btnDeleteAll.Name = "btnReset";
+            this.btnDeleteAll.Size = new System.Drawing.Size(114, 31);
+            this.btnDeleteAll.TabIndex = 6;
+            this.btnDeleteAll.Text = "Xóa tất cả";
+            this.btnDeleteAll.UseVisualStyleBackColor = true;
+            this.btnDeleteAll.Click += new System.EventHandler(this.btnDeleteAll_Click);
             // 
             // btnReload
             // 
@@ -342,100 +437,6 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.taAccount.ClearBeforeFill = true;
             // 
-            // usp_GetCustomerHavingAccountAllGridControl
-            // 
-            this.usp_GetCustomerHavingAccountAllGridControl.DataSource = this.bdsCustomer;
-            this.usp_GetCustomerHavingAccountAllGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.usp_GetCustomerHavingAccountAllGridControl.Location = new System.Drawing.Point(2, 28);
-            this.usp_GetCustomerHavingAccountAllGridControl.MainView = this.gridView1;
-            this.usp_GetCustomerHavingAccountAllGridControl.Name = "usp_GetCustomerHavingAccountAllGridControl";
-            this.usp_GetCustomerHavingAccountAllGridControl.Size = new System.Drawing.Size(969, 190);
-            this.usp_GetCustomerHavingAccountAllGridControl.TabIndex = 0;
-            this.usp_GetCustomerHavingAccountAllGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
-            // 
-            // gridView1
-            // 
-            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
-            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridView1.Appearance.Row.Options.UseFont = true;
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colCMND,
-            this.colHOTEN,
-            this.colDIACHI,
-            this.colNGAYCAP,
-            this.colSODT,
-            this.colMACN});
-            this.gridView1.GridControl = this.usp_GetCustomerHavingAccountAllGridControl;
-            this.gridView1.Name = "gridView1";
-            // 
-            // colCMND
-            // 
-            this.colCMND.Caption = "Số CMND";
-            this.colCMND.FieldName = "CMND";
-            this.colCMND.MinWidth = 25;
-            this.colCMND.Name = "colCMND";
-            this.colCMND.OptionsColumn.ReadOnly = true;
-            this.colCMND.Visible = true;
-            this.colCMND.VisibleIndex = 0;
-            this.colCMND.Width = 94;
-            // 
-            // colHOTEN
-            // 
-            this.colHOTEN.Caption = "Họ tên";
-            this.colHOTEN.FieldName = "HOTEN";
-            this.colHOTEN.MinWidth = 25;
-            this.colHOTEN.Name = "colHOTEN";
-            this.colHOTEN.OptionsColumn.ReadOnly = true;
-            this.colHOTEN.Visible = true;
-            this.colHOTEN.VisibleIndex = 1;
-            this.colHOTEN.Width = 94;
-            // 
-            // colDIACHI
-            // 
-            this.colDIACHI.Caption = "Địa chỉ";
-            this.colDIACHI.FieldName = "DIACHI";
-            this.colDIACHI.MinWidth = 25;
-            this.colDIACHI.Name = "colDIACHI";
-            this.colDIACHI.OptionsColumn.ReadOnly = true;
-            this.colDIACHI.Visible = true;
-            this.colDIACHI.VisibleIndex = 2;
-            this.colDIACHI.Width = 94;
-            // 
-            // colNGAYCAP
-            // 
-            this.colNGAYCAP.Caption = "Ngày cấp";
-            this.colNGAYCAP.FieldName = "NGAYCAP";
-            this.colNGAYCAP.MinWidth = 25;
-            this.colNGAYCAP.Name = "colNGAYCAP";
-            this.colNGAYCAP.OptionsColumn.ReadOnly = true;
-            this.colNGAYCAP.Visible = true;
-            this.colNGAYCAP.VisibleIndex = 3;
-            this.colNGAYCAP.Width = 94;
-            // 
-            // colSODT
-            // 
-            this.colSODT.Caption = "Số ĐT";
-            this.colSODT.FieldName = "SODT";
-            this.colSODT.MinWidth = 25;
-            this.colSODT.Name = "colSODT";
-            this.colSODT.OptionsColumn.ReadOnly = true;
-            this.colSODT.Visible = true;
-            this.colSODT.VisibleIndex = 4;
-            this.colSODT.Width = 94;
-            // 
-            // colMACN
-            // 
-            this.colMACN.Caption = "Mã CN";
-            this.colMACN.FieldName = "MACN";
-            this.colMACN.MinWidth = 25;
-            this.colMACN.Name = "colMACN";
-            this.colMACN.OptionsColumn.ReadOnly = true;
-            this.colMACN.Visible = true;
-            this.colMACN.VisibleIndex = 5;
-            this.colMACN.Width = 94;
-            // 
             // fChangeEndpointsExchangeTrans
             // 
             this.Appearance.Options.UseFont = true;
@@ -454,8 +455,10 @@ namespace NganHangPhanTan.SimpleForm
             this.Load += new System.EventHandler(this.fChangeEndpointsExchangeTrans_Load);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountAllGridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCustomer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gcAccount)).EndInit();
@@ -469,8 +472,6 @@ namespace NganHangPhanTan.SimpleForm
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountAllGridControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -494,7 +495,7 @@ namespace NganHangPhanTan.SimpleForm
         private DSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.BindingSource bdsAccount;
         private DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter taAccount;
-        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnDeleteAll;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnChoose;
         private DevExpress.XtraGrid.GridControl gcAccount;

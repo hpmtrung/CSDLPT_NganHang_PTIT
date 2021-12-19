@@ -87,8 +87,6 @@ namespace NganHangPhanTan
                 RequestExitProgram = () => Close(),
             };
             f.Show();
-            // XXX
-            //f.abc();
         }
 
         private void btnManageEmployee_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -114,7 +112,6 @@ namespace NganHangPhanTan
             btnCreateAccount.Enabled = btnLogout.Enabled = false;
             ribCategory.Visible = ribService.Visible = ribReport.Visible = false;
             CreateAndShowLoginForm();
-            //btnOpenCustomerAccount_ItemClick(null, null);
         }
 
         private void btnLogout_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -124,7 +121,7 @@ namespace NganHangPhanTan
                 // Kiểm tra có tác vụ chưa lưu, nếu có trả về false
                 if (pair.Value == false)
                 {
-                    MessageBox.Show($"Form {pair.Key.Text} không thể đóng do có tác vụ đang thực hiện.", "", MessageBoxButtons.OK);
+                    MessageUtil.ShowErrorMsgDialog($"Form {pair.Key.Text} không thể đóng do có tác vụ đang thực hiện");
                     return;
                 }
             }

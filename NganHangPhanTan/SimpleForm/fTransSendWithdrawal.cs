@@ -2,6 +2,7 @@
 using NganHangPhanTan.DTO;
 using NganHangPhanTan.Util;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -91,6 +92,11 @@ namespace NganHangPhanTan.SimpleForm
 
         private void gvAccount_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
+            if (bdsAccount.Count > 0)
+                teAccountId.Text = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
+            else
+                teAccountId.Text = null;
+
             LoadTransFromAccount();
         }
 
@@ -132,7 +138,7 @@ namespace NganHangPhanTan.SimpleForm
             pnInput.Enabled = true;
             gcCustomer.Enabled = gcAccount.Enabled = gcTrans.Enabled = false;
 
-            cbTransType.SelectedIndex = 0;
+            cbTransTypeName.SelectedIndex = 0;
             teAccountId.Text = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
             teEmployeeId.Text = SecurityContext.User.Username;
             deTransDate.DateTime = DateTime.Now;
@@ -145,28 +151,45 @@ namespace NganHangPhanTan.SimpleForm
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(teTransMoney.EditValue.ToString()))
+            {
+                MessageUtil.ShowErrorMsgDialog("Vui lòng điền số tiền cần thực hiện giao dịch");
+                return;
+            }
+
+            double amount = double.Parse(teTransMoney.EditValue.ToString());
+
+            if (amount < 50000)
+            {
+                MessageUtil.ShowErrorMsgDialog("Số tiền giao dịch cần tối thiểu là 50.000 đ");
+                return;
+            }
+
             string accountId = teAccountId.Text;
-            string transType = cbTransType.Text;
+
+            string transTypeName = cbTransTypeName.Text;
+            string transTypeCode = "";
+            if (transTypeName.StartsWith("R"))
+                transTypeCode = "RT";
+            else if (transTypeName.StartsWith("G"))
+                transTypeCode = "GT";
+
             double balance = double.Parse(((DataRowView)bdsAccount.Current)[Account.BALANCE_HEADER].ToString());
-            double money = double.Parse(teTransMoney.EditValue.ToString());
-            if (transType.Equals("RT") && balance < money)
+
+            if (transTypeCode.Equals("RT") && balance < amount)
             {
                 MessageUtil.ShowErrorMsgDialog("Số dư tài khoản không đủ để thực hiện rút tiền");
                 return;
             }
 
-            if (MessageUtil.ShowInfoConfirmDialog($"Xác nhận thực hiện giao dịch {transType} cho tài khoản {accountId}?") != DialogResult.OK)
+            if (MessageUtil.ShowInfoConfirmDialog($"Xác nhận thực hiện giao dịch {transTypeName} cho tài khoản {accountId}?") != DialogResult.OK)
                 return;
 
-            DateTime transDate = deTransDate.DateTime;
-            string employeeId = teEmployeeId.Text;
             try
             {
                 bdsTrans.RemoveCurrent();
 
-                int rowAffected = DataProvider.Instance.ExecuteNonQuery("EXEC usp_InsertTransSendWithdrawal @SOTK, @LOAIGD, @NGAYGD, @SOTIEN, @MANV",
-                    new object[] { accountId, transType, transDate, money, employeeId }
-                );
+                int rowAffected = AccountDAO.Instance.AddSendWithdrawalTransaction(accountId, transTypeCode, amount);
 
                 if (rowAffected <= 0)
                     return;
@@ -174,7 +197,7 @@ namespace NganHangPhanTan.SimpleForm
                 // Cập nhật lại số dư của tài khoản
                 LoadAccountFromCustomer();
                 bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, accountId);
-                
+
                 // Cập nhật giao dịch mới được thêm
                 taTrans.Fill(this.DS.usp_GetTransSendWithdrawalByAccountId, accountId);
 
@@ -201,7 +224,6 @@ namespace NganHangPhanTan.SimpleForm
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //bdsTrans.CancelEdit();
             bdsTrans.RemoveCurrent();
 
             gcCustomer.Enabled = gcAccount.Enabled = gcTrans.Enabled = true;
@@ -219,6 +241,14 @@ namespace NganHangPhanTan.SimpleForm
                 ReqClose.Invoke(this);
                 e.Cancel = btnSave.Enabled;
             }
+        }
+
+        private void teTransType_TextChanged(object sender, EventArgs e)
+        {
+            if (teTransType.Text.StartsWith("R"))
+                cbTransTypeName.SelectedItem = "Rút tiền";
+            else if (teTransType.Text.StartsWith("G"))
+                cbTransTypeName.SelectedItem = "Gửi tiền";
         }
     }
 }

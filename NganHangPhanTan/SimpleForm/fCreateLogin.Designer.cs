@@ -121,6 +121,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // gridView1
             // 
+            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.Row.Options.UseFont = true;
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colMANV,
             this.colHO,
@@ -134,77 +138,97 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colMANV
             // 
+            this.colMANV.AppearanceHeader.Options.UseTextOptions = true;
+            this.colMANV.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colMANV.Caption = "Mã NV";
             this.colMANV.FieldName = "MANV";
             this.colMANV.MinWidth = 25;
             this.colMANV.Name = "colMANV";
-            this.colMANV.OptionsColumn.AllowEdit = false;
+            this.colMANV.OptionsColumn.ReadOnly = true;
             this.colMANV.Visible = true;
             this.colMANV.VisibleIndex = 0;
             this.colMANV.Width = 94;
             // 
             // colHO
             // 
+            this.colHO.AppearanceHeader.Options.UseTextOptions = true;
+            this.colHO.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colHO.Caption = "Họ";
             this.colHO.FieldName = "HO";
             this.colHO.MinWidth = 25;
             this.colHO.Name = "colHO";
-            this.colHO.OptionsColumn.AllowEdit = false;
+            this.colHO.OptionsColumn.ReadOnly = true;
             this.colHO.Visible = true;
             this.colHO.VisibleIndex = 1;
             this.colHO.Width = 94;
             // 
             // colTEN
             // 
+            this.colTEN.AppearanceHeader.Options.UseTextOptions = true;
+            this.colTEN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colTEN.Caption = "Tên";
             this.colTEN.FieldName = "TEN";
             this.colTEN.MinWidth = 25;
             this.colTEN.Name = "colTEN";
-            this.colTEN.OptionsColumn.AllowEdit = false;
+            this.colTEN.OptionsColumn.ReadOnly = true;
             this.colTEN.Visible = true;
             this.colTEN.VisibleIndex = 2;
             this.colTEN.Width = 94;
             // 
             // colDIACHI
             // 
+            this.colDIACHI.AppearanceHeader.Options.UseTextOptions = true;
+            this.colDIACHI.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colDIACHI.Caption = "Địa chỉ";
             this.colDIACHI.FieldName = "DIACHI";
             this.colDIACHI.MinWidth = 25;
             this.colDIACHI.Name = "colDIACHI";
-            this.colDIACHI.OptionsColumn.AllowEdit = false;
+            this.colDIACHI.OptionsColumn.ReadOnly = true;
             this.colDIACHI.Visible = true;
             this.colDIACHI.VisibleIndex = 3;
             this.colDIACHI.Width = 94;
             // 
             // colPHAI
             // 
+            this.colPHAI.AppearanceCell.Options.UseTextOptions = true;
+            this.colPHAI.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colPHAI.AppearanceHeader.Options.UseTextOptions = true;
+            this.colPHAI.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colPHAI.Caption = "Phái";
             this.colPHAI.FieldName = "PHAI";
             this.colPHAI.MinWidth = 25;
             this.colPHAI.Name = "colPHAI";
-            this.colPHAI.OptionsColumn.AllowEdit = false;
+            this.colPHAI.OptionsColumn.ReadOnly = true;
             this.colPHAI.Visible = true;
             this.colPHAI.VisibleIndex = 4;
             this.colPHAI.Width = 94;
             // 
             // colSODT
             // 
+            this.colSODT.AppearanceCell.Options.UseTextOptions = true;
+            this.colSODT.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colSODT.AppearanceHeader.Options.UseTextOptions = true;
+            this.colSODT.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colSODT.Caption = "Số ĐT";
             this.colSODT.FieldName = "SODT";
             this.colSODT.MinWidth = 25;
             this.colSODT.Name = "colSODT";
-            this.colSODT.OptionsColumn.AllowEdit = false;
+            this.colSODT.OptionsColumn.ReadOnly = true;
             this.colSODT.Visible = true;
             this.colSODT.VisibleIndex = 5;
             this.colSODT.Width = 94;
             // 
             // colMACN
             // 
+            this.colMACN.AppearanceCell.Options.UseTextOptions = true;
+            this.colMACN.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colMACN.AppearanceHeader.Options.UseTextOptions = true;
+            this.colMACN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colMACN.Caption = "Mã CN";
             this.colMACN.FieldName = "MACN";
             this.colMACN.MinWidth = 25;
             this.colMACN.Name = "colMACN";
-            this.colMACN.OptionsColumn.AllowEdit = false;
+            this.colMACN.OptionsColumn.ReadOnly = true;
             this.colMACN.Visible = true;
             this.colMACN.VisibleIndex = 6;
             this.colMACN.Width = 94;

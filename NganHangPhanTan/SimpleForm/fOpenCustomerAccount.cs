@@ -207,7 +207,7 @@ namespace NganHangPhanTan.SimpleForm
         {
             Account deletedAccount = new Account((DataRowView)bdsAccount[bdsAccount.Position]);
 
-            bool accountHavingTransation = (bool)DataProvider.Instance.ExecuteScalar($"SELECT dbo.udf_CheckAccountHavingTransaction(N'{deletedAccount.Id}')");
+            bool accountHavingTransation = AccountDAO.Instance.HavingAnyTransaction(deletedAccount.Id);
 
             if (accountHavingTransation)
             {
@@ -261,11 +261,7 @@ namespace NganHangPhanTan.SimpleForm
                     row[Account.OPEN_DATE_HEADER]);
             }
 
-            SqlParameter tableParam = new SqlParameter("@UpdatedAccounts", bufferAccountDataTable);
-            tableParam.SqlDbType = SqlDbType.Structured;
-            tableParam.TypeName = "dbo.TBTYPE_TAIKHOAN";
-
-            int rowAffected = DataProvider.Instance.ExecuteNonQuery("dbo.usp_UpdateCustomerAccounts", new SqlParameter[] { tableParam });
+            int rowAffected = CustomerDAO.Instance.UpdateAccount(bufferAccountDataTable);
 
             if (rowAffected > 0)
             {
@@ -292,55 +288,78 @@ namespace NganHangPhanTan.SimpleForm
 
         private void Undo()
         {
-            if (undoStack.Count > 0)
+            bool undo = true;
+            UserEventData action = undoStack.Last();
+            undoStack.RemoveLast();
+            switch (action.Type)
             {
-                UserEventData action = undoStack.Last();
-                undoStack.RemoveLast();
-                switch (action.Type)
-                {
-                    case UserEventData.EventType.CANCEL_EDIT:
-                        {
-                            UndoUnSaveAction(action);
-                            break;
-                        }
-                    case UserEventData.EventType.INSERT:
-                        {
-                            int gridPos = bdsAccount.Position;
-                            if (UndoByInsertAction(action))
-                            {
-                                action.Type = UserEventData.EventType.DELETE;
-                                action.GridPos = gridPos;
-                                redoStack.AddLast(action);
-                            }
-                            break;
-                        }
-                    case UserEventData.EventType.DELETE:
-                        {
-                            if (UndoByDeleteAction(action))
-                            {
-                                action.Type = UserEventData.EventType.INSERT;
-                                redoStack.AddLast(action);
-                                bdsAccount.Position = action.GridPos;
-                            }
-                            break;
-                        }
-                    case UserEventData.EventType.UPDATE:
-                        {
-                            Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
-                            if (UndoByUpdateAction(action))
-                            {
-                                action.Type = UserEventData.EventType.UPDATE;
-                                action.Content = oldAccount;
-                                redoStack.AddLast(action);
-                            }
-                            break;
-                        }
-                    default:
+                case UserEventData.EventType.CANCEL_EDIT:
+                    {
+                        UndoUnSaveAction(action);
                         break;
-                }
-                btnRedo.Enabled = (redoStack.Count > 0);
+                    }
+                case UserEventData.EventType.INSERT:
+                    {
+                        int gridPos = bdsAccount.Position;
+                        if (UndoByInsertAction(action))
+                        {
+                            action.Type = UserEventData.EventType.DELETE;
+                            action.GridPos = gridPos;
+                            redoStack.AddLast(action);
+                        }
+                        else
+                        {
+                            undoStack.AddLast(action);
+                            undo = false;
+                        }
+                        break;
+                    }
+                case UserEventData.EventType.DELETE:
+                    {
+                        int res = UndoByDeleteAction(action);
+                        if (res == 1)
+                        {
+                            action.Type = UserEventData.EventType.INSERT;
+                            redoStack.AddLast(action);
+                            bdsAccount.Position = action.GridPos;
+                        }
+                        else if (res == 0)
+                        {
+                            undoStack.AddLast(action);
+                            undo = false;
+                        }
+                        break;
+                    }
+                case UserEventData.EventType.UPDATE:
+                    {
+                        Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
+                        if (UndoByUpdateAction(action))
+                        {
+                            action.Type = UserEventData.EventType.UPDATE;
+                            action.Content = oldAccount;
+                            redoStack.AddLast(action);
+                        }
+                        else
+                        {
+                            undoStack.AddLast(action);
+                            undo = false;
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
-            btnUndo.Enabled = (undoStack.Count > 0);
+            if (undo)
+            {
+                btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
+                btnRedo.Enabled = (redoStack.Count > 0);
+
+                // Nút save enabled khi còn tác vụ chưa lưu, hay undo stack khác rỗng
+                btnSave.Enabled = btnUndo.Enabled = (undoStack.Count > 0);
+
+                // Nếu nút save enabled thì không thể đóng form
+                ReqUpdateCanCloseState.Invoke(this, !btnSave.Enabled);
+            }
         }
 
         private void btnUndo_Click(object sender, EventArgs e)
@@ -350,50 +369,73 @@ namespace NganHangPhanTan.SimpleForm
 
         private void btnRedo_Click(object sender, EventArgs e)
         {
-            if (redoStack.Count > 0)
+            bool redo = true;
+            UserEventData action = redoStack.Last();
+            redoStack.RemoveLast();
+            switch (action.Type)
             {
-                UserEventData action = redoStack.Last();
-                redoStack.RemoveLast();
-                switch (action.Type)
-                {
-                    case UserEventData.EventType.INSERT:
+                case UserEventData.EventType.INSERT:
+                    {
+                        int gridPos = bdsAccount.Position;
+                        if (UndoByInsertAction(action))
                         {
-                            int gridPos = bdsAccount.Position;
-                            if (UndoByInsertAction(action))
-                            {
-                                action.Type = UserEventData.EventType.DELETE;
-                                action.GridPos = gridPos;
-                                undoStack.AddLast(action);
-                            }
-                            break;
+                            action.Type = UserEventData.EventType.DELETE;
+                            action.GridPos = gridPos;
+                            undoStack.AddLast(action);
                         }
-                    case UserEventData.EventType.DELETE:
+                        else
                         {
-                            if (UndoByDeleteAction(action))
-                            {
-                                action.Type = UserEventData.EventType.INSERT;
-                                undoStack.AddLast(action);
-                                bdsAccount.Position = action.GridPos;
-                            }
-                            break;
+                            redoStack.AddLast(action);
+                            redo = false;
                         }
-                    case UserEventData.EventType.UPDATE:
-                        {
-                            Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
-                            if (UndoByUpdateAction(action))
-                            {
-                                action.Type = UserEventData.EventType.UPDATE;
-                                action.Content = oldAccount;
-                                undoStack.AddLast(action);
-                            }
-                            break;
-                        }
-                    default:
                         break;
-                }
-                btnUndo.Enabled = (undoStack.Count > 0);
+                    }
+                case UserEventData.EventType.DELETE:
+                    {
+                        int res = UndoByDeleteAction(action);
+                        if (res == 1)
+                        {
+                            action.Type = UserEventData.EventType.INSERT;
+                            undoStack.AddLast(action);
+                            bdsAccount.Position = action.GridPos;
+                        }
+                        else if (res == 0)
+                        {
+                            redoStack.AddLast(action);
+                            redo = false;
+                        }
+                        break;
+                    }
+                case UserEventData.EventType.UPDATE:
+                    {
+                        Account oldAccount = new Account((DataRowView)bdsAccount[bdsAccount.Find(Account.ID_HEADER, ((Account)action.Content).Id)]);
+                        if (UndoByUpdateAction(action))
+                        {
+                            action.Type = UserEventData.EventType.UPDATE;
+                            action.Content = oldAccount;
+                            undoStack.AddLast(action);
+                        }
+                        else
+                        {
+                            redoStack.AddLast(action);
+                            redo = false;
+                        }
+                        break;
+                    }
+                default:
+                    break;
             }
-            btnRedo.Enabled = (redoStack.Count > 0);
+            if (redo)
+            {
+                btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
+                btnRedo.Enabled = (redoStack.Count > 0);
+
+                // Nút save enabled khi còn tác vụ chưa lưu, hay undo stack khác rỗng
+                btnSave.Enabled = btnUndo.Enabled = (undoStack.Count > 0);
+
+                // Nếu nút save enabled thì không thể đóng form
+                ReqUpdateCanCloseState.Invoke(this, !btnSave.Enabled);
+            }
         }
 
         private void fOpenCustomerAccount_FormClosing(object sender, FormClosingEventArgs e)
@@ -401,7 +443,7 @@ namespace NganHangPhanTan.SimpleForm
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 ReqClose.Invoke(this);
-                e.Cancel = (btnSave.Enabled == false);
+                e.Cancel = btnSave.Enabled;
             }
         }
 
@@ -411,13 +453,6 @@ namespace NganHangPhanTan.SimpleForm
             gvAccount.CloseEditor();
             btnInsertAcc.Enabled = btnReload.Enabled = true;
             btnDeleteAcc.Enabled = (bdsAccount.Count > 0);
-
-            // Nút save enabled khi còn tác vụ chưa lưu, hay undo stack khác rỗng
-            btnSave.Enabled = btnUndo.Enabled = (undoStack.Count > 0);
-            btnRedo.Enabled = (redoStack.Count > 0);
-
-            // Nếu nút save enabled thì không thể đóng form
-            ReqUpdateCanCloseState.Invoke(this, btnSave.Enabled);
         }
 
         private bool UndoByInsertAction(UserEventData action)
@@ -451,7 +486,7 @@ namespace NganHangPhanTan.SimpleForm
             return true;
         }
 
-        private bool UndoByDeleteAction(UserEventData action)
+        private int UndoByDeleteAction(UserEventData action)
         {
             Account account = (Account)action.Content;
             bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
@@ -461,11 +496,11 @@ namespace NganHangPhanTan.SimpleForm
             if (accountHavingTransation)
             {
                 MessageUtil.ShowErrorMsgDialog($"Không thể xóa tài khoản mã số {account.Id} vì đã thực hiện giao dịch.\n");
-                return false;
+                return -1;
             }
 
             if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa tài khoản mã số {account.Id}?") != DialogResult.OK)
-                return false;
+                return 0;
 
             try
             {
@@ -476,11 +511,11 @@ namespace NganHangPhanTan.SimpleForm
                 // Phục hồi nếu xóa không thành công
                 MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa tài khoản mã số {account.Id}. Thử thực hiện lại.\nChi tiết: {ex.Message}");
                 bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, account.Id);
-                return false;
+                return 0;
             }
 
             btnDeleteAcc.Enabled = bdsAccount.Count != 0;
-            return true;
+            return 1;
         }
 
         /// <summary>
@@ -638,29 +673,32 @@ namespace NganHangPhanTan.SimpleForm
                     gvAccount.ShowEditor();
                     return;
                 }
-            } 
+            }
 
             // Dữ liệu tài khoản được thêm hoặc update trên bdsAccount
             bdsAccount.EndEdit();
             bdsAccount.ResetCurrentItem();
 
-            // Pop cancel-editing event from undo stack
-            UserEventData action = undoStack.Last();
-            undoStack.RemoveLast();
-
-            // Insert mode
-            if (insertMode)
+            if (undoStack.Count > 0)
             {
-                // Nếu INSERT, thêm vào undo stack DELETE action
-                action.Type = UserEventData.EventType.DELETE;
-                action.Content = new Account((DataRowView)bdsAccount.Current);
-                // Không cần lưu action.GridPos vì là DELETE action
+                // Pop cancel-editing event from undo stack
+                UserEventData action = undoStack.Last();
+                //undoStack.RemoveLast();
+
+                // Insert mode
+                if (insertMode)
+                {
+                    // Nếu INSERT, thêm vào undo stack DELETE action
+                    action.Type = UserEventData.EventType.DELETE;
+                    action.Content = new Account((DataRowView)bdsAccount.Current);
+                    // Không cần lưu action.GridPos vì là DELETE action
+                }
             }
 
-            undoStack.AddLast(action);
-            ControlUtil.ResolveStackStorage(undoStack);
+            //undoStack.AddLast(action);
+            //ControlUtil.ResolveStackStorage(undoStack);
 
-            btnUndo.Enabled = true;
+            //btnUndo.Enabled = true;
 
             // Xóa redo stack
             redoStack.Clear();
@@ -686,7 +724,8 @@ namespace NganHangPhanTan.SimpleForm
 
         private void gvAccount_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            if (bdsAccount.Count == 0 || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle) return;
+            if (bdsAccount.Count == 0 || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle
+                || e.FocusedRowHandle == DevExpress.XtraGrid.GridControl.NewItemRowHandle - 1) return;
 
             string accountId = gvAccount.GetRowCellValue(e.FocusedRowHandle, Account.ID_HEADER).ToString();
 

@@ -214,13 +214,17 @@ namespace NganHangPhanTan.Report
             this.usp_GetCustomerAccountsGridControl.Location = new System.Drawing.Point(0, 83);
             this.usp_GetCustomerAccountsGridControl.MainView = this.gvAccount;
             this.usp_GetCustomerAccountsGridControl.Name = "usp_GetCustomerAccountsGridControl";
-            this.usp_GetCustomerAccountsGridControl.Size = new System.Drawing.Size(1092, 391);
+            this.usp_GetCustomerAccountsGridControl.Size = new System.Drawing.Size(1092, 551);
             this.usp_GetCustomerAccountsGridControl.TabIndex = 17;
             this.usp_GetCustomerAccountsGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvAccount});
             // 
             // gvAccount
             // 
+            this.gvAccount.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvAccount.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvAccount.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvAccount.Appearance.Row.Options.UseFont = true;
             this.gvAccount.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colSOTK,
             this.colHOTEN,
@@ -232,6 +236,10 @@ namespace NganHangPhanTan.Report
             // 
             // colSOTK
             // 
+            this.colSOTK.AppearanceCell.Options.UseTextOptions = true;
+            this.colSOTK.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colSOTK.AppearanceHeader.Options.UseTextOptions = true;
+            this.colSOTK.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colSOTK.Caption = "Số TK";
             this.colSOTK.FieldName = "SOTK";
             this.colSOTK.MinWidth = 25;
@@ -243,6 +251,8 @@ namespace NganHangPhanTan.Report
             // 
             // colHOTEN
             // 
+            this.colHOTEN.AppearanceHeader.Options.UseTextOptions = true;
+            this.colHOTEN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colHOTEN.Caption = "Họ tên";
             this.colHOTEN.FieldName = "HOTEN";
             this.colHOTEN.MinWidth = 25;
@@ -254,6 +264,10 @@ namespace NganHangPhanTan.Report
             // 
             // colCMND
             // 
+            this.colCMND.AppearanceCell.Options.UseTextOptions = true;
+            this.colCMND.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colCMND.AppearanceHeader.Options.UseTextOptions = true;
+            this.colCMND.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colCMND.Caption = "Số CMND";
             this.colCMND.FieldName = "CMND";
             this.colCMND.MinWidth = 25;
@@ -265,6 +279,10 @@ namespace NganHangPhanTan.Report
             // 
             // colNGAYMOTK
             // 
+            this.colNGAYMOTK.AppearanceCell.Options.UseTextOptions = true;
+            this.colNGAYMOTK.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colNGAYMOTK.AppearanceHeader.Options.UseTextOptions = true;
+            this.colNGAYMOTK.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colNGAYMOTK.Caption = "Ngày mở TK";
             this.colNGAYMOTK.FieldName = "NGAYMOTK";
             this.colNGAYMOTK.MinWidth = 25;
@@ -284,9 +302,9 @@ namespace NganHangPhanTan.Report
             this.groupControl1.Controls.Add(label4);
             this.groupControl1.Controls.Add(this.dpDateFrom);
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupControl1.Location = new System.Drawing.Point(0, 474);
+            this.groupControl1.Location = new System.Drawing.Point(0, 634);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1092, 215);
+            this.groupControl1.Size = new System.Drawing.Size(1092, 233);
             this.groupControl1.TabIndex = 18;
             this.groupControl1.Text = "Nhập thông tin báo cáo";
             // 
@@ -295,7 +313,7 @@ namespace NganHangPhanTan.Report
             this.Appearance.Options.UseFont = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1092, 689);
+            this.ClientSize = new System.Drawing.Size(1092, 867);
             this.Controls.Add(this.groupControl1);
             this.Controls.Add(this.usp_GetCustomerAccountsGridControl);
             this.Controls.Add(this.panelControl1);

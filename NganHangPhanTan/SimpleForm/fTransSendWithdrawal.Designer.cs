@@ -51,12 +51,13 @@ namespace NganHangPhanTan.SimpleForm
             this.colSODT = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.pnInput = new System.Windows.Forms.Panel();
-            this.teEmployeeId = new DevExpress.XtraEditors.TextEdit();
+            this.teTransType = new DevExpress.XtraEditors.TextEdit();
             this.bdsTrans = new System.Windows.Forms.BindingSource(this.components);
+            this.teEmployeeId = new DevExpress.XtraEditors.TextEdit();
             this.teTransMoney = new DevExpress.XtraEditors.TextEdit();
             this.deTransDate = new DevExpress.XtraEditors.DateEdit();
             this.teAccountId = new DevExpress.XtraEditors.TextEdit();
-            this.cbTransType = new System.Windows.Forms.ComboBox();
+            this.cbTransTypeName = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnReload = new DevExpress.XtraEditors.SimpleButton();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
@@ -68,10 +69,11 @@ namespace NganHangPhanTan.SimpleForm
             this.gcTrans = new DevExpress.XtraGrid.GridControl();
             this.gvTrans = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colMAGD = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTENLOAIGD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLOAIGD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSOTIEN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMANV = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colHOTENNV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNGAYGD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.gcAccount = new DevExpress.XtraGrid.GridControl();
@@ -83,6 +85,7 @@ namespace NganHangPhanTan.SimpleForm
             this.taCustomer = new NganHangPhanTan.DSTableAdapters.usp_GetCustomerHavingAccountInSubcriberTableAdapter();
             this.taAccount = new NganHangPhanTan.DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter();
             this.taTrans = new NganHangPhanTan.DSTableAdapters.usp_GetTransSendWithdrawalByAccountIdTableAdapter();
+            this.panel2 = new System.Windows.Forms.Panel();
             mANVLabel = new System.Windows.Forms.Label();
             sOTIENLabel = new System.Windows.Forms.Label();
             sOTKLabel = new System.Windows.Forms.Label();
@@ -99,8 +102,9 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
             this.pnInput.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.teEmployeeId.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teTransType.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsTrans)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teEmployeeId.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teTransMoney.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTransDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTransDate.Properties)).BeginInit();
@@ -175,7 +179,7 @@ namespace NganHangPhanTan.SimpleForm
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1335, 74);
+            this.panelControl1.Size = new System.Drawing.Size(1356, 74);
             this.panelControl1.TabIndex = 7;
             // 
             // cbBrand
@@ -204,7 +208,7 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupControl1.Location = new System.Drawing.Point(0, 74);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1335, 249);
+            this.groupControl1.Size = new System.Drawing.Size(1356, 249);
             this.groupControl1.TabIndex = 10;
             this.groupControl1.Text = "Danh sách khách hàng đăng ký tài khoản thuộc chi nhánh";
             // 
@@ -215,7 +219,7 @@ namespace NganHangPhanTan.SimpleForm
             this.gcCustomer.Location = new System.Drawing.Point(2, 28);
             this.gcCustomer.MainView = this.gvCustomer;
             this.gcCustomer.Name = "gcCustomer";
-            this.gcCustomer.Size = new System.Drawing.Size(1331, 219);
+            this.gcCustomer.Size = new System.Drawing.Size(1352, 219);
             this.gcCustomer.TabIndex = 0;
             this.gcCustomer.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvCustomer});
@@ -307,14 +311,16 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl2.Controls.Add(this.pnInput);
             this.groupControl2.Controls.Add(this.panel1);
             this.groupControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupControl2.Location = new System.Drawing.Point(0, 621);
+            this.groupControl2.Location = new System.Drawing.Point(0, 822);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1335, 240);
+            this.groupControl2.Size = new System.Drawing.Size(1356, 240);
             this.groupControl2.TabIndex = 13;
             this.groupControl2.Text = "Thông tin giao dịch gửi/rút tiền";
             // 
             // pnInput
             // 
+            this.pnInput.Controls.Add(this.panel2);
+            this.pnInput.Controls.Add(this.teTransType);
             this.pnInput.Controls.Add(mANVLabel);
             this.pnInput.Controls.Add(this.teEmployeeId);
             this.pnInput.Controls.Add(sOTIENLabel);
@@ -324,12 +330,26 @@ namespace NganHangPhanTan.SimpleForm
             this.pnInput.Controls.Add(this.deTransDate);
             this.pnInput.Controls.Add(this.teAccountId);
             this.pnInput.Controls.Add(lOAIGDLabel);
-            this.pnInput.Controls.Add(this.cbTransType);
+            this.pnInput.Controls.Add(this.cbTransTypeName);
             this.pnInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnInput.Location = new System.Drawing.Point(2, 68);
             this.pnInput.Name = "pnInput";
-            this.pnInput.Size = new System.Drawing.Size(1331, 170);
+            this.pnInput.Size = new System.Drawing.Size(1352, 170);
             this.pnInput.TabIndex = 19;
+            // 
+            // teTransType
+            // 
+            this.teTransType.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsTrans, "LOAIGD", true));
+            this.teTransType.Location = new System.Drawing.Point(1217, 138);
+            this.teTransType.Name = "teTransType";
+            this.teTransType.Size = new System.Drawing.Size(125, 22);
+            this.teTransType.TabIndex = 31;
+            this.teTransType.TextChanged += new System.EventHandler(this.teTransType_TextChanged);
+            // 
+            // bdsTrans
+            // 
+            this.bdsTrans.DataMember = "usp_GetTransSendWithdrawalByAccountId";
+            this.bdsTrans.DataSource = this.DS;
             // 
             // teEmployeeId
             // 
@@ -341,11 +361,6 @@ namespace NganHangPhanTan.SimpleForm
             this.teEmployeeId.Properties.ReadOnly = true;
             this.teEmployeeId.Size = new System.Drawing.Size(169, 30);
             this.teEmployeeId.TabIndex = 30;
-            // 
-            // bdsTrans
-            // 
-            this.bdsTrans.DataMember = "usp_GetTransSendWithdrawalByAccountId";
-            this.bdsTrans.DataSource = this.DS;
             // 
             // teTransMoney
             // 
@@ -382,7 +397,6 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // teAccountId
             // 
-            this.teAccountId.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bdsTrans, "SOTK", true));
             this.teAccountId.Location = new System.Drawing.Point(513, 40);
             this.teAccountId.Name = "teAccountId";
             this.teAccountId.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -391,19 +405,18 @@ namespace NganHangPhanTan.SimpleForm
             this.teAccountId.Size = new System.Drawing.Size(165, 30);
             this.teAccountId.TabIndex = 22;
             // 
-            // cbTransType
+            // cbTransTypeName
             // 
-            this.cbTransType.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bdsTrans, "LOAIGD", true));
-            this.cbTransType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTransType.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbTransType.FormattingEnabled = true;
-            this.cbTransType.Items.AddRange(new object[] {
-            "RT",
-            "GT"});
-            this.cbTransType.Location = new System.Drawing.Point(155, 40);
-            this.cbTransType.Name = "cbTransType";
-            this.cbTransType.Size = new System.Drawing.Size(170, 31);
-            this.cbTransType.TabIndex = 25;
+            this.cbTransTypeName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTransTypeName.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbTransTypeName.FormattingEnabled = true;
+            this.cbTransTypeName.Items.AddRange(new object[] {
+            "Rút tiền",
+            "Gửi tiền"});
+            this.cbTransTypeName.Location = new System.Drawing.Point(155, 40);
+            this.cbTransTypeName.Name = "cbTransTypeName";
+            this.cbTransTypeName.Size = new System.Drawing.Size(170, 31);
+            this.cbTransTypeName.TabIndex = 25;
             // 
             // panel1
             // 
@@ -414,7 +427,7 @@ namespace NganHangPhanTan.SimpleForm
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(2, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1331, 40);
+            this.panel1.Size = new System.Drawing.Size(1352, 40);
             this.panel1.TabIndex = 11;
             // 
             // btnReload
@@ -487,7 +500,6 @@ namespace NganHangPhanTan.SimpleForm
             this.tableAdapterManager.NhanVienTableAdapter = null;
             this.tableAdapterManager.TaiKhoanTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = NganHangPhanTan.DSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            //this.tableAdapterManager.usp_GetTransSendWithdrawalByAccountIdTableAdapter = null;
             // 
             // pnBody
             // 
@@ -496,7 +508,7 @@ namespace NganHangPhanTan.SimpleForm
             this.pnBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnBody.Location = new System.Drawing.Point(0, 323);
             this.pnBody.Name = "pnBody";
-            this.pnBody.Size = new System.Drawing.Size(1335, 298);
+            this.pnBody.Size = new System.Drawing.Size(1356, 499);
             this.pnBody.TabIndex = 15;
             // 
             // pnTrans
@@ -505,7 +517,7 @@ namespace NganHangPhanTan.SimpleForm
             this.pnTrans.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnTrans.Location = new System.Drawing.Point(764, 0);
             this.pnTrans.Name = "pnTrans";
-            this.pnTrans.Size = new System.Drawing.Size(571, 298);
+            this.pnTrans.Size = new System.Drawing.Size(592, 499);
             this.pnTrans.TabIndex = 14;
             this.pnTrans.Text = "Giao dịch gửi / rút của tài khoản";
             // 
@@ -516,7 +528,7 @@ namespace NganHangPhanTan.SimpleForm
             this.gcTrans.Location = new System.Drawing.Point(2, 28);
             this.gcTrans.MainView = this.gvTrans;
             this.gcTrans.Name = "gcTrans";
-            this.gcTrans.Size = new System.Drawing.Size(567, 268);
+            this.gcTrans.Size = new System.Drawing.Size(588, 469);
             this.gcTrans.TabIndex = 0;
             this.gcTrans.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvTrans});
@@ -529,10 +541,11 @@ namespace NganHangPhanTan.SimpleForm
             this.gvTrans.Appearance.Row.Options.UseFont = true;
             this.gvTrans.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colMAGD,
-            this.gridColumn1,
+            this.colTENLOAIGD,
             this.colLOAIGD,
             this.colSOTIEN,
             this.colMANV,
+            this.colHOTENNV,
             this.colNGAYGD});
             this.gvTrans.GridControl = this.gcTrans;
             this.gvTrans.Name = "gvTrans";
@@ -547,39 +560,38 @@ namespace NganHangPhanTan.SimpleForm
             this.colMAGD.FieldName = "MAGD";
             this.colMAGD.MinWidth = 25;
             this.colMAGD.Name = "colMAGD";
-            this.colMAGD.OptionsColumn.ReadOnly = true;
             this.colMAGD.Visible = true;
             this.colMAGD.VisibleIndex = 0;
             this.colMAGD.Width = 94;
             // 
-            // gridColumn1
+            // colTENLOAIGD
             // 
-            this.gridColumn1.Caption = "Loại";
-            this.gridColumn1.MinWidth = 25;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.OptionsColumn.ReadOnly = true;
-            this.gridColumn1.UnboundExpression = "Iif([LOAIGD] = \'RT\', \'Rút tiền\', [LOAIGD] = \'GT\', \'Gửi tiền\', \'\')";
-            this.gridColumn1.Width = 94;
+            this.colTENLOAIGD.AppearanceCell.Options.UseTextOptions = true;
+            this.colTENLOAIGD.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colTENLOAIGD.AppearanceHeader.Options.UseTextOptions = true;
+            this.colTENLOAIGD.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colTENLOAIGD.Caption = "Loại GD";
+            this.colTENLOAIGD.FieldName = "TENLOAIGD";
+            this.colTENLOAIGD.MinWidth = 25;
+            this.colTENLOAIGD.Name = "colTENLOAIGD";
+            this.colTENLOAIGD.UnboundExpression = "Iif([LOAIGD] = \'RT\', \'Rút tiền\', [LOAIGD] = \'GT\', \'Gửi tiền\', [LOAIGD] = \'CT\', \'C" +
+    "huyển tiền\', \'\')";
+            this.colTENLOAIGD.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            this.colTENLOAIGD.Visible = true;
+            this.colTENLOAIGD.VisibleIndex = 1;
+            this.colTENLOAIGD.Width = 94;
             // 
             // colLOAIGD
             // 
-            this.colLOAIGD.AppearanceCell.Options.UseTextOptions = true;
-            this.colLOAIGD.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colLOAIGD.AppearanceHeader.Options.UseTextOptions = true;
             this.colLOAIGD.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colLOAIGD.Caption = "Loại GD";
             this.colLOAIGD.FieldName = "LOAIGD";
             this.colLOAIGD.MinWidth = 25;
             this.colLOAIGD.Name = "colLOAIGD";
-            this.colLOAIGD.OptionsColumn.ReadOnly = true;
-            this.colLOAIGD.Visible = true;
-            this.colLOAIGD.VisibleIndex = 1;
             this.colLOAIGD.Width = 94;
             // 
             // colSOTIEN
             // 
-            this.colSOTIEN.AppearanceCell.Options.UseTextOptions = true;
-            this.colSOTIEN.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.colSOTIEN.AppearanceHeader.Options.UseTextOptions = true;
             this.colSOTIEN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colSOTIEN.Caption = "Số tiền";
@@ -588,7 +600,6 @@ namespace NganHangPhanTan.SimpleForm
             this.colSOTIEN.FieldName = "SOTIEN";
             this.colSOTIEN.MinWidth = 25;
             this.colSOTIEN.Name = "colSOTIEN";
-            this.colSOTIEN.OptionsColumn.ReadOnly = true;
             this.colSOTIEN.Visible = true;
             this.colSOTIEN.VisibleIndex = 2;
             this.colSOTIEN.Width = 94;
@@ -603,10 +614,21 @@ namespace NganHangPhanTan.SimpleForm
             this.colMANV.FieldName = "MANV";
             this.colMANV.MinWidth = 25;
             this.colMANV.Name = "colMANV";
-            this.colMANV.OptionsColumn.ReadOnly = true;
             this.colMANV.Visible = true;
             this.colMANV.VisibleIndex = 3;
             this.colMANV.Width = 94;
+            // 
+            // colHOTENNV
+            // 
+            this.colHOTENNV.AppearanceHeader.Options.UseTextOptions = true;
+            this.colHOTENNV.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colHOTENNV.Caption = "Họ tên NV";
+            this.colHOTENNV.FieldName = "HOTENNV";
+            this.colHOTENNV.MinWidth = 25;
+            this.colHOTENNV.Name = "colHOTENNV";
+            this.colHOTENNV.Visible = true;
+            this.colHOTENNV.VisibleIndex = 4;
+            this.colHOTENNV.Width = 94;
             // 
             // colNGAYGD
             // 
@@ -614,13 +636,12 @@ namespace NganHangPhanTan.SimpleForm
             this.colNGAYGD.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colNGAYGD.AppearanceHeader.Options.UseTextOptions = true;
             this.colNGAYGD.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.colNGAYGD.Caption = "Ngày GD";
+            this.colNGAYGD.Caption = "Ngày thực hiện";
             this.colNGAYGD.FieldName = "NGAYGD";
             this.colNGAYGD.MinWidth = 25;
             this.colNGAYGD.Name = "colNGAYGD";
-            this.colNGAYGD.OptionsColumn.ReadOnly = true;
             this.colNGAYGD.Visible = true;
-            this.colNGAYGD.VisibleIndex = 4;
+            this.colNGAYGD.VisibleIndex = 5;
             this.colNGAYGD.Width = 94;
             // 
             // groupControl3
@@ -630,7 +651,7 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl3.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupControl3.Location = new System.Drawing.Point(0, 0);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(764, 298);
+            this.groupControl3.Size = new System.Drawing.Size(764, 499);
             this.groupControl3.TabIndex = 13;
             this.groupControl3.Text = "Danh sách tài khoản của khách hàng";
             // 
@@ -641,7 +662,7 @@ namespace NganHangPhanTan.SimpleForm
             this.gcAccount.Location = new System.Drawing.Point(2, 28);
             this.gcAccount.MainView = this.gvAccount;
             this.gcAccount.Name = "gcAccount";
-            this.gcAccount.Size = new System.Drawing.Size(760, 268);
+            this.gcAccount.Size = new System.Drawing.Size(760, 469);
             this.gcAccount.TabIndex = 0;
             this.gcAccount.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvAccount});
@@ -724,13 +745,20 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.taTrans.ClearBeforeFill = true;
             // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(1099, 44);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(250, 116);
+            this.panel2.TabIndex = 32;
+            // 
             // fTransSendWithdrawal
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1335, 861);
+            this.ClientSize = new System.Drawing.Size(1356, 1062);
             this.Controls.Add(this.pnBody);
             this.Controls.Add(this.groupControl2);
             this.Controls.Add(this.groupControl1);
@@ -755,8 +783,9 @@ namespace NganHangPhanTan.SimpleForm
             this.groupControl2.ResumeLayout(false);
             this.pnInput.ResumeLayout(false);
             this.pnInput.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.teEmployeeId.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teTransType.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsTrans)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.teEmployeeId.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teTransMoney.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTransDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTransDate.Properties)).EndInit();
@@ -795,7 +824,7 @@ namespace NganHangPhanTan.SimpleForm
         private DevExpress.XtraEditors.TextEdit teTransMoney;
         private DevExpress.XtraEditors.DateEdit deTransDate;
         private DevExpress.XtraEditors.TextEdit teAccountId;
-        private System.Windows.Forms.ComboBox cbTransType;
+        private System.Windows.Forms.ComboBox cbTransTypeName;
         private System.Windows.Forms.BindingSource bdsCustomer;
         private DSTableAdapters.usp_GetCustomerHavingAccountInSubcriberTableAdapter taCustomer;
         private DevExpress.XtraGrid.GridControl gcCustomer;
@@ -816,14 +845,17 @@ namespace NganHangPhanTan.SimpleForm
         private DSTableAdapters.usp_GetTransSendWithdrawalByAccountIdTableAdapter taTrans;
         private DevExpress.XtraGrid.GridControl gcTrans;
         private DevExpress.XtraGrid.Views.Grid.GridView gvTrans;
-        private DevExpress.XtraGrid.Columns.GridColumn colMAGD;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn colLOAIGD;
-        private DevExpress.XtraGrid.Columns.GridColumn colSOTIEN;
-        private DevExpress.XtraGrid.Columns.GridColumn colMANV;
-        private DevExpress.XtraGrid.Columns.GridColumn colNGAYGD;
         private DevExpress.XtraEditors.SimpleButton btnReload;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraGrid.Columns.GridColumn colMAGD;
+        private DevExpress.XtraGrid.Columns.GridColumn colTENLOAIGD;
+        private DevExpress.XtraGrid.Columns.GridColumn colLOAIGD;
+        private DevExpress.XtraGrid.Columns.GridColumn colSOTIEN;
+        private DevExpress.XtraGrid.Columns.GridColumn colMANV;
+        private DevExpress.XtraGrid.Columns.GridColumn colHOTENNV;
+        private DevExpress.XtraGrid.Columns.GridColumn colNGAYGD;
+        private DevExpress.XtraEditors.TextEdit teTransType;
+        private System.Windows.Forms.Panel panel2;
     }
 }

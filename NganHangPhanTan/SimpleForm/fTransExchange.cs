@@ -75,11 +75,26 @@ namespace NganHangPhanTan.SimpleForm
 
         private void ConfigGridEnpoint()
         {
+            gvEndpoints.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            gvEndpoints.Appearance.HeaderPanel.Options.UseFont = true;
+            gvEndpoints.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            gvEndpoints.Appearance.Row.Options.UseFont = true;
+
             gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].OptionsColumn.ReadOnly = true;
             gvEndpoints.Columns[ExchangeEndpoint.FULLNAME_IDX].OptionsColumn.ReadOnly = true;
             gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].OptionsColumn.ReadOnly = true;
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].OptionsColumn.ReadOnly = false;
+
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatString = "{0:c0}";
             gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatString = "0:c0";
+
+            // Alignment
+            gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.FULLNAME_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
 
         private void fTransExchange_FormClosing(object sender, FormClosingEventArgs e)
@@ -205,6 +220,9 @@ namespace NganHangPhanTan.SimpleForm
 
         private void ResetTransaction()
         {
+            if (exchangeTransaction == null)
+                return;
+
             exchangeTransaction.Clear();
             if (bdsAccount.Current != null)
                 exchangeTransaction.InitBalance = double.Parse(((DataRowView)bdsAccount.Current)[Account.BALANCE_HEADER].ToString());
@@ -241,52 +259,6 @@ namespace NganHangPhanTan.SimpleForm
             LoadTransFromAccount();
         }
 
-        /// <summary>
-        /// Reload lại dữ liệu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnReload_Click(object sender, EventArgs e)
-        {
-            reloadData = true;
-            bool errorFound = false;
-
-            // Reload customer data
-            string customerId = ((DataRowView)bdsCustomer.Current)[Customer.ID_HEADER].ToString();
-            this.taCustomer.Fill(this.DS.usp_GetCustomerHavingAccountInSubcriber);
-            try
-            {
-                bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customerId);
-            }
-            catch (Exception ex)
-            {
-                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Khách hàng đang chọn không tồn tại.\nChi tiết: " + ex.Message);
-                errorFound = true;
-            }
-            // Reload account data
-            string accountId = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
-            this.taAccount.Fill(this.DS.usp_GetAccountByCustomerId, customerId);
-            try
-            {
-                bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, accountId);
-            }
-            catch (Exception ex)
-            {
-                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Tài khoản đang chọn không tồn tại.\nChi tiết: " + ex.Message);
-                errorFound = true;
-            }
-
-            LoadTransFromAccount();
-
-            if (errorFound)
-            {
-                ResetTransaction();
-                teRemainBalance.EditValue = teInitBalance.EditValue = null;
-                btnCommit.Enabled = false;
-            }
-            reloadData = false;
-        }
-
         private void btnChangeEndpoints_Click(object sender, EventArgs e)
         {
             if (changeEndpointForm == null)
@@ -313,25 +285,26 @@ namespace NganHangPhanTan.SimpleForm
 
         private void CommitTransaction()
         {
-            foreach (var item in exchangeTransaction.Endpoints)
+            foreach (var endpoint in exchangeTransaction.Endpoints)
             {
-                bufferExchangeTransDataTable.Rows.Add(item.AccountId, item.ExchangeMoney);
+                if (endpoint.ExchangeMoney < 50000)
+                {
+                    MessageUtil.ShowErrorMsgDialog($"Số tiền cần chuyển cho TK {endpoint.AccountId} cần tối thiểu 50.000 đ");
+                    return;
+                }
             }
 
-            string employeeId = SecurityContext.User.Username;
             string senderAccountId = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
 
-            SqlParameter param0 = new SqlParameter("@SOTK_CHUYEN", senderAccountId);
-            SqlParameter param1 = new SqlParameter("@NGAYGD", DateTime.Now);
-            SqlParameter param2 = new SqlParameter("@MULTI_EXCHANGE_TABLE", bufferExchangeTransDataTable);
-            param2.SqlDbType = SqlDbType.Structured;
-            param2.TypeName = "dbo.TBTYPE_MultiExchangeTransaction";
-            SqlParameter param3 = new SqlParameter("@MANV", employeeId);
-            
-            int rowAffected = DataProvider.Instance.ExecuteNonQuery(
-                "dbo.usp_InsertTransExchange",
-                new SqlParameter[] {param0, param1, param2, param3}
-            );
+            if (MessageUtil.ShowInfoConfirmDialog($"Xác nhận lưu giao dịch chuyển tiền cho TK chuyển là {senderAccountId}?") != DialogResult.OK)
+                return;
+
+            foreach (var endpoint in exchangeTransaction.Endpoints)
+            {
+                bufferExchangeTransDataTable.Rows.Add(endpoint.AccountId, endpoint.ExchangeMoney);
+            }
+
+            int rowAffected = AccountDAO.Instance.AddExchangeTransaction(senderAccountId, bufferExchangeTransDataTable);
 
             if (rowAffected > 0)
             {
@@ -396,6 +369,47 @@ namespace NganHangPhanTan.SimpleForm
                     return;
                 }
             }
+        }
+
+        private void btnReload2_Click(object sender, EventArgs e)
+        {
+            reloadData = true;
+            bool errorFound = false;
+
+            // Reload customer data
+            string customerId = ((DataRowView)bdsCustomer.Current)[Customer.ID_HEADER].ToString();
+            this.taCustomer.Fill(this.DS.usp_GetCustomerHavingAccountInSubcriber);
+            try
+            {
+                bdsCustomer.Position = bdsCustomer.Find(Customer.ID_HEADER, customerId);
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Khách hàng đang chọn không tồn tại.\nChi tiết: " + ex.Message);
+                errorFound = true;
+            }
+            // Reload account data
+            string accountId = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
+            this.taAccount.Fill(this.DS.usp_GetAccountByCustomerId, customerId);
+            try
+            {
+                bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, accountId);
+            }
+            catch (Exception ex)
+            {
+                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Tài khoản đang chọn không tồn tại.\nChi tiết: " + ex.Message);
+                errorFound = true;
+            }
+
+            LoadTransFromAccount();
+
+            if (errorFound)
+            {
+                ResetTransaction();
+                teRemainBalance.EditValue = teInitBalance.EditValue = null;
+                btnCommit.Enabled = false;
+            }
+            reloadData = false;
         }
     }
 }

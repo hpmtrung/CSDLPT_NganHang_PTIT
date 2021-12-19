@@ -409,7 +409,7 @@ namespace NganHangPhanTan.SimpleForm
             this.gcEmployee.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit1,
             this.repositoryItemTextEdit1});
-            this.gcEmployee.Size = new System.Drawing.Size(1341, 403);
+            this.gcEmployee.Size = new System.Drawing.Size(1341, 449);
             this.gcEmployee.TabIndex = 6;
             this.gcEmployee.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvEmployee});
@@ -534,9 +534,9 @@ namespace NganHangPhanTan.SimpleForm
             this.pnInput.Controls.Add(mANVLabel);
             this.pnInput.Controls.Add(this.txbId);
             this.pnInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnInput.Location = new System.Drawing.Point(0, 507);
+            this.pnInput.Location = new System.Drawing.Point(0, 553);
             this.pnInput.Name = "pnInput";
-            this.pnInput.Size = new System.Drawing.Size(1341, 277);
+            this.pnInput.Size = new System.Drawing.Size(1341, 231);
             this.pnInput.TabIndex = 7;
             // 
             // cbGender

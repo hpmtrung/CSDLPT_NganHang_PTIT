@@ -21,6 +21,8 @@ namespace NganHangPhanTan.SimpleForm
         public Action ReqChangeEnpoints { get => reqChangeEndpoints; set => reqChangeEndpoints = value; }
         public string SenderAccountId { get => senderAccountId; set => senderAccountId = value; }
 
+        private bool validateError = false;
+
         public fChangeEndpointsExchangeTrans(ExchangeTransaction exchangeTransaction)
         {
             InitializeComponent();
@@ -31,11 +33,26 @@ namespace NganHangPhanTan.SimpleForm
 
         private void ConfigGridEnpoint()
         {
+            gvEndpoints.Appearance.HeaderPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            gvEndpoints.Appearance.HeaderPanel.Options.UseFont = true;
+            gvEndpoints.Appearance.Row.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            gvEndpoints.Appearance.Row.Options.UseFont = true;
+
             gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].OptionsColumn.ReadOnly = true;
             gvEndpoints.Columns[ExchangeEndpoint.FULLNAME_IDX].OptionsColumn.ReadOnly = true;
             gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].OptionsColumn.ReadOnly = true;
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].OptionsColumn.ReadOnly = false;
+
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatString = "{0:c0}";
             gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].DisplayFormat.FormatString = "0:c0";
+            
+            // Alignment
+            gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.ACCOUNT_ID_IDX].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.FULLNAME_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.CUSTOMER_ID_IDX].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gvEndpoints.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX].AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -50,22 +67,11 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Khách hàng đang chọn không tồn tại.\nChi tiết: " + ex.Message);
+                MessageUtil.ShowInfoMsgDialog("Xãy ra lỗi khi reload: Khách hàng đã chọn trước đó không tồn tại trong danh sách.\nChi tiết: " + ex.Message);
                 return;
             }
 
-            // Reload account data
-            string accountId = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
             LoadAccountFromCustomer();
-
-            try
-            {
-                bdsAccount.Position = bdsAccount.Find(Account.ID_HEADER, accountId);
-            }
-            catch (Exception ex)
-            {
-                MessageUtil.ShowErrorMsgDialog("Xãy ra lỗi khi reload: Tài khoản đang chọn không tồn tại.\nChi tiết: " + ex.Message);
-            }
         }
 
         private void fChangeEndpointsExchangeTrans_Load(object sender, EventArgs e)
@@ -76,17 +82,17 @@ namespace NganHangPhanTan.SimpleForm
 
             this.taAccount.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
 
-            btnDelete.Enabled = btnReset.Enabled = gvEndpoints.RowCount > 0;
+            btnDelete.Enabled = btnDeleteAll.Enabled = gvEndpoints.RowCount > 0;
 
             teRemainBalance.EditValue = this.exchangeTransaction.RemainBalance;
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void DeleteEndpoint()
         {
             // Delete endpoint
             ExchangeEndpoint selectEndpoint = (ExchangeEndpoint)gvEndpoints.GetFocusedRow();
 
-            if (MessageUtil.ShowWarnConfirmDialog($"Bạn có chắc muốn xóa TK chuyển {selectEndpoint.AccountId}?") != DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa TK cần chuyển là {selectEndpoint.AccountId}?") != DialogResult.OK)
                 return;
 
             try
@@ -99,7 +105,13 @@ namespace NganHangPhanTan.SimpleForm
                 return;
             }
 
-            btnDelete.Enabled = btnReset.Enabled = gvEndpoints.RowCount > 0;
+            btnDelete.Enabled = btnDeleteAll.Enabled = gvEndpoints.RowCount > 0;
+            validateError = false;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeleteEndpoint();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -111,11 +123,12 @@ namespace NganHangPhanTan.SimpleForm
         {
             // Kiểm tra số tài khoản đã có
             string accountId = ((DataRowView)bdsAccount.Current)[Account.ID_HEADER].ToString();
+
             foreach (ExchangeEndpoint endpoint in exchangeTransaction.Endpoints)
             {
                 if (endpoint.AccountId.Equals(accountId))
                 {
-                    MessageUtil.ShowErrorMsgDialog("Tài khoản đã được chọn, vui lòng điều chỉnh số tiền cần chuyển.");
+                    MessageUtil.ShowErrorMsgDialog($"Tài khoản {accountId} đã được chọn, vui lòng hiệu chỉnh số tiền cần chuyển.");
                     return;
                 }
             }
@@ -125,7 +138,7 @@ namespace NganHangPhanTan.SimpleForm
 
             exchangeTransaction.AddEnpoint(new ExchangeEndpoint(accountId, customerFullname, customerId, 0));
 
-            btnDelete.Enabled = btnReset.Enabled = true;
+            btnDelete.Enabled = btnDeleteAll.Enabled = true;
         }
 
         private void LoadAccountFromCustomer()
@@ -150,34 +163,54 @@ namespace NganHangPhanTan.SimpleForm
             LoadAccountFromCustomer();
         }
 
+        private void DeleteAllEndpoints()
+        {
+            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa danh sách tài khoản cần chuyển?") != DialogResult.OK)
+                return;
+
+            exchangeTransaction.Clear();
+            btnDelete.Enabled = btnDeleteAll.Enabled = false;
+            validateError = false;
+        }
+
         /// <summary>
         /// Delete all select endpoints
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnReset_Click(object sender, EventArgs e)
+        private void btnDeleteAll_Click(object sender, EventArgs e)
         {
-            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận làm mới danh sách tài khoản cần chuyển?") != DialogResult.OK)
-                return;
-
-            exchangeTransaction.Clear();
-            btnDelete.Enabled = btnReset.Enabled = false;
+            DeleteAllEndpoints();
         }
 
         private void fChangeEndpointsExchangeTrans_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (validateError)
+            {
+                e.Cancel = true;
+                return;
+            }
             // Commit
             reqChangeEndpoints.Invoke();
         }
 
         private void gvEndpoints_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
         {
+            if (btnDelete.Focused)
+            {
+                DeleteEndpoint();
+                return;
+            }
+
+            if (btnDeleteAll.Focused)
+            {
+                DeleteAllEndpoints();
+                return;
+            }
+            validateError = false;
             try
             {
                 ExchangeEndpoint endpoint = (ExchangeEndpoint)e.Row;
-                //double exchangeMoney = endpoint.ExchangeMoney;
-                //if (exchangeMoney < 0)
-                //    throw new Exception("Số tiền chuyển không hợp lệ");
                 exchangeTransaction.UpdateRemainBalance();
                 teRemainBalance.EditValue = this.exchangeTransaction.RemainBalance;
             }
@@ -185,6 +218,7 @@ namespace NganHangPhanTan.SimpleForm
             {
                 e.Valid = false;
                 e.ErrorText = ex.Message;
+                validateError = true;
                 return;
             }
         }
@@ -192,19 +226,19 @@ namespace NganHangPhanTan.SimpleForm
         private void gvEndpoints_InvalidRowException(object sender, DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventArgs e)
         {
             e.ExceptionMode = DevExpress.XtraEditors.Controls.ExceptionMode.NoAction;
-            MessageUtil.ShowErrorMsgDialog($"{e.ErrorText}");
+            MessageUtil.ShowErrorMsgDialog(e.ErrorText);
         }
 
         private void gvEndpoints_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
         {
+            if (btnDelete.Focused || btnDeleteAll.Focused)
+                return;
+            validateError = false;
             GridView view = sender as GridView;
             if (view.FocusedColumn == view.Columns[ExchangeEndpoint.EXCHANGE_MONEY_IDX])
             {
                 try
                 {
-                    //double exchangeMoney = (double) e.Value;
-                    //if (exchangeMoney < 0)
-                    //    throw new Exception("Số tiền chuyển không hợp lệ");
                     exchangeTransaction.Endpoints[gvEndpoints.FocusedRowHandle].ExchangeMoney = (double)e.Value;
                     exchangeTransaction.UpdateRemainBalance();
                     teRemainBalance.EditValue = this.exchangeTransaction.RemainBalance;
@@ -213,6 +247,7 @@ namespace NganHangPhanTan.SimpleForm
                 {
                     e.Valid = false;
                     e.ErrorText = ex.Message;
+                    validateError = true;
                     return;
                 }
             }

@@ -196,7 +196,7 @@ namespace NganHangPhanTan.SimpleForm
             this.cbBrand.Name = "cbBrand";
             this.cbBrand.Size = new System.Drawing.Size(502, 31);
             this.cbBrand.TabIndex = 1;
-            this.cbBrand.SelectedIndexChanged += new System.EventHandler(this.cbBrand_SelectedIndexChanged);
+            this.cbBrand.SelectionChangeCommitted += new System.EventHandler(this.cbBrand_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -270,6 +270,8 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colCMND
             // 
+            this.colCMND.AppearanceHeader.Options.UseTextOptions = true;
+            this.colCMND.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colCMND.Caption = "CMND";
             this.colCMND.FieldName = "CMND";
             this.colCMND.MinWidth = 32;
@@ -281,6 +283,8 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colHO
             // 
+            this.colHO.AppearanceHeader.Options.UseTextOptions = true;
+            this.colHO.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colHO.Caption = "Họ";
             this.colHO.FieldName = "HO";
             this.colHO.MinWidth = 32;
@@ -292,6 +296,8 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colTEN
             // 
+            this.colTEN.AppearanceHeader.Options.UseTextOptions = true;
+            this.colTEN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colTEN.Caption = "Tên";
             this.colTEN.FieldName = "TEN";
             this.colTEN.MinWidth = 32;
@@ -303,6 +309,8 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colDIACHI
             // 
+            this.colDIACHI.AppearanceHeader.Options.UseTextOptions = true;
+            this.colDIACHI.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colDIACHI.Caption = "Địa chỉ";
             this.colDIACHI.FieldName = "DIACHI";
             this.colDIACHI.MinWidth = 32;
@@ -314,6 +322,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colPHAI
             // 
+            this.colPHAI.AppearanceCell.Options.UseTextOptions = true;
+            this.colPHAI.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colPHAI.AppearanceHeader.Options.UseTextOptions = true;
+            this.colPHAI.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colPHAI.Caption = "Phái";
             this.colPHAI.FieldName = "PHAI";
             this.colPHAI.MinWidth = 32;
@@ -325,6 +337,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colNGAYCAP
             // 
+            this.colNGAYCAP.AppearanceCell.Options.UseTextOptions = true;
+            this.colNGAYCAP.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colNGAYCAP.AppearanceHeader.Options.UseTextOptions = true;
+            this.colNGAYCAP.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colNGAYCAP.Caption = "Ngày cấp";
             this.colNGAYCAP.FieldName = "NGAYCAP";
             this.colNGAYCAP.MinWidth = 32;
@@ -336,6 +352,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colSODT
             // 
+            this.colSODT.AppearanceCell.Options.UseTextOptions = true;
+            this.colSODT.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colSODT.AppearanceHeader.Options.UseTextOptions = true;
+            this.colSODT.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colSODT.Caption = "Số ĐT";
             this.colSODT.FieldName = "SODT";
             this.colSODT.MinWidth = 32;
@@ -347,6 +367,10 @@ namespace NganHangPhanTan.SimpleForm
             // 
             // colMACN
             // 
+            this.colMACN.AppearanceCell.Options.UseTextOptions = true;
+            this.colMACN.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colMACN.AppearanceHeader.Options.UseTextOptions = true;
+            this.colMACN.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.colMACN.Caption = "Mã CN";
             this.colMACN.FieldName = "MACN";
             this.colMACN.MinWidth = 32;

@@ -25,7 +25,7 @@ namespace NganHangPhanTan.DTO
 
         public void Clear()
         {
-            this.initBalance = this.remainBalance = 0;
+            this.remainBalance = this.initBalance;
             this.endpoints.Clear();
         }
 
@@ -58,6 +58,10 @@ namespace NganHangPhanTan.DTO
                 throw new Exception("Số dư TK chuyển không đủ");
         }
 
+        /// <summary>
+        /// Add a new endpoint with 'zero' money, no need to update remain balance
+        /// </summary>
+        /// <param name="endpoint"></param>
         public void AddEnpoint(ExchangeEndpoint endpoint)
         {
             if (endpoint == null)

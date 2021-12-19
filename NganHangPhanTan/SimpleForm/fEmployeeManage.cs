@@ -144,6 +144,8 @@ namespace NganHangPhanTan.SimpleForm
             txbPhoneNum.Text = employee.PhoneNum;
             cbGender.SelectedItem = employee.Gender;
 
+            cbGender.DataBindings[0].WriteValue();
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -157,13 +159,13 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể thêm nhân viên mới.\nChi tiết: {ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể khôi phục nhân viên đã xóa có mã số {employee.Id}.\nChi tiết: {ex.Message}");
                 return false;
             }
             return true;
         }
 
-        private bool UndoByDeleteAction(UserEventData action)
+        private int UndoByDeleteAction(UserEventData action)
         {
             Employee employee = (Employee)action.Content;
             bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
@@ -171,11 +173,11 @@ namespace NganHangPhanTan.SimpleForm
             if (bdsMoneyExchange.Count > 0 || bdsMoneyTransfer.Count > 0)
             {
                 MessageUtil.ShowErrorMsgDialog("Không thể xóa nhân viên đã thực hiện giao dịch cho khách hàng");
-                return false;
+                return -1;
             }
 
-            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa nhân viên?") != DialogResult.OK)
-                return false;
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa nhân viên có mã số {employee.Id}?") != DialogResult.OK)
+                return 0;
 
             try
             {
@@ -190,10 +192,10 @@ namespace NganHangPhanTan.SimpleForm
                 MessageUtil.ShowErrorMsgDialog($"Lỗi không thể xóa nhân viên. Thử thực hiện lại.\nChi tiết: {ex.Message}");
                 taEmployee.Fill(this.DS.NhanVien);
                 bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, employee.Id);
-                return false;
+                return 0;
             }
             btnEmployeeMove.Enabled = btnDelete.Enabled = bdsEmployee.Count != 0;
-            return true;
+            return 1;
         }
 
         private bool UndoByUpdateAction(UserEventData action)
@@ -208,6 +210,8 @@ namespace NganHangPhanTan.SimpleForm
             txbPhoneNum.Text = updatedEmployee.PhoneNum;
             cbGender.SelectedItem = updatedEmployee.Gender;
 
+            cbGender.DataBindings[0].WriteValue();
+
             try
             {
                 // Lưu thông tin trên binding source
@@ -218,7 +222,7 @@ namespace NganHangPhanTan.SimpleForm
             }
             catch (Exception ex)
             {
-                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh nhân viên.\nChi tiết: {ex.Message}");
+                MessageUtil.ShowErrorMsgDialog($"Lỗi không thể hiệu chỉnh nhân viên.Thử thực hiện lại.\nChi tiết: {ex.Message}");
                 return false;
             }
             return true;
@@ -246,15 +250,24 @@ namespace NganHangPhanTan.SimpleForm
                                 action.GridPos = gridPos;
                                 redoStack.AddLast(action);
                             }
+                            else
+                            {
+                                undoStack.AddLast(action);
+                            }
                             break;
                         }
                     case UserEventData.EventType.DELETE:
                         {
-                            if (UndoByDeleteAction(action))
+                            int res = UndoByDeleteAction(action);
+                            if (res == 1)
                             {
                                 action.Type = UserEventData.EventType.INSERT;
                                 redoStack.AddLast(action);
                                 bdsEmployee.Position = action.GridPos;
+                            }
+                            else if (res == 0)
+                            {
+                                undoStack.AddLast(action);
                             }
                             break;
                         }
@@ -266,6 +279,10 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.UPDATE;
                                 action.Content = oldEmployee;
                                 redoStack.AddLast(action);
+                            }
+                            else
+                            {
+                                undoStack.AddLast(action);
                             }
                             break;
                         }
@@ -313,7 +330,8 @@ namespace NganHangPhanTan.SimpleForm
             // Còn chuyển nhân viên mới dùng tới trạng thái xóa
 
             // Không thể xóa nhân viên đang là user
-            if (((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString().Equals(SecurityContext.User.Username))
+            string employeeId = ((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString();
+            if (employeeId.Equals(SecurityContext.User.Username))
             {
                 MessageUtil.ShowErrorMsgDialog("Bạn chỉ được thay đổi thông tin của mình, không thể xóa.");
                 return;
@@ -325,7 +343,7 @@ namespace NganHangPhanTan.SimpleForm
                 return;
             }
 
-            if (MessageUtil.ShowWarnConfirmDialog("Xác nhận xóa nhân viên?") == DialogResult.OK)
+            if (MessageUtil.ShowWarnConfirmDialog($"Xác nhận xóa nhân viên có mã số {employeeId}?") == DialogResult.OK)
             {
                 Employee deletedEmployee = null;
                 try
@@ -344,7 +362,7 @@ namespace NganHangPhanTan.SimpleForm
                     bdsEmployee.Position = bdsEmployee.Find(Employee.ID_HEADER, deletedEmployee.Id);
                     return;
                 }
-                    
+
                 btnDelete.Enabled = bdsEmployee.Count != 0;
 
                 // Ignore to save grid pos
@@ -560,7 +578,7 @@ namespace NganHangPhanTan.SimpleForm
         private void MoveEmployeeToBrand(string brandId)
         {
             string employeeId = ((DataRowView)bdsEmployee[bdsEmployee.Position])[Employee.ID_HEADER].ToString();
-            
+
             // Không thể chuyển nhân viên đang là user
             if (employeeId.Equals(SecurityContext.User.Username))
             {
@@ -615,15 +633,24 @@ namespace NganHangPhanTan.SimpleForm
                                 action.GridPos = gridPos;
                                 undoStack.AddLast(action);
                             }
+                            else
+                            {
+                                redoStack.AddLast(action);
+                            }
                             break;
                         }
                     case UserEventData.EventType.DELETE:
                         {
-                            if (UndoByDeleteAction(action))
+                            int res = UndoByDeleteAction(action);
+                            if (res == 1)
                             {
                                 action.Type = UserEventData.EventType.INSERT;
                                 undoStack.AddLast(action);
                                 bdsEmployee.Position = action.GridPos;
+                            }
+                            else if (res == 0)
+                            {
+                                redoStack.AddLast(action);
                             }
                             break;
                         }
@@ -635,6 +662,10 @@ namespace NganHangPhanTan.SimpleForm
                                 action.Type = UserEventData.EventType.UPDATE;
                                 action.Content = oldEmployee;
                                 undoStack.AddLast(action);
+                            }
+                            else
+                            {
+                                redoStack.AddLast(action);
                             }
                             break;
                         }
