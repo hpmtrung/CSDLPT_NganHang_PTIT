@@ -49,6 +49,7 @@ namespace NganHangPhanTan.Report
             cbTransType.ValueMember = "Value";
 
             dpDateFrom.DateTime = dpDateTo.DateTime = DateTime.Now;
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void btnSubmit_Click(object sender, System.EventArgs e)

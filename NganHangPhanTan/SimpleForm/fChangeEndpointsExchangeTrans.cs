@@ -107,6 +107,7 @@ namespace NganHangPhanTan.SimpleForm
 
             btnDelete.Enabled = btnDeleteAll.Enabled = gvEndpoints.RowCount > 0;
             validateError = false;
+            teRemainBalance.EditValue = this.exchangeTransaction.RemainBalance;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -171,6 +172,7 @@ namespace NganHangPhanTan.SimpleForm
             exchangeTransaction.Clear();
             btnDelete.Enabled = btnDeleteAll.Enabled = false;
             validateError = false;
+            teRemainBalance.EditValue = this.exchangeTransaction.RemainBalance;
         }
 
         /// <summary>

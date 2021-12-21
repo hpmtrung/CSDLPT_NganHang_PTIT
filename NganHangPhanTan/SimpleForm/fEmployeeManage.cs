@@ -74,6 +74,7 @@ namespace NganHangPhanTan.SimpleForm
             txbId.Enabled = false;
 
             this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

@@ -58,6 +58,7 @@ namespace NganHangPhanTan.SimpleForm
             txbId.Enabled = false;
 
             this.gridBrandID = BrandDAO.Instance.GetBrandIdOfSubcriber();
+            cbBrand_SelectionChangeCommitted(null, null);
         }
         
         private void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -629,5 +630,6 @@ namespace NganHangPhanTan.SimpleForm
             taCustomer.Connection.ConnectionString = DataProvider.Instance.ConnectionStr;
             taCustomer.Fill(this.DS.KhachHang);
         }
+
     }
 }

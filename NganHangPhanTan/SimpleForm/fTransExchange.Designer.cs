@@ -67,7 +67,10 @@ namespace NganHangPhanTan.SimpleForm
             this.gcEndpoints = new DevExpress.XtraGrid.GridControl();
             this.gvEndpoints = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnReload = new DevExpress.XtraEditors.SimpleButton();
+            this.pnExchangeInfo = new System.Windows.Forms.Panel();
+            this.btnCommit = new DevExpress.XtraEditors.SimpleButton();
+            this.btnChangeEndpoints = new DevExpress.XtraEditors.SimpleButton();
             this.teRemainBalance = new DevExpress.XtraEditors.TextEdit();
             this.teInitBalance = new DevExpress.XtraEditors.TextEdit();
             this.label3 = new System.Windows.Forms.Label();
@@ -76,9 +79,6 @@ namespace NganHangPhanTan.SimpleForm
             this.tableAdapterManager = new NganHangPhanTan.DSTableAdapters.TableAdapterManager();
             this.taCustomer = new NganHangPhanTan.DSTableAdapters.usp_GetCustomerHavingAccountInSubcriberTableAdapter();
             this.taAccount = new NganHangPhanTan.DSTableAdapters.usp_GetAccountByCustomerIdTableAdapter();
-            this.btnReload = new DevExpress.XtraEditors.SimpleButton();
-            this.btnChangeEndpoints = new DevExpress.XtraEditors.SimpleButton();
-            this.btnCommit = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usp_GetCustomerHavingAccountInSubcriberGridControl)).BeginInit();
@@ -104,7 +104,7 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.gcEndpoints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvEndpoints)).BeginInit();
             this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnExchangeInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teInitBalance.Properties)).BeginInit();
             this.SuspendLayout();
@@ -503,26 +503,68 @@ namespace NganHangPhanTan.SimpleForm
             // panel2
             // 
             this.panel2.Controls.Add(this.btnReload);
-            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.pnExchangeInfo);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(830, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(313, 373);
             this.panel2.TabIndex = 4;
             // 
-            // panel1
+            // btnReload
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnCommit);
-            this.panel1.Controls.Add(this.btnChangeEndpoints);
-            this.panel1.Controls.Add(this.teRemainBalance);
-            this.panel1.Controls.Add(this.teInitBalance);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(6, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(297, 158);
-            this.panel1.TabIndex = 4;
+            this.btnReload.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReload.Appearance.Options.UseFont = true;
+            this.btnReload.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
+            this.btnReload.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReload.ImageOptions.Image")));
+            this.btnReload.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
+            this.btnReload.Location = new System.Drawing.Point(6, 176);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(297, 36);
+            this.btnReload.TabIndex = 12;
+            this.btnReload.Text = "Reload";
+            this.btnReload.Click += new System.EventHandler(this.btnReload2_Click);
+            // 
+            // pnExchangeInfo
+            // 
+            this.pnExchangeInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnExchangeInfo.Controls.Add(this.btnCommit);
+            this.pnExchangeInfo.Controls.Add(this.btnChangeEndpoints);
+            this.pnExchangeInfo.Controls.Add(this.teRemainBalance);
+            this.pnExchangeInfo.Controls.Add(this.teInitBalance);
+            this.pnExchangeInfo.Controls.Add(this.label3);
+            this.pnExchangeInfo.Controls.Add(this.label2);
+            this.pnExchangeInfo.Location = new System.Drawing.Point(6, 12);
+            this.pnExchangeInfo.Name = "pnExchangeInfo";
+            this.pnExchangeInfo.Size = new System.Drawing.Size(297, 158);
+            this.pnExchangeInfo.TabIndex = 4;
+            // 
+            // btnCommit
+            // 
+            this.btnCommit.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCommit.Appearance.Options.UseFont = true;
+            this.btnCommit.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
+            this.btnCommit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCommit.ImageOptions.Image")));
+            this.btnCommit.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
+            this.btnCommit.Location = new System.Drawing.Point(154, 105);
+            this.btnCommit.Name = "btnCommit";
+            this.btnCommit.Size = new System.Drawing.Size(126, 36);
+            this.btnCommit.TabIndex = 14;
+            this.btnCommit.Text = "Xác nhận";
+            this.btnCommit.Click += new System.EventHandler(this.btnCommit_Click);
+            // 
+            // btnChangeEndpoints
+            // 
+            this.btnChangeEndpoints.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeEndpoints.Appearance.Options.UseFont = true;
+            this.btnChangeEndpoints.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
+            this.btnChangeEndpoints.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnChangeEndpoints.ImageOptions.Image")));
+            this.btnChangeEndpoints.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
+            this.btnChangeEndpoints.Location = new System.Drawing.Point(15, 105);
+            this.btnChangeEndpoints.Name = "btnChangeEndpoints";
+            this.btnChangeEndpoints.Size = new System.Drawing.Size(126, 36);
+            this.btnChangeEndpoints.TabIndex = 13;
+            this.btnChangeEndpoints.Text = "Hiệu chỉnh";
+            this.btnChangeEndpoints.Click += new System.EventHandler(this.btnChangeEndpoints_Click);
             // 
             // teRemainBalance
             // 
@@ -601,48 +643,6 @@ namespace NganHangPhanTan.SimpleForm
             // 
             this.taAccount.ClearBeforeFill = true;
             // 
-            // btnReload
-            // 
-            this.btnReload.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReload.Appearance.Options.UseFont = true;
-            this.btnReload.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
-            this.btnReload.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnInsertAcc.ImageOptions.Image")));
-            this.btnReload.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
-            this.btnReload.Location = new System.Drawing.Point(6, 176);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(297, 36);
-            this.btnReload.TabIndex = 12;
-            this.btnReload.Text = "Reload";
-            this.btnReload.Click += new System.EventHandler(this.btnReload2_Click);
-            // 
-            // btnChangeEndpoints
-            // 
-            this.btnChangeEndpoints.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeEndpoints.Appearance.Options.UseFont = true;
-            this.btnChangeEndpoints.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
-            this.btnChangeEndpoints.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
-            this.btnChangeEndpoints.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
-            this.btnChangeEndpoints.Location = new System.Drawing.Point(15, 105);
-            this.btnChangeEndpoints.Name = "btnChangeEndpoints";
-            this.btnChangeEndpoints.Size = new System.Drawing.Size(126, 36);
-            this.btnChangeEndpoints.TabIndex = 13;
-            this.btnChangeEndpoints.Text = "Hiệu chỉnh";
-            this.btnChangeEndpoints.Click += new System.EventHandler(this.btnChangeEndpoints_Click);
-            // 
-            // btnCommit
-            // 
-            this.btnCommit.Appearance.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCommit.Appearance.Options.UseFont = true;
-            this.btnCommit.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.False;
-            this.btnCommit.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
-            this.btnCommit.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftBottom;
-            this.btnCommit.Location = new System.Drawing.Point(154, 105);
-            this.btnCommit.Name = "btnCommit";
-            this.btnCommit.Size = new System.Drawing.Size(126, 36);
-            this.btnCommit.TabIndex = 14;
-            this.btnCommit.Text = "Xác nhận";
-            this.btnCommit.Click += new System.EventHandler(this.btnCommit_Click);
-            // 
             // fTransExchange
             // 
             this.Appearance.Options.UseFont = true;
@@ -686,8 +686,8 @@ namespace NganHangPhanTan.SimpleForm
             ((System.ComponentModel.ISupportInitialize)(this.gcEndpoints)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvEndpoints)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnExchangeInfo.ResumeLayout(false);
+            this.pnExchangeInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teRemainBalance.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teInitBalance.Properties)).EndInit();
             this.ResumeLayout(false);
@@ -718,7 +718,7 @@ namespace NganHangPhanTan.SimpleForm
         private DevExpress.XtraGrid.GridControl gcEndpoints;
         private DevExpress.XtraGrid.Views.Grid.GridView gvEndpoints;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnExchangeInfo;
         private DevExpress.XtraEditors.TextEdit teRemainBalance;
         private DevExpress.XtraEditors.TextEdit teInitBalance;
         private System.Windows.Forms.Label label3;

@@ -64,7 +64,7 @@ namespace NganHangPhanTan
             tssEmployeeGroup.Text = $"Nhóm: {user.GetGroupName()}";
 
             btnLogin.Enabled = false;
-            btnCreateAccount.Enabled = btnLogout.Enabled = true;
+            btnCreateLogin.Enabled = btnLogout.Enabled = true;
 
             ribCategory.Visible = ribService.Visible = ribReport.Visible = true;
         }
@@ -109,7 +109,7 @@ namespace NganHangPhanTan
 
         private void fMain_Load(object sender, EventArgs e)
         {
-            btnCreateAccount.Enabled = btnLogout.Enabled = false;
+            btnCreateLogin.Enabled = btnLogout.Enabled = false;
             ribCategory.Visible = ribService.Visible = ribReport.Visible = false;
             CreateAndShowLoginForm();
         }
@@ -142,7 +142,7 @@ namespace NganHangPhanTan
                 tssEmployeeGroup.Text = "Nhóm: trống";
 
                 btnLogin.Enabled = true;
-                btnCreateAccount.Enabled = btnLogout.Enabled = false;
+                btnCreateLogin.Enabled = btnLogout.Enabled = false;
                 ribCategory.Visible = ribService.Visible = ribReport.Visible = false;
             }
         }

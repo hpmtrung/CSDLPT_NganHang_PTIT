@@ -38,6 +38,7 @@ namespace NganHangPhanTan.Report
 
             dpDateFrom.DateTime = dpDateTo.DateTime = DateTime.Now;
             rbtChooseBrand.Checked = true;
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)

@@ -50,6 +50,7 @@ namespace NganHangPhanTan.SimpleForm
 
             btnReload.Enabled = true;
             btnCancel.Enabled = btnSave.Enabled = false;
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void LoadAccountFromCustomer()

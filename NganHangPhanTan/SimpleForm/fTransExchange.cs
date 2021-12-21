@@ -49,11 +49,12 @@ namespace NganHangPhanTan.SimpleForm
             {
                 case DTO.User.GroupENM.NGAN_HANG:
                     cbBrand.Enabled = true;
-                    gcEditEnpoint.Enabled = false;
+                    //gcEditEnpoint.Enabled = false;
+                    pnExchangeInfo.Enabled = gcEndpoints.Enabled = false;
                     break;
                 case DTO.User.GroupENM.CHI_NHANH:
                     cbBrand.Enabled = false;
-                    gcEditEnpoint.Enabled = true;
+                    //gcEditEnpoint.Enabled = true;
 
                     exchangeTransaction = new ExchangeTransaction();
                     gcEndpoints.DataSource = exchangeTransaction.Endpoints;
@@ -71,6 +72,9 @@ namespace NganHangPhanTan.SimpleForm
                     // DEBUG
                     throw new Exception("User group is unidentified");
             }
+            
+            btnReload.Enabled = true;
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void ConfigGridEnpoint()

@@ -72,6 +72,7 @@ namespace NganHangPhanTan.SimpleForm
             btnReload.Enabled = true;
             btnSave.Enabled = btnUndo.Enabled = btnRedo.Enabled = false;
             acceptGvFocusedRowChanging = true;
+            cbBrand_SelectionChangeCommitted(null, null);
         }
 
         private void LoadAccountFromCustomer()
